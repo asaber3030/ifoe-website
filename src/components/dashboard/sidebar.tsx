@@ -2,9 +2,10 @@
 
 import React from "react"
 
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { DASHBOARD_NAVIGATION } from "@/lib/navigations"
 import { AppLogo } from "../app/logo"
+
 import Link from "next/link"
 
 export function DashboardSidebar() {

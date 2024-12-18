@@ -1,11 +1,8 @@
-import { StatsItem } from "@/components/dashboard/home/stats-item"
-import { AdminPageTitle } from "@/components/dashboard/title"
 import { Button } from "@/components/ui/button"
 
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,

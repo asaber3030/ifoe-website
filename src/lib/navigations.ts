@@ -14,7 +14,7 @@ export const DASHBOARD_NAVIGATION = [
     label: "الصفحة الرئيسية"
   },
   {
-    href: "/admin/frenchises",
+    href: "/admin/franchises",
     icon: BuildingOffice2Icon,
     label: "الخدمات"
   },

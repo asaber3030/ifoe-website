@@ -69,7 +69,7 @@ export default function Frenchises() {
           <h1 className="text-blue-600 my-4 mb-10">الخدمات</h1>
           <section className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8">
             {Array.from({ length: 6 }).map((_, i) => (
-              <FrenchiseCard key={i} franchise={"" as any} />
+              <FrenchiseCard key={i} franchise={""} />
             ))}
           </section>
         </div>

@@ -1,4 +1,5 @@
 import { type Metadata } from "next"
+import Image from "next/image"
 
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa"
 
@@ -36,7 +37,13 @@ export default function Home() {
 
       <div className="container mx-auto px-4 py-16 text-center lg:text-left flex flex-col lg:flex-row items-center space-y-10 lg:space-y-0 lg:space-x-10">
         <div className="w-full lg:w-1/2">
-          <img src="/bg.jpg" alt="Hero Image" className="rounded-md ml-auto" width={500} />
+          <Image
+            src="/bg.jpg"
+            alt="Hero Image"
+            className="rounded-md ml-auto"
+            width={500}
+            height={500}
+          />
         </div>
 
         <div className="max-w-lg md:text-right text-center">

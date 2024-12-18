@@ -4,7 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 
 import { useState } from "react"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { FaRegUserCircle } from "react-icons/fa"
 import { CgMenuGridO } from "react-icons/cg"
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa"

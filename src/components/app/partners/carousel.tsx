@@ -20,8 +20,8 @@ const partners = [
 export function PartnerCarousel() {
   return (
     <div className="grid xl:grid-cols-6 md:grid-cols-4 grid-cols-2 gap-8 container mx-auto">
-      {partners.map((partner) => (
-        <div className="p-1">
+      {partners.map((partner, i) => (
+        <div className="p-1" key={i}>
           <Image
             src={partner.logo}
             alt={`${partner.name} logo`}

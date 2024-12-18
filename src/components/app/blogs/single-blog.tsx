@@ -2,9 +2,15 @@
 
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { BlogPost } from "./blog-data"
 
-export function BlogPost({ post }: { post: BlogPost }) {
+interface BlogPostProps {
+  id: number
+  title: string
+  description: string
+  imageUrl: string
+}
+
+export function BlogPost({ post }: { post: BlogPostProps }) {
   return (
     <div className="flex gap-8 py-8 border-b border-gray-200 last:border-b-0">
       <div>

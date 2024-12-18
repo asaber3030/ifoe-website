@@ -1,9 +1,7 @@
 import { HomeIcon, User } from "lucide-react"
 import Link from "next/link"
 
-type Props = {}
-
-export const DashboardNavbar = ({}: Props) => {
+export const DashboardNavbar = () => {
   return (
     <div className="w-full bg-white flex justify-between items-center p-2 px-8">
       <h1>TITLE</h1>

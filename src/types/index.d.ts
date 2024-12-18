@@ -1,3 +1,12 @@
+// Types
+export type APIResponse<T> = {
+  status: number
+  message: string
+  data?: T
+}
+
+// Schema
+
 export type FranchiseImage = {
   franchise_images_id: number
   franchise_id: number
