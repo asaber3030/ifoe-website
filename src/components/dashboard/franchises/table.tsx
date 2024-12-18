@@ -12,7 +12,7 @@ import { Pagination } from "@/components/app/pagination"
 import { Button } from "@/components/ui/button"
 import { Edit, Eye, Trash } from "lucide-react"
 
-export function FrenchisesTable() {
+export function FranchisesTable() {
   return (
     <div className="mt-4">
       <Table>

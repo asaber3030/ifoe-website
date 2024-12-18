@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { FrenchisesTable } from "@/components/dashboard/frenchises/table"
+import { FranchisesTable } from "@/components/dashboard/franchises/table"
 import { AdminPageTitle } from "@/components/dashboard/title"
 import { PlusIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -18,7 +18,7 @@ export default function AdminBlogsPage() {
         </LinkBtn>
       </AdminPageTitle>
 
-      <FrenchisesTable />
+      <FranchisesTable />
     </div>
   )
 }

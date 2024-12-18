@@ -1,15 +1,15 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Frenchise } from "@/types"
+import { Franchise } from "@/types"
 
 import Image from "next/image"
 
 type Props = {
-  frenchise: Frenchise
+  franchise: Franchise
 }
 
-export const FrenchiseCard = ({ frenchise }: Props) => {
+export const FrenchiseCard = ({ franchise }: Props) => {
   return (
     <div className="bg-white rounded-md py-8 pb-0 shadow-md border overflow-hidden">
       <div className="border p-4 py-8 rounded-md w-fit mx-4 mb-8">
