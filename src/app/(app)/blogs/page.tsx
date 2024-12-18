@@ -2,6 +2,13 @@ import { BlogPost } from "@/components/app/blogs/single-blog"
 import { blogPosts } from "@/components/app/blogs/blog-data"
 import { Pagination } from "@/components/app/blogs/pagination"
 
+import { type Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "المقالات",
+  description: "المقالات"
+}
+
 export default function BlogsPage() {
   return (
     <div className="container mx-auto px-4 py-12">

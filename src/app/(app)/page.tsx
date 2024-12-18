@@ -1,4 +1,11 @@
+import { type Metadata } from "next"
+
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa"
+
+export const metadata: Metadata = {
+  title: "الرئيسية",
+  description: "الرئيسية"
+}
 
 export default function Home() {
   return (

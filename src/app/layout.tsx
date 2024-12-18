@@ -1,3 +1,4 @@
+import ReactQueryProvider from "@/providers/react-query"
 import "./globals.css"
 
 import { Alexandria } from "next/font/google"
@@ -13,7 +14,9 @@ export default function Home({ children }: Props) {
   return (
     <html dir="rtl">
       <body>
-        <div className={alexandria.className}>{children}</div>
+        <ReactQueryProvider>
+          <div className={alexandria.className}>{children}</div>
+        </ReactQueryProvider>
       </body>
     </html>
   )

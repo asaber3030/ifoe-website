@@ -1,4 +1,4 @@
-"use client"
+import { type Metadata } from "next"
 
 import { FrenchiseCard } from "@/components/app/frenchises/card"
 import { Button } from "@/components/ui/button"
@@ -6,6 +6,11 @@ import { HomeIcon } from "lucide-react"
 
 import Image from "next/image"
 import React from "react"
+
+export const metadata: Metadata = {
+  title: "الخدمات",
+  description: "الخدمات"
+}
 
 export default function Frenchises() {
   return (

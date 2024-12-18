@@ -1,42 +1,36 @@
+"use client"
+
 import Image from "next/image"
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious
-} from "@/components/ui/carousel"
-
 const partners = [
-  { id: 1, name: "Acme Corp", logo: "/placeholder.svg?height=100&width=200" },
-  { id: 2, name: "Globex", logo: "/placeholder.svg?height=100&width=200" },
-  { id: 3, name: "Initech", logo: "/placeholder.svg?height=100&width=200" },
-  { id: 4, name: "Umbrella Corp", logo: "/placeholder.svg?height=100&width=200" },
-  { id: 5, name: "Hooli", logo: "/placeholder.svg?height=100&width=200" },
-  { id: 6, name: "Pied Piper", logo: "/placeholder.svg?height=100&width=200" }
+  { id: 1, name: "Acme Corp", logo: "/ifoe-logo.png" },
+  { id: 2, name: "Globex", logo: "/ifoe-logo.png" },
+  { id: 3, name: "Initech", logo: "/ifoe-logo.png" },
+  { id: 4, name: "Umbrella Corp", logo: "/ifoe-logo.png" },
+  { id: 5, name: "Hooli", logo: "/ifoe-logo.png" },
+  { id: 6, name: "Pied Piper", logo: "/ifoe-logo.png" },
+  { id: 7, name: "Acme Corp", logo: "/ifoe-logo.png" },
+  { id: 8, name: "Globex", logo: "/ifoe-logo.png" },
+  { id: 9, name: "Initech", logo: "/ifoe-logo.png" },
+  { id: 10, name: "Umbrella Corp", logo: "/ifoe-logo.png" },
+  { id: 11, name: "Hooli", logo: "/ifoe-logo.png" },
+  { id: 12, name: "Pied Piper", logo: "/ifoe-logo.png" }
 ]
 
 export function PartnerCarousel() {
   return (
-    <Carousel className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
-      <CarouselContent>
-        {partners.map((partner) => (
-          <CarouselItem key={partner.id} className="md:basis-1/2 lg:basis-1/3">
-            <div className="p-1">
-              <Image
-                src={partner.logo}
-                alt={`${partner.name} logo`}
-                width={200}
-                height={100}
-                className="w-full h-auto object-contain"
-              />
-            </div>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
+    <div className="grid xl:grid-cols-6 md:grid-cols-4 grid-cols-2 gap-8 container mx-auto">
+      {partners.map((partner) => (
+        <div className="p-1">
+          <Image
+            src={partner.logo}
+            alt={`${partner.name} logo`}
+            width={200}
+            height={100}
+            className="w-full h-auto object-cover"
+          />
+        </div>
+      ))}
+    </div>
   )
 }

@@ -1,5 +1,12 @@
 import { PartnerCarousel } from "@/components/app/partners/carousel"
 
+import { type Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "الشركاء",
+  description: "الشركاء"
+}
+
 export default function PartnersPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
