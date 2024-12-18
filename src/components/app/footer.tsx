@@ -72,11 +72,6 @@ export const Footer = () => {
             </div>
           </div>
         </div>
-
-        {/* Footer Bottom */}
-        <div className="mt-8 border-t border-gray-700 pt-4 text-center text-sm text-gray-400">
-          © {new Date().getFullYear()} جميع الحقوق محفوظة | شركتنا
-        </div>
       </div>
     </footer>
   )

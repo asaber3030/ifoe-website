@@ -14,27 +14,27 @@ export const DASHBOARD_NAVIGATION = [
     label: "الصفحة الرئيسية"
   },
   {
-    href: "/dashboard/frenchises",
+    href: "/admin/frenchises",
     icon: BuildingOffice2Icon,
     label: "الخدمات"
   },
   {
-    href: "/dashboard/blogs",
+    href: "/admin/blogs",
     icon: KeyIcon,
     label: "المقالات"
   },
   {
-    href: "/dashboard/partners",
+    href: "/admin/partners",
     icon: UserIcon,
     label: "الشركاء"
   },
   {
-    href: "/dashboard/users",
+    href: "/admin/users",
     icon: UserCircleIcon,
     label: "المستخدمين"
   },
   {
-    href: "/dashboard/logout",
+    href: "/admin/logout",
     icon: ArrowRightOnRectangleIcon,
     label: "تسجيل الخروج"
   }
