@@ -31,7 +31,7 @@ type TMutation = {
 
 export const UpdateBlogForm = ({ blog }: { blog: Blog }) => {
   const [file, setFile] = useState<File | null>(null)
-  const [blogContent, setBlogContent] = useState<string>("")
+  const [blogContent, setBlogContent] = useState<string>(blog.blogContent)
   const [filePreview, setFilePreview] = useState<string>("/bg.jpg")
 
   const router = useRouter()
@@ -40,7 +40,7 @@ export const UpdateBlogForm = ({ blog }: { blog: Blog }) => {
     resolver: zodResolver(BlogSchema.Create),
     defaultValues: {
       title: blog.shortText,
-      shortText: blog.blogContent
+      shortText: blog.shortText
     }
   })
 
@@ -83,6 +83,7 @@ export const UpdateBlogForm = ({ blog }: { blog: Blog }) => {
             <Editor
               apiKey="ak97gh8mq9na3matau07b11mq6p4i8th8srwii58ouzmc1yc"
               onEditorChange={handleEditorChange}
+              initialValue={blogContent}
               init={{
                 plugins:
                   "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",

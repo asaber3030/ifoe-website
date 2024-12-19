@@ -1,4 +1,5 @@
-import { PartnerCarousel } from "@/components/app/partners/carousel"
+import { getPartners } from "@/actions/partners"
+import { EmptyState } from "@/components/app/empty-state"
 
 import { type Metadata } from "next"
 
@@ -7,28 +8,28 @@ export const metadata: Metadata = {
   description: "الشركاء"
 }
 
-export default function PartnersPage() {
+export default async function PartnersPage() {
+  const partners = await getPartners()
+
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen max-w-7xl mx-auto bg-background text-foreground">
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold text-center mb-8">Our Partners</h1>
-        <p className="text-center mb-12 max-w-2xl mx-auto">
-          We&apos;re proud to work with some of the most innovative companies in the industry. Our
-          partnerships enable us to deliver cutting-edge solutions to our clients.
+        <h1 className="text-4xl font-bold mb-8">شركائنا</h1>
+        <p className="mb-12 max-w-2xl">
+          نحن نعمل مع شركاء مبدعين لتقديم أفضل الحلول لعملائنا. تعرف على شركائنا وكيف يمكنك الانضمام
+          إليهم.
         </p>
-        <div className="flex justify-center mb-16">
-          <PartnerCarousel />
+        {partners?.length === 0 && <EmptyState />}
+        <div className="flex flex-wrap gap-10 mb-16">
+          {partners?.map((partner) => (
+            <img
+              key={partner.id}
+              src={partner.imageUrl}
+              alt={partner.name}
+              className="size-20 object-cover rounded-md"
+            />
+          ))}
         </div>
-        <section className="text-center">
-          <h2 className="text-2xl font-semibold mb-4">Become a Partner</h2>
-          <p className="mb-6 max-w-2xl mx-auto">
-            Interested in partnering with us? We&apos;re always looking for new opportunities to
-            collaborate and innovate. Get in touch to learn more about our partnership program.
-          </p>
-          <button className="bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90 transition-colors">
-            Contact Us
-          </button>
-        </section>
       </main>
     </div>
   )

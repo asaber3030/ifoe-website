@@ -5,7 +5,7 @@ import { UsersTable } from "@/components/dashboard/users/table"
 import { PlusIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-import { adminRoutes, routes } from "@/lib/routes"
+import { adminRoutes } from "@/lib/routes"
 
 export default function AdminBlogsPage() {
   return (
