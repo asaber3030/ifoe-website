@@ -1,5 +1,12 @@
-import Link from "next/link"
+import moment from "moment"
 
+import { deleteBlogAction } from "@/actions/blogs"
+import { adminRoutes } from "@/lib/routes"
+
+import { Edit } from "lucide-react"
+import { Blog } from "@/types"
+import { LinkBtn } from "@/components/ui/link-btn"
+import { DeleteModal } from "../delete-modal"
 import {
   Table,
   TableBody,
@@ -8,47 +15,41 @@ import {
   TableHeader,
   TableRow
 } from "@/components/ui/table"
-import { Pagination } from "@/components/app/pagination"
-import { Button } from "@/components/ui/button"
-import { Edit, Eye, Trash } from "lucide-react"
 
-export function BlogsTable() {
+type Props = {
+  blogs: Blog[]
+}
+
+export function BlogsTable({ blogs }: Props) {
   return (
     <div className="mt-4">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Invoice</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Method</TableHead>
-            <TableHead>Amount</TableHead>
-            <TableHead>Action</TableHead>
+            <TableHead>رقم المقالة</TableHead>
+            <TableHead>العنوان</TableHead>
+            <TableHead>اخر تعديل في</TableHead>
+            <TableHead>تم الانشاء في</TableHead>
+            <TableHead>حرر</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {Array.from({ length: 5 }).map((_, index) => (
-            <TableRow key={index}>
-              <TableCell>INV001</TableCell>
-              <TableCell>Paid</TableCell>
-              <TableCell>Credit Card</TableCell>
-              <TableCell>$250.00</TableCell>
+          {blogs.map((blog) => (
+            <TableRow key={blog.blogId}>
+              <TableCell>{blog.blogId}</TableCell>
+              <TableCell>{blog.title}</TableCell>
+              <TableCell>{moment(new Date("2020-12-12")).fromNow()}</TableCell>
+              <TableCell>{moment(new Date("2020-12-12")).fromNow()}</TableCell>
               <TableCell className="flex gap-2">
-                <Button size="icon" variant="outline">
+                <LinkBtn href={adminRoutes.blogs.update(blog.blogId)} size="icon" variant="outline">
                   <Edit className="size-4" />
-                </Button>
-                <Button size="icon" variant="outline">
-                  <Eye className="size-4" />
-                </Button>
-                <Button size="icon" variant="outlineDestructive">
-                  <Trash className="size-4" />
-                </Button>
+                </LinkBtn>
+                <DeleteModal deletedId={blog.blogId} forceAction={deleteBlogAction} />
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-
-      <Pagination currentPage={0} totalPages={4} />
     </div>
   )
 }

@@ -5,6 +5,13 @@ export type APIResponse<T> = {
   data?: T
 }
 
+type ErrorResponse = {
+  type: string
+  title: string
+  status: number
+  traceId: string
+}
+
 // Schema
 
 export type FranchiseImage = {
@@ -40,13 +47,14 @@ export type FranchiseCharacteristics = {
 }
 
 export type Category = {
-  category_id: number
-  category_name: string
+  categoryId: number
+  categoryName: string
 }
 
 export type Country = {
-  country_id: number
-  country_name: string
+  countryId: number
+  countryName: string
+  franchises: Franchise[]
 }
 
 export type TrainingPeriod = {
@@ -94,15 +102,15 @@ export type FranchiseType = {
 }
 
 export type Blog = {
-  blog_id: number
+  blogId: number
   title: string
-  short_text: string
-  blog_content: string
-  image_url: string
+  shortText: string
+  blogContent: string
+  imageUrl: string
 }
 
 export type Partner = {
   id: number
   name: string
-  image_url: string
+  imageUrl: string
 }

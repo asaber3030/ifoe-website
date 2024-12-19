@@ -1,16 +1,13 @@
 "use client"
 
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
-interface BlogPostProps {
-  id: number
-  title: string
-  description: string
-  imageUrl: string
-}
+import { LinkBtn } from "@/components/ui/link-btn"
+import { Blog } from "@/types"
+import { routes } from "@/lib/routes"
 
-export function BlogPost({ post }: { post: BlogPostProps }) {
+export function BlogPost({ post }: { post: Blog }) {
   return (
     <div className="flex gap-8 py-8 border-b border-gray-200 last:border-b-0">
       <div>
@@ -23,11 +20,22 @@ export function BlogPost({ post }: { post: BlogPostProps }) {
         />
       </div>
       <div className="flex flex-col space-y-2">
-        <h2 className="text-xl font-bold">{post.title}</h2>
-        <p className="text-sm text-muted-foreground line-clamp-1">{post.description}</p>
-        <Button className="self-start rounded-3xl" variant="outlineBlue">
-          Read More
-        </Button>
+        <Link
+          href={routes.blogs.view(post.blogId)}
+          className="text-xl font-bold hover:text-blue-500 hover:underline"
+        >
+          {post.title}
+        </Link>
+
+        <p className="text-sm text-muted-foreground line-clamp-1">{post.shortText}</p>
+
+        <LinkBtn
+          href={routes.blogs.view(post.blogId)}
+          className="self-start rounded-3xl"
+          variant="outlineBlue"
+        >
+          اقرا المزيد
+        </LinkBtn>
       </div>
     </div>
   )

@@ -5,13 +5,16 @@ import { BlogsTable } from "@/components/dashboard/blogs/table"
 import { PlusIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-import { routes } from "@/lib/routes"
+import { adminRoutes } from "@/lib/routes"
+import { getBlogs } from "@/actions/blogs"
 
-export default function AdminBlogsPage() {
+export default async function AdminBlogsPage() {
+  const blogs = await getBlogs()
+
   return (
     <div>
       <AdminPageTitle title="المقالات">
-        <Link href={routes.blogs.create}>
+        <Link href={adminRoutes.blogs.create}>
           <Button variant="blue">
             <PlusIcon className="size-4" />
             اضافة مقالة
@@ -19,7 +22,7 @@ export default function AdminBlogsPage() {
         </Link>
       </AdminPageTitle>
 
-      <BlogsTable />
+      <BlogsTable blogs={blogs} />
     </div>
   )
 }

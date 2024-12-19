@@ -1,4 +1,4 @@
-export const routes = {
+export const adminRoutes = {
   blogs: {
     root: `/admin/blogs`,
     create: `/admin/blogs/create`,
@@ -17,10 +17,37 @@ export const routes = {
     update: (id: number) => `/admin/franchises/${id}/update`,
     view: (id: number) => `/admin/franchises/${id}`
   },
+  countries: {
+    root: `/admin/countries`,
+    create: `/admin/countries/create`,
+    update: (id: number) => `/admin/countries/${id}/update`,
+    view: (id: number) => `/admin/countries/${id}`
+  },
+  categories: {
+    root: `/admin/categories`,
+    create: `/admin/categories/create`,
+    update: (id: number) => `/admin/categories/${id}/update`,
+    view: (id: number) => `/admin/categories/${id}`
+  },
   partners: {
     root: `/admin/partners`,
     create: `/admin/partners/create`,
     update: (id: number) => `/admin/partners/${id}/update`,
     view: (id: number) => `/admin/partners/${id}`
+  }
+}
+
+export const routes = {
+  blogs: {
+    root: `/blogs`,
+    view: (id: number) => `/blogs/${id}`
+  },
+  franchises: {
+    root: `/franchises`,
+    view: (id: number) => `/franchises/${id}`
+  },
+  partners: {
+    root: `/partners`,
+    view: (id: number) => `/partners/${id}`
   }
 }

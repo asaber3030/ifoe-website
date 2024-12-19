@@ -13,7 +13,7 @@ interface Props {
 
 export default function Home({ children }: Props) {
   return (
-    <html dir="rtl">
+    <html dir="rtl" suppressHydrationWarning>
       <body>
         <ReactQueryProvider>
           <ToastContainer />

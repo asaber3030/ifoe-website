@@ -1,5 +1,7 @@
-import { type Metadata } from "next"
 import Image from "next/image"
+
+import { getBlogs } from "@/actions/blogs"
+import { type Metadata } from "next"
 
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa"
 
@@ -8,7 +10,7 @@ export const metadata: Metadata = {
   description: "الرئيسية"
 }
 
-export default function Home() {
+export default async function Home() {
   return (
     <main>
       <section

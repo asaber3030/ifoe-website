@@ -1,6 +1,6 @@
 import { type Metadata } from "next"
 
-import { FrenchiseCard } from "@/components/app/frenchises/card"
+import { FrenchiseCard } from "@/components/app/franchises/card"
 import { Button } from "@/components/ui/button"
 import { HomeIcon } from "lucide-react"
 

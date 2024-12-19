@@ -47,8 +47,8 @@ export const Header = () => {
             </li>
             <li>
               <Link
-                href="/frenchises"
-                className={`${isActive("/frenchises") ? "text-blue-500" : "hover:text-gray-400"}`}
+                href="/franchises"
+                className={`${isActive("/franchises") ? "text-blue-500" : "hover:text-gray-400"}`}
               >
                 خدماتنا
               </Link>

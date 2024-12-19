@@ -31,3 +31,63 @@ export const UserSchema = {
       .optional()
   })
 }
+
+export const BlogSchema = {
+  Create: z.object({
+    title: z
+      .string({ message: "هذا المدخل يجب ان يكون حروف" })
+      .nonempty({ message: "لا يمكن اهمال هذا المدخل" }),
+    shortText: z.string().nonempty({ message: "لا يمكن اهمال هذا المدخل" })
+  }),
+  Update: z.object({
+    title: z
+      .string({ message: "هذا المدخل يجب ان يكون حروف" })
+      .nonempty({ message: "لا يمكن اهمال هذا المدخل" })
+      .optional(),
+    shortText: z.string().nonempty({ message: "لا يمكن اهمال هذا المدخل" }).optional()
+  })
+}
+
+export const CountrySchema = {
+  Create: z.object({
+    countryName: z
+      .string({ message: "هذا المدخل يجب ان يكون حروف" })
+      .nonempty({ message: "لا يمكن اهمال هذا المدخل" })
+  }),
+
+  Update: z.object({
+    countryName: z
+      .string({ message: "هذا المدخل يجب ان يكون حروف" })
+      .nonempty({ message: "لا يمكن اهمال هذا المدخل" })
+      .optional()
+  })
+}
+
+export const CategorySchema = {
+  Create: z.object({
+    categoryName: z
+      .string({ message: "هذا المدخل يجب ان يكون حروف" })
+      .nonempty({ message: "لا يمكن اهمال هذا المدخل" })
+  }),
+
+  Update: z.object({
+    categoryName: z
+      .string({ message: "هذا المدخل يجب ان يكون حروف" })
+      .nonempty({ message: "لا يمكن اهمال هذا المدخل" })
+      .optional()
+  })
+}
+
+export const PartnerSchema = {
+  Create: z.object({
+    name: z
+      .string({ message: "هذا المدخل يجب ان يكون حروف" })
+      .nonempty({ message: "لا يمكن اهمال هذا المدخل" })
+  }),
+  Update: z.object({
+    name: z
+      .string({ message: "هذا المدخل يجب ان يكون حروف" })
+      .nonempty({ message: "لا يمكن اهمال هذا المدخل" })
+      .optional()
+  })
+}
