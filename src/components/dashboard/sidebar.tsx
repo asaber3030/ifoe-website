@@ -1,12 +1,11 @@
 "use client"
 
-import React from "react"
+import Link from "next/link"
 
 import { usePathname } from "next/navigation"
-import { DASHBOARD_NAVIGATION } from "@/lib/navigations"
-import { AppLogo } from "../app/logo"
 
-import Link from "next/link"
+import { DASHBOARD_URLS } from "@/lib/navigations"
+import { AppLogo } from "../app/logo"
 
 export function DashboardSidebar() {
   const pathname = usePathname()
@@ -17,7 +16,7 @@ export function DashboardSidebar() {
       <AppLogo />
       <nav className="mt-4">
         <ul className="space-y-4">
-          {DASHBOARD_NAVIGATION.map(({ href, icon: Icon, label }) => {
+          {DASHBOARD_URLS.map(({ href, icon: Icon, label }) => {
             return (
               <li
                 key={href}

@@ -91,3 +91,34 @@ export const PartnerSchema = {
       .optional()
   })
 }
+
+export const UnitSchema = {
+  Create: z.object({
+    unit: z
+      .string({ message: "هذا المدخل يجب ان يكون حروف" })
+      .nonempty({ message: "لا يمكن اهمال هذا المدخل" }),
+    value: z.number().min(0, { message: "القيمة يجب ان تكون اكبر من صفر" })
+  }),
+  Update: z.object({
+    unit: z
+      .string({ message: "هذا المدخل يجب ان يكون حروف" })
+      .nonempty({ message: "لا يمكن اهمال هذا المدخل" })
+      .optional(),
+    value: z.number().min(0, { message: "القيمة يجب ان تكون اكبر من صفر" }).optional()
+  })
+}
+
+export const FranchiesCharacteristicsSchema = {
+  Create: z.object({
+    franchiseFees: z.string().nonempty({ message: "لا يمكن اهمال هذا المدخل" }),
+    royaltyFees: z.string().nonempty({ message: "لا يمكن اهمال هذا المدخل" }),
+    marketingFees: z.string().nonempty({ message: "لا يمكن اهمال هذا المدخل" }),
+    investmentsCost: z.string().nonempty({ message: "لا يمكن اهمال هذا المدخل" })
+  }),
+  Update: z.object({
+    franchiseFees: z.string().nonempty({ message: "لا يمكن اهمال هذا المدخل" }).optional(),
+    royaltyFees: z.string().nonempty({ message: "لا يمكن اهمال هذا المدخل" }).optional(),
+    marketingFees: z.string().nonempty({ message: "لا يمكن اهمال هذا المدخل" }).optional(),
+    investmentsCost: z.string().nonempty({ message: "لا يمكن اهمال هذا المدخل" }).optional()
+  })
+}

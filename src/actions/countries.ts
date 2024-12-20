@@ -1,10 +1,12 @@
 "use server"
 
-import { API_URL } from "@/lib/constants"
-import { adminRoutes } from "@/lib/routes"
 import { CountrySchema } from "@/lib/schema"
 import { Country } from "@/types"
+
+import { API_URL } from "@/lib/constants"
+
 import { revalidatePath } from "next/cache"
+import { adminRoutes } from "@/lib/routes"
 import { z } from "zod"
 
 export async function getCountries(): Promise<Country[]> {

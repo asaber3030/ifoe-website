@@ -1,4 +1,13 @@
 import {
+  Briefcase,
+  FlagIcon,
+  ListCheck,
+  MoveHorizontal,
+  ScrollText,
+  Star,
+  Tractor
+} from "lucide-react"
+import {
   HomeIcon,
   KeyIcon,
   UserIcon,
@@ -6,9 +15,8 @@ import {
   ArrowRightOnRectangleIcon,
   UserCircleIcon
 } from "@heroicons/react/24/outline"
-import { FlagIcon, ListCheck } from "lucide-react"
 
-export const DASHBOARD_NAVIGATION = [
+export const DASHBOARD_URLS = [
   {
     href: "/admin",
     icon: HomeIcon,
@@ -43,6 +51,31 @@ export const DASHBOARD_NAVIGATION = [
     href: "/admin/users",
     icon: UserCircleIcon,
     label: "المستخدمين"
+  },
+  {
+    href: "/admin/franchise-characteristics",
+    icon: Star,
+    label: "خصائص الخدمات"
+  },
+  {
+    href: "/admin/training-periods",
+    icon: Briefcase,
+    label: "فترات التدريب"
+  },
+  {
+    href: "/admin/contract-periods",
+    icon: ScrollText,
+    label: "العقود"
+  },
+  {
+    href: "/admin/equipment-cost",
+    icon: Tractor,
+    label: "تكلفة الادوات"
+  },
+  {
+    href: "/admin/space-required",
+    icon: MoveHorizontal,
+    label: "المساحات المطلوبه"
   },
   {
     href: "/admin/logout",

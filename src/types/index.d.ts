@@ -21,29 +21,29 @@ export type FranchiseImage = {
 }
 
 export type SpaceRequired = {
-  space_required_id: number
+  spaceRequiredId: number
   value: number
   unit: any
 }
 
 export type ContractPeriod = {
-  contract_period_id: number
+  contractPeriodId: number
   value: number
   unit: any
 }
 
 export type EquipmentCost = {
-  equipment_cost_id: number
+  equipmentCostId: number
   value: number
-  unit: any
+  unit: string
 }
 
 export type FranchiseCharacteristics = {
-  franchise_characteristics_id: number
-  franchise_fees: string
-  royalty_fees: string
-  marketing_fees: string
-  investments_cost: string
+  franchiseCharacteristicsId: number
+  franchiseFees: string
+  royaltyFees: string
+  marketingFees: string
+  investmentsCost: string
 }
 
 export type Category = {
@@ -58,7 +58,7 @@ export type Country = {
 }
 
 export type TrainingPeriod = {
-  id: number
+  trainingPeriodId: number
   value: number
   unit: any
 }

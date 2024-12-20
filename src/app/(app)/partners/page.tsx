@@ -1,7 +1,7 @@
-import { getPartners } from "@/actions/partners"
 import { EmptyState } from "@/components/app/empty-state"
-
 import { type Metadata } from "next"
+
+import { getPartners } from "@/actions/partners"
 
 export const metadata: Metadata = {
   title: "الشركاء",

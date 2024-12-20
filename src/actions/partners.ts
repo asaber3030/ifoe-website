@@ -1,15 +1,16 @@
 "use server"
 
-import { API_URL } from "@/lib/constants"
-import { adminRoutes } from "@/lib/routes"
 import { PartnerSchema } from "@/lib/schema"
 import { Partner } from "@/types"
+
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 import { revalidatePath } from "next/cache"
+import { adminRoutes } from "@/lib/routes"
+import { storage } from "@/services/firebase"
+import { v4 as uuid } from "uuid"
 import { z } from "zod"
 
-import { v4 as uuid } from "uuid"
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
-import { storage } from "@/services/firebase"
+import { API_URL } from "@/lib/constants"
 
 export async function getPartners(): Promise<Partner[]> {
   try {

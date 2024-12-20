@@ -1,15 +1,16 @@
 "use server"
 
-import { API_URL } from "@/lib/constants"
+import { Blog } from "@/types"
 import { BlogSchema } from "@/lib/schema"
-import { storage } from "@/services/firebase"
-import { Blog, ErrorResponse } from "@/types"
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
-import { z } from "zod"
 
-import { v4 as uuid } from "uuid"
-import { adminRoutes } from "@/lib/routes"
+import { API_URL } from "@/lib/constants"
+
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 import { revalidatePath } from "next/cache"
+import { adminRoutes } from "@/lib/routes"
+import { v4 as uuid } from "uuid"
+import { storage } from "@/services/firebase"
+import { z } from "zod"
 
 export async function getBlogs(): Promise<Blog[]> {
   try {
@@ -49,7 +50,8 @@ export async function createBlogAction(
       BlogContent: blogContent
     }),
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`
     }
   })
 
