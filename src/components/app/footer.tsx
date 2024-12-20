@@ -32,7 +32,7 @@ export const Footer = () => {
               </li>
               <li>
                 <Link href="/services" className="hover:text-gray-300">
-                  خدماتنا
+                  الامتيازات
                 </Link>
               </li>
               <li>

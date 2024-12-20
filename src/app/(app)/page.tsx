@@ -4,6 +4,7 @@ import { getBlogs } from "@/actions/blogs"
 import { type Metadata } from "next"
 
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa"
+import { FrenchiseCard } from "@/components/app/franchises/card"
 
 export const metadata: Metadata = {
   title: "الرئيسية",
@@ -67,7 +68,33 @@ export default async function Home() {
           </div>
         </div>
       </div>
-
+ <div className="p-10 xl:px-24">
+        <div>
+          <h1 className="text-blue-600 my-4 mb-10">الامتيازات</h1>
+          <section className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <FrenchiseCard key={i} franchise={""} />
+            ))}
+          </section>
+        </div>
+      </div>
+       <div className="p-10 xl:px-24">
+              <h1 className="text-blue-600 my-4 mb-10">شركاء النجاح</h1>
+              <div className="grid xl:grid-cols-6 gap-8 grid-cols-2">
+                <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
+                <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
+                <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
+                <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
+                <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
+                <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
+                <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
+                <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
+                <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
+                <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
+                <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
+                <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
+              </div>
+            </div>
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 my-10">
         {/* Left Section - Contact Info */}
         <div className="flex flex-col justify-center">

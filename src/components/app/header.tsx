@@ -50,7 +50,7 @@ export const Header = () => {
                 href="/franchises"
                 className={`${isActive("/franchises") ? "text-blue-500" : "hover:text-gray-400"}`}
               >
-                خدماتنا
+                الامتيازات
               </Link>
             </li>
             <li>
@@ -120,7 +120,7 @@ export const Header = () => {
                       isActive("/services") ? "text-blue-500" : "hover:text-gray-400"
                     }`}
                   >
-                    خدماتنا
+                    الامتيازات
                   </Link>
                 </li>
                 <li>

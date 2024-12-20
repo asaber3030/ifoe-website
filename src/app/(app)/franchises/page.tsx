@@ -66,7 +66,7 @@ export default function Frenchises() {
 
       <div className="p-10 xl:px-24">
         <div>
-          <h1 className="text-blue-600 my-4 mb-10">الخدمات</h1>
+          <h1 className="text-blue-600 my-4 mb-10">الامتيازات</h1>
           <section className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8">
             {Array.from({ length: 6 }).map((_, i) => (
               <FrenchiseCard key={i} franchise={""} />
@@ -75,7 +75,7 @@ export default function Frenchises() {
         </div>
       </div>
 
-      <div className="p-10 xl:px-24">
+      {/* <div className="p-10 xl:px-24">
         <h1 className="text-blue-600 my-4 mb-10">الامتيازات</h1>
 
         <div className="grid xl:grid-cols-3 gap-8 grid-cols-1">
@@ -139,9 +139,9 @@ export default function Frenchises() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <div className="p-10 xl:px-24">
+      {/* <div className="p-10 xl:px-24">
         <h1 className="text-blue-600 my-4 mb-10">شركاء النجاح</h1>
         <div className="grid xl:grid-cols-6 gap-8 grid-cols-2">
           <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
@@ -157,7 +157,7 @@ export default function Frenchises() {
           <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
           <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
         </div>
-      </div>
+      </div> */}
 
       <div className="m-10 xl:mx-24 bg-blue-600 rounded-[100px] grid xl:grid-cols-3 justify-between items-center xl:p-20 p-10 gap-20">
         <div className="xl:col-span-2">
