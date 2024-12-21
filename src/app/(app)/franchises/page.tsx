@@ -6,6 +6,8 @@ import { HomeIcon } from "lucide-react"
 
 import Image from "next/image"
 import React from "react"
+import { LinkBtn } from "@/components/ui/link-btn"
+import { routes } from "@/lib/routes"
 
 export const metadata: Metadata = {
   title: "الخدمات",
@@ -56,17 +58,25 @@ export default function Frenchises() {
             code.
           </p>
 
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-2">
             <Button className="rounded-3xl border-black" variant="outline">
               عرض التفاصيل
             </Button>
+            <LinkBtn href={routes.blogs.root} className="rounded-3xl " variant="blue">
+              عرض الكل
+            </LinkBtn>
           </div>
         </div>
       </div>
 
       <div className="p-10 xl:px-24">
         <div>
-          <h1 className="text-blue-600 my-4 mb-10">الامتيازات</h1>
+          <div className="flex justify-between">
+            <h1 className="text-blue-600 my-4 mb-10">الامتيازات</h1>
+            <Button className="rounded-3xl " variant="blue">
+              عرض الكل
+            </Button>
+          </div>
           <section className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8">
             {Array.from({ length: 6 }).map((_, i) => (
               <FrenchiseCard key={i} franchise={""} />

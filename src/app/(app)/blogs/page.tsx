@@ -15,7 +15,7 @@ export default async function BlogsPage() {
     <div className="container mx-auto px-4 py-12">
       <h1 className="text-4xl font-bold mb-12">المقالات الخاصة بنا</h1>
 
-      <div>
+      <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
         {blogs.map((post) => (
           <BlogPost key={`blog-${post.blogId}`} post={post} />
         ))}
