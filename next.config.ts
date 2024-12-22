@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: "5mb"
     }
+  },
+  images: {
+    domains: ["firebasestorage.googleapis.com", "placehold.co"]
   }
 }
 

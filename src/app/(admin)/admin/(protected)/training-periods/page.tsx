@@ -13,7 +13,7 @@ export default async function AdminSpaceRequiredPage() {
       <AdminPageTitle title="فترات التدريب">
         <CreateTrainingPeriodModal />
       </AdminPageTitle>
-      {trainingPeriods.length === 0 ? (
+      {!trainingPeriods ? (
         <EmptyState />
       ) : (
         <TrainingPeriodsTable trainingPeriods={trainingPeriods} />

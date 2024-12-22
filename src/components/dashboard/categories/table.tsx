@@ -6,12 +6,9 @@ import {
   TableHeader,
   TableRow
 } from "@/components/ui/table"
-import { Eye, Trash } from "lucide-react"
 import { Category } from "@/types"
-import { LinkBtn } from "@/components/ui/link-btn"
 import { UpdateCategoryModal } from "./update-modal"
 
-import { adminRoutes } from "@/lib/routes"
 import { DeleteModal } from "../delete-modal"
 import { deleteCategoryAction } from "@/actions/categories"
 
@@ -32,12 +29,12 @@ export function CategoriesTable({ categories }: Props) {
         </TableHeader>
         <TableBody>
           {categories.map((category) => (
-            <TableRow key={`category-row-${category.categoryId}`}>
-              <TableCell>{category.categoryId}</TableCell>
-              <TableCell>{category.categoryName}</TableCell>
+            <TableRow key={`category-row-${category.id}`}>
+              <TableCell>{category.id}</TableCell>
+              <TableCell>{category.name}</TableCell>
               <TableCell className="flex gap-2">
                 <UpdateCategoryModal category={category} />
-                <DeleteModal forceAction={deleteCategoryAction} deletedId={category.categoryId} />
+                <DeleteModal forceAction={deleteCategoryAction} deletedId={category.id} />
               </TableCell>
             </TableRow>
           ))}

@@ -9,12 +9,12 @@ import { showResponse } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
-import { UnitSchema } from "@/lib/schema"
+import { UnitCreateSchema } from "@/lib/schema"
 import { Form } from "@/components/ui/form"
 import { InputField } from "@/components/common/input-field"
 import { Button } from "@/components/ui/button"
 import { TrainingPeriod } from "@/types"
-import { Edit } from "lucide-react"
+import { Edit, Loader } from "lucide-react"
 import { LoadingButton } from "@/components/common/loading-button"
 import {
   Dialog,
@@ -26,6 +26,10 @@ import {
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/dialog"
+import { SelectField } from "@/components/common/select-field"
+import { SelectItem } from "@/components/ui/select"
+import { useUnits } from "@/hooks/use-units"
+import { updateTrainingPeriodAction } from "@/actions/training-periods"
 
 export const UpdateTrainingPeriodModal = ({
   trainingPeriod
@@ -34,17 +38,19 @@ export const UpdateTrainingPeriodModal = ({
 }) => {
   const [open, setOpen] = useState(false)
 
+  const { units, isLoading } = useUnits()
+
   const form = useForm({
-    resolver: zodResolver(UnitSchema.Update),
+    resolver: zodResolver(UnitCreateSchema.Update),
     defaultValues: {
-      unit: trainingPeriod.unit,
+      unit_id: trainingPeriod.unit_id,
       value: trainingPeriod.value
     }
   })
 
   const updateMutation = useMutation({
-    mutationFn: ({ data }: { data: z.infer<typeof UnitSchema.Update> }) =>
-      updateSpaceRequiredAction(trainingPeriod.trainingPeriodId, data),
+    mutationFn: ({ data }: { data: z.infer<typeof UnitCreateSchema.Update> }) =>
+      updateTrainingPeriodAction(trainingPeriod.id, data),
     onSuccess: (data) =>
       showResponse(data, () => {
         setOpen(false)
@@ -68,14 +74,28 @@ export const UpdateTrainingPeriodModal = ({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            تعديل فترة التدريب - <b>#{trainingPeriod.trainingPeriodId}</b>
+            تعديل فترة التدريب - <b>#{trainingPeriod.id}</b>
           </DialogTitle>
           <DialogDescription>تعديل فترة التدريب بالتفاصيل</DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-            <InputField name="unit" label="الوحدة" control={form.control} />
+            <SelectField
+              defaultValue={trainingPeriod.unit_id.toString()}
+              valueAsNumber
+              control={form.control}
+              name="unit_id"
+              label="الوحدة"
+            >
+              {isLoading && <Loader className="animate-spin" />}
+              {units?.map((unit) => (
+                <SelectItem key={unit.id} value={unit.id.toString()}>
+                  {unit.name}
+                </SelectItem>
+              ))}
+            </SelectField>
+
             <InputField
               type="number"
               name="value"

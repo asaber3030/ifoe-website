@@ -31,7 +31,7 @@ export const CreateCategoryModal = () => {
   const form = useForm({
     resolver: zodResolver(CategorySchema.Create),
     defaultValues: {
-      categoryName: ""
+      name: ""
     }
   })
 
@@ -68,7 +68,7 @@ export const CreateCategoryModal = () => {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-            <InputField name="categoryName" label="الاسم" control={form.control} />
+            <InputField name="name" label="الاسم" control={form.control} />
 
             <DialogFooter>
               <DialogClose asChild>

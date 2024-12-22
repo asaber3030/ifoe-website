@@ -35,16 +35,18 @@ export function BlogsTable({ blogs }: Props) {
         </TableHeader>
         <TableBody>
           {blogs.map((blog) => (
-            <TableRow key={blog.blogId}>
-              <TableCell>{blog.blogId}</TableCell>
+            <TableRow key={blog.id}>
+              <TableCell>{blog.id}</TableCell>
               <TableCell>{blog.title}</TableCell>
-              <TableCell>{moment(new Date("2020-12-12")).fromNow()}</TableCell>
-              <TableCell>{moment(new Date("2020-12-12")).fromNow()}</TableCell>
+              <TableCell>{moment(new Date(blog.created_at)).fromNow()}</TableCell>
+              <TableCell>
+                {blog.updated_at ? moment(new Date(blog.updated_at)).fromNow() : "N/A"}
+              </TableCell>
               <TableCell className="flex gap-2">
-                <LinkBtn href={adminRoutes.blogs.update(blog.blogId)} size="icon" variant="outline">
+                <LinkBtn href={adminRoutes.blogs.update(blog.id)} size="icon" variant="outline">
                   <Edit className="size-4" />
                 </LinkBtn>
-                <DeleteModal deletedId={blog.blogId} forceAction={deleteBlogAction} />
+                <DeleteModal deletedId={blog.id} forceAction={deleteBlogAction} />
               </TableCell>
             </TableRow>
           ))}

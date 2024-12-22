@@ -1,7 +1,9 @@
 import {
   Briefcase,
+  Check,
   FlagIcon,
   ListCheck,
+  Menu,
   MoveHorizontal,
   ScrollText,
   Star,
@@ -33,6 +35,11 @@ export const DASHBOARD_URLS = [
     label: "الاقسام"
   },
   {
+    href: "/admin/units",
+    icon: Check,
+    label: "الوحدات"
+  },
+  {
     href: "/admin/franchises",
     icon: BuildingOffice2Icon,
     label: "الخدمات"
@@ -56,6 +63,11 @@ export const DASHBOARD_URLS = [
     href: "/admin/franchise-characteristics",
     icon: Star,
     label: "خصائص الخدمات"
+  },
+  {
+    href: "/admin/franchise-types",
+    icon: Menu,
+    label: "انواع الخدمات"
   },
   {
     href: "/admin/training-periods",

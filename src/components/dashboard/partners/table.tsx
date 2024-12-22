@@ -6,10 +6,7 @@ import {
   TableHeader,
   TableRow
 } from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import { Edit, Eye, Trash } from "lucide-react"
 import { Partner } from "@/types"
-import Image from "next/image"
 import { UpdatePartnerModal } from "./update-modal"
 import { DeleteModal } from "../delete-modal"
 import { deletePartnerAction } from "@/actions/partners"
@@ -25,19 +22,17 @@ export function PartnersTable({ partners }: Props) {
         <TableHeader>
           <TableRow>
             <TableHead>رقم التعريف</TableHead>
-            <TableHead>الاسم</TableHead>
             <TableHead>الصورة</TableHead>
             <TableHead>Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {partners.map((partner, index) => (
+          {partners.map((partner) => (
             <TableRow key={`partner-row-${partner.id}`}>
               <TableCell>{partner.id}</TableCell>
-              <TableCell>{partner.name}</TableCell>
               <TableCell>
                 <img
-                  src={partner.imageUrl}
+                  src={partner.image_url}
                   alt="Partner Image"
                   width={60}
                   height={60}

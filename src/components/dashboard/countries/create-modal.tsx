@@ -31,7 +31,7 @@ export const CreateCountryModal = () => {
   const form = useForm({
     resolver: zodResolver(CountrySchema.Create),
     defaultValues: {
-      countryName: ""
+      name: ""
     }
   })
 
@@ -68,7 +68,7 @@ export const CreateCountryModal = () => {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-            <InputField name="countryName" label="الاسم" control={form.control} />
+            <InputField name="name" label="الاسم" control={form.control} />
 
             <DialogFooter>
               <DialogClose asChild>

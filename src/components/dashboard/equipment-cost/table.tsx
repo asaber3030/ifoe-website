@@ -30,13 +30,13 @@ export function EquipmentCostsTable({ equipmentCosts }: Props) {
         </TableHeader>
         <TableBody>
           {equipmentCosts.map((eq) => (
-            <TableRow key={`category-row-${eq.equipmentCostId}`}>
-              <TableCell>{eq.equipmentCostId}</TableCell>
-              <TableCell>{eq.unit}</TableCell>
+            <TableRow key={`category-row-${eq.id}`}>
+              <TableCell>{eq.id}</TableCell>
+              <TableCell>{eq.unit?.id}</TableCell>
               <TableCell>{eq.value}</TableCell>
               <TableCell className="flex gap-2">
                 <UpdateEquipmentCostModal equipmentCost={eq} />
-                <DeleteModal forceAction={deleteEquipmentAction} deletedId={eq.equipmentCostId} />
+                <DeleteModal forceAction={deleteEquipmentAction} deletedId={eq.id} />
               </TableCell>
             </TableRow>
           ))}

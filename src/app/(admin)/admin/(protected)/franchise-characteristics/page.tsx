@@ -13,7 +13,7 @@ export default async function AdminSpaceRequiredPage() {
       <AdminPageTitle title="خصائص الخدمات">
         <CreateFranchiesCharacteristicModal />
       </AdminPageTitle>
-      {franchiseCharacteristics.length === 0 ? (
+      {!franchiseCharacteristics ? (
         <EmptyState />
       ) : (
         <FranchiseCharacteristicsTable franchiseCharacteristics={franchiseCharacteristics} />

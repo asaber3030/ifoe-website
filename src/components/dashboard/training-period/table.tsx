@@ -30,16 +30,13 @@ export function TrainingPeriodsTable({ trainingPeriods }: Props) {
         </TableHeader>
         <TableBody>
           {trainingPeriods.map((tr, i) => (
-            <TableRow key={`category-row-${tr.trainingPeriodId ?? i}`}>
-              <TableCell>{tr.trainingPeriodId ?? i}</TableCell>
-              <TableCell>{tr.unit}</TableCell>
+            <TableRow key={`category-row-${tr.id ?? i}`}>
+              <TableCell>{tr.id ?? i}</TableCell>
+              <TableCell>{tr.unit?.name}</TableCell>
               <TableCell>{tr.value}</TableCell>
               <TableCell className="flex gap-2">
                 <UpdateTrainingPeriodModal trainingPeriod={tr} />
-                <DeleteModal
-                  forceAction={deleteTrainingPeriodAction}
-                  deletedId={tr.trainingPeriodId}
-                />
+                <DeleteModal forceAction={deleteTrainingPeriodAction} deletedId={tr.id} />
               </TableCell>
             </TableRow>
           ))}

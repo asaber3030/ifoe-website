@@ -3,6 +3,7 @@ import { getCountries } from "@/actions/countries"
 import { AdminPageTitle } from "@/components/dashboard/title"
 import { CountriesTable } from "@/components/dashboard/countries/table"
 import { CreateCountryModal } from "@/components/dashboard/countries/create-modal"
+import { EmptyState } from "@/components/app/empty-state"
 
 export default async function AdminCountriesPage() {
   const countries = await getCountries()
@@ -13,7 +14,7 @@ export default async function AdminCountriesPage() {
         <CreateCountryModal />
       </AdminPageTitle>
 
-      <CountriesTable countries={countries} />
+      {!countries ? <EmptyState /> : <CountriesTable countries={countries} />}
     </div>
   )
 }

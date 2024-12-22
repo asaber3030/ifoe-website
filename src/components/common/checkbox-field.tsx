@@ -15,9 +15,13 @@ export const CheckboxField = ({ name, label, control, defaultValue }: Props) => 
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="flex flex-row items-start space-x-2 space-y-0">
+        <FormItem className="flex flex-row items-start gap-2 space-y-0">
           <FormControl>
-            <Checkbox defaultChecked={defaultValue} checked={field.value} onCheckedChange={field.onChange} />
+            <Checkbox
+              defaultChecked={defaultValue}
+              checked={field.value}
+              onCheckedChange={field.onChange}
+            />
           </FormControl>
           <div className="space-y-1 leading-none">
             <FormLabel>{label}</FormLabel>

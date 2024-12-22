@@ -9,7 +9,7 @@ import { showResponse } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
-import { UnitSchema } from "@/lib/schema"
+import { UnitCreateSchema } from "@/lib/schema"
 import { Form } from "@/components/ui/form"
 import { InputField } from "@/components/common/input-field"
 import { Button } from "@/components/ui/button"
@@ -26,21 +26,27 @@ import {
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/dialog"
+import { Loader } from "lucide-react"
+import { SelectField } from "@/components/common/select-field"
+import { SelectItem } from "@/components/ui/select"
+import { useUnits } from "@/hooks/use-units"
 
 export const UpdateEquipmentCostModal = ({ equipmentCost }: { equipmentCost: EquipmentCost }) => {
   const [open, setOpen] = useState(false)
 
+  const { units, isLoading } = useUnits()
+
   const form = useForm({
-    resolver: zodResolver(UnitSchema.Update),
+    resolver: zodResolver(UnitCreateSchema.Update),
     defaultValues: {
-      unit: equipmentCost.unit,
+      unit_id: equipmentCost.unit_id,
       value: equipmentCost.value
     }
   })
 
   const updateMutation = useMutation({
-    mutationFn: ({ data }: { data: z.infer<typeof UnitSchema.Update> }) =>
-      updateEquipmentAction(equipmentCost.equipmentCostId, data),
+    mutationFn: ({ data }: { data: z.infer<typeof UnitCreateSchema.Update> }) =>
+      updateEquipmentAction(equipmentCost.id, data),
     onSuccess: (data) =>
       showResponse(data, () => {
         setOpen(false)
@@ -64,14 +70,28 @@ export const UpdateEquipmentCostModal = ({ equipmentCost }: { equipmentCost: Equ
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            تعديل الاداءه - <b>#{equipmentCost.equipmentCostId}</b>
+            تعديل الاداءه - <b>#{equipmentCost.id}</b>
           </DialogTitle>
           <DialogDescription>تعديل الاداءه بالتفاصيل</DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-            <InputField name="unit" label="الوحدة" control={form.control} />
+            <SelectField
+              defaultValue={equipmentCost.unit_id.toString()}
+              valueAsNumber
+              control={form.control}
+              name="unit_id"
+              label="الوحدة"
+            >
+              {isLoading && <Loader className="animate-spin" />}
+              {units?.map((unit) => (
+                <SelectItem key={unit.id} value={unit.id.toString()}>
+                  {unit.name}
+                </SelectItem>
+              ))}
+            </SelectField>
+
             <InputField
               type="number"
               name="value"

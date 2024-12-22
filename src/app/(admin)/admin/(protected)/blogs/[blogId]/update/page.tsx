@@ -14,7 +14,7 @@ export default async function UpdateBlogPage({ params }: Props) {
   const blogId = +(await params).blogId
   const blog = await getBlog(blogId)
 
-  if (!blog || !blog.blog || blog.status != 200) return notFound()
+  if (!blog.blog) return notFound()
 
   return (
     <div className="space-y-4">

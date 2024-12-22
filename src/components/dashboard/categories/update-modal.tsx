@@ -34,13 +34,13 @@ export const UpdateCategoryModal = ({ category }: { category: Category }) => {
   const form = useForm({
     resolver: zodResolver(CategorySchema.Update),
     defaultValues: {
-      categoryName: category.categoryName
+      name: category.name
     }
   })
 
   const updateMutation = useMutation({
     mutationFn: ({ data }: { data: z.infer<typeof CategorySchema.Update> }) =>
-      updateCategoryAction(category.categoryId, data),
+      updateCategoryAction(category.id, data),
     onSuccess: (data) =>
       showResponse(data, () => {
         setOpen(false)
@@ -64,14 +64,14 @@ export const UpdateCategoryModal = ({ category }: { category: Category }) => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            تعديل القسم - <b>{category.categoryName}</b>
+            تعديل القسم - <b>{category.name}</b>
           </DialogTitle>
           <DialogDescription>تعديل القسم بالاسم والتفاصيل</DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-            <InputField name="categoryName" label="الاسم" control={form.control} />
+            <InputField name="name" label="الاسم" control={form.control} />
 
             <DialogFooter>
               <DialogClose asChild>

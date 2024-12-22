@@ -30,16 +30,13 @@ export function ContractPeriodsTable({ contractPeriods }: Props) {
         </TableHeader>
         <TableBody>
           {contractPeriods.map((contract) => (
-            <TableRow key={`category-row-${contract.contractPeriodId}`}>
-              <TableCell>{contract.contractPeriodId}</TableCell>
-              <TableCell>{contract.unit}</TableCell>
+            <TableRow key={`category-row-${contract.id}`}>
+              <TableCell>{contract.id}</TableCell>
+              <TableCell>{contract.unit?.name}</TableCell>
               <TableCell>{contract.value}</TableCell>
               <TableCell className="flex gap-2">
                 <UpdateContractPeriodModal contractPeriod={contract} />
-                <DeleteModal
-                  forceAction={deleteContractPeriodAction}
-                  deletedId={contract.contractPeriodId}
-                />
+                <DeleteModal forceAction={deleteContractPeriodAction} deletedId={contract.id} />
               </TableCell>
             </TableRow>
           ))}

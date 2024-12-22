@@ -70,3 +70,19 @@ export function extractFilePath(url: string): string | null {
 
   return null
 }
+
+export function defaultHeaders(more: Record<string, string> = {}) {
+  return {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    ...more
+  }
+}
+
+export function actionResponse<T>(message: string, status: number, data?: T): APIResponse<T> {
+  return {
+    status,
+    message: message || "حدث خطأ ما",
+    data
+  }
+}

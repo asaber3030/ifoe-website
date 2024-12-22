@@ -1,20 +1,49 @@
+import Image from "next/image"
+import React from "react"
+
 import { type Metadata } from "next"
 
 import { FrenchiseCard } from "@/components/app/franchises/card"
 import { Button } from "@/components/ui/button"
-import { HomeIcon } from "lucide-react"
 
-import Image from "next/image"
-import React from "react"
 import { LinkBtn } from "@/components/ui/link-btn"
 import { routes } from "@/lib/routes"
+import { filterFranchises } from "@/actions/franchises"
+
+import { PaginateData } from "@/components/dashboard/pagination"
+import { getCountries } from "@/actions/countries"
+import { getCategories } from "@/actions/categories"
+import { FranchiseFilters } from "@/components/app/franchises/filters"
+import { EmptyState } from "@/components/app/empty-state"
 
 export const metadata: Metadata = {
   title: "الخدمات",
   description: "الخدمات"
 }
 
-export default function Frenchises() {
+type Props = {
+  searchParams: Promise<{
+    page: string
+    category: string
+    country: string
+  }>
+}
+
+export default async function Franchises({ searchParams }: Props) {
+  const page = (await searchParams).page
+  const category = (await searchParams).category
+  const country = (await searchParams).country
+
+  const franchisesPromise = filterFranchises(page, category, country)
+  const countriesPromise = getCountries()
+  const categoriesPromise = getCategories()
+
+  const [franchises, countries, categories] = await Promise.all([
+    franchisesPromise,
+    countriesPromise,
+    categoriesPromise
+  ])
+
   return (
     <main>
       <section
@@ -69,19 +98,31 @@ export default function Frenchises() {
         </div>
       </div>
 
-      <div className="p-10 xl:px-24">
+      <div className="p-10 xl:px-24" id="franchises-id">
         <div>
-          <div className="flex justify-between">
+          <div className="flex justify-between flex-wrap">
             <h1 className="text-blue-600 my-4 mb-10">الامتيازات</h1>
-            <Button className="rounded-3xl " variant="blue">
-              عرض الكل
-            </Button>
+            {categories && countries && (
+              <FranchiseFilters categories={categories} countries={countries} />
+            )}
           </div>
-          <section className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <FrenchiseCard key={i} franchise={""} />
-            ))}
-          </section>
+          {franchises?.data.length === 0 ? (
+            <EmptyState />
+          ) : (
+            <section className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8">
+              {franchises?.data.map((franchise, i) => (
+                <FrenchiseCard key={i} franchise={franchise} />
+              ))}
+            </section>
+          )}
+        </div>
+
+        <div className="mt-4">
+          <PaginateData
+            links={franchises?.links!}
+            hasNextPage={!!franchises?.next_page_url}
+            hasPreviousPage={!!franchises?.prev_page_url}
+          />
         </div>
       </div>
 

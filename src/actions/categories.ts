@@ -1,112 +1,111 @@
 "use server"
 
-import { API_URL } from "@/lib/constants"
-import { adminRoutes } from "@/lib/routes"
 import { CategorySchema } from "@/lib/schema"
-import { Category } from "@/types"
+import { APIResponse, Category } from "@/types"
+import { API_URL } from "@/lib/constants"
+
+import { actionResponse, defaultHeaders } from "@/lib/utils"
+import { getAuthorizationToken } from "./app"
 import { revalidatePath } from "next/cache"
+import { adminRoutes } from "@/lib/routes"
 import { z } from "zod"
 
 export async function getCategories(): Promise<Category[]> {
   try {
-    const res = await fetch(`${API_URL}/Categories`)
-    const data = await res.json()
-    return data
+    const res = await fetch(`${API_URL}/categories`)
+    const data: APIResponse<Category[]> = await res.json()
+    return data.data
   } catch (error) {
     return []
   }
 }
 
-export async function getCategory(CategoryId: number) {
-  const res = await fetch(`${API_URL}/Categories/${CategoryId}`)
+export async function getCategory(categoryId: number) {
+  const res = await fetch(`${API_URL}/categories/${categoryId}`)
   const data: Category = await res.json()
   return {
-    Category: data,
+    category: data,
     status: res.status
   }
 }
 
-export async function createCategoryAction(data: z.infer<typeof CategorySchema.Create>) {
-  const res = await fetch(`${API_URL}/Categories`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      CategoryId: Math.floor(Math.random() * 10000000),
-      CategoryName: data.categoryName
+export async function createCategoryAction(
+  values: z.infer<typeof CategorySchema.Create>
+): Promise<APIResponse<any>> {
+  try {
+    const token = await getAuthorizationToken()
+    const res = await fetch(`${API_URL}/categories`, {
+      method: "POST",
+      headers: defaultHeaders({
+        Authorization: `Bearer ${token}`
+      }),
+      body: JSON.stringify({
+        name: values.name
+      })
     })
-  })
 
-  const resData = await res.json()
-  console.log(resData)
+    if (!res.ok) return actionResponse("حدث خطأ ما", res.status)
 
-  if (!res.ok) {
-    return {
-      status: res.status,
-      message: "حدث خطأ ما",
-      response: resData
-    }
-  }
+    revalidatePath(adminRoutes.categories.root)
 
-  revalidatePath(adminRoutes.categories.root)
-  return {
-    status: res.status,
-    message: "تم تحديث البيانات بنجاح",
-    response: resData
+    const data = await res.json()
+    return data
+  } catch (error) {
+    return actionResponse("حدث خطأ ما", 500)
   }
 }
 
 export async function updateCategoryAction(
-  CategoryId: number,
-  data: z.infer<typeof CategorySchema.Update>
-) {
-  const res = await fetch(`${API_URL}/Categories/${CategoryId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      CategoryId: CategoryId,
-      CategoryName: data.categoryName
+  categoryId: number,
+  values: z.infer<typeof CategorySchema.Update>
+): Promise<APIResponse<any>> {
+  try {
+    const token = await getAuthorizationToken()
+    const res = await fetch(`${API_URL}/categories/${categoryId}`, {
+      method: "PATCH",
+      headers: defaultHeaders({
+        Authorization: `Bearer ${token}`
+      }),
+      body: JSON.stringify({
+        name: values.name
+      })
     })
-  })
 
-  if (!res.ok) {
-    return {
-      status: res.status,
-      message: "حدث خطأ ما"
-    }
-  }
-  revalidatePath(adminRoutes.categories.root)
-  return {
-    status: res.status,
-    message: "تم تحديث البيانات بنجاح"
+    if (!res.ok) return actionResponse("حدث خطأ ما", res.status)
+
+    revalidatePath(adminRoutes.categories.root)
+
+    return actionResponse("تم تحديث البيانات بنجاح", res.status)
+  } catch (error) {
+    return actionResponse("حدث خطأ ما", 500)
   }
 }
 
 export async function deleteCategoryAction(categoryId: number) {
-  const response = await fetch(`${API_URL}/Categories/${categoryId}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      Id: categoryId
-    })
-  })
-  revalidatePath(adminRoutes.categories.root)
-  const data = await response.json()
+  try {
+    const token = await getAuthorizationToken()
 
-  if (!response.ok) {
+    const response = await fetch(`${API_URL}/categories/${categoryId}`, {
+      method: "DELETE",
+      headers: defaultHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    })
+    revalidatePath(adminRoutes.categories.root)
+    const data = await response.json()
+
+    if (!response.ok) {
+      return {
+        status: response.status,
+        message: data?.title || "حدث خطأ ما"
+      }
+    }
+
     return {
       status: response.status,
-      message: data?.title || "حدث خطأ ما"
+      message: "تم حذف القسم بنجاح"
     }
-  }
-
-  return {
-    status: response.status,
-    message: "تم حذف الشريك بنجاح"
+  } catch (error) {
+    return actionResponse("حدث خطأ ما", 500)
   }
 }

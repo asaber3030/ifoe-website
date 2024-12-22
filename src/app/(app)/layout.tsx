@@ -7,7 +7,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     <>
       <Header />
       {children}
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }

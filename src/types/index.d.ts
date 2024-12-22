@@ -2,8 +2,10 @@
 export type APIResponse<T> = {
   status: number
   message: string
-  data?: T
+  data: T
 }
+
+export type Status = "Pending" | "Approved" | "Rejected"
 
 type ErrorResponse = {
   type: string
@@ -12,59 +14,103 @@ type ErrorResponse = {
   traceId: string
 }
 
+type PagniationLink = {
+  url: string | null
+  label: string
+  active: boolean
+}
+
+type PaginatedData<T> = {
+  current_page: number
+  data: T
+  first_page_url: string
+  from: number
+  last_page: number
+  last_page_url: string
+  links: PagniationLink[]
+  next_page_url: string | null
+  path: string
+  per_page: number
+  prev_page_url: string | null
+  to: number
+  total: number
+}
+
 // Schema
 
+export type User = {
+  id: number
+  name: string
+  email: string
+  role_id: number
+  role?: Role
+}
+
+export type Role = {
+  id: number
+  name: string
+}
+
 export type FranchiseImage = {
-  franchise_images_id: number
+  id: number
   franchise_id: number
   image_url: number
 }
 
 export type SpaceRequired = {
-  spaceRequiredId: number
+  id: number
   value: number
-  unit: any
+  unit_id: number
+  unit: Unit
 }
 
 export type ContractPeriod = {
-  contractPeriodId: number
+  id: number
   value: number
-  unit: any
+  unit_id: number
+  unit: Unit
 }
 
 export type EquipmentCost = {
-  equipmentCostId: number
+  id: number
   value: number
-  unit: string
+  unit_id: number
+  unit: Unit
 }
 
 export type FranchiseCharacteristics = {
-  franchiseCharacteristicsId: number
-  franchiseFees: string
-  royaltyFees: string
-  marketingFees: string
-  investmentsCost: string
+  id: number
+  franchise_fees: string
+  royalty_fees: string
+  marketing_fees: string
+  investments_cost: string
 }
 
 export type Category = {
-  categoryId: number
-  categoryName: string
+  id: number
+  name: string
+}
+
+export type Unit = {
+  id: number
+  name: string
 }
 
 export type Country = {
-  countryId: number
-  countryName: string
+  id: number
+  name: string
   franchises: Franchise[]
 }
 
 export type TrainingPeriod = {
-  trainingPeriodId: number
+  id: number
   value: number
-  unit: any
+  unit_id: number
+  unit: Unit
 }
 
 export type Franchise = {
-  franchise_id: number
+  id: number
   name: string
   description: string
   equipment_cost_id: number
@@ -75,42 +121,71 @@ export type Franchise = {
   space_required_id: number
   number_of_labors: number
   training_period_id: number
-  establish_year: Date
+  establish_year: number
   center_office: string
   franchise_characteristics_id: number
   contract_period_id: number
-}
 
-export type FranchiseRequest = {
-  franchise_request_id: number
-  franchise_id: number
-  full_name: string
-  phone: string
-  country_id: number
-  city: string
-  company_name: string
-  business_type: any
-  have_experience: boolean
-  franchise_type_id: number
+  category: Category
+  country: Country
+  space_required: SpaceRequired
+  training_period: TrainingPeriod
+  franchise_characteristic: FranchiseCharacteristics
+  contract_period: ContractPeriod
+  added_by: User
+  equipment_cost: EquipmentCost
 }
 
 export type FranchiseType = {
-  franchise_type_id: number
-  franchise_type: any
+  id: number
+  franchise_type: string
   city_of_opening: string
   confirmation: boolean
+  deleted_at: Date | null
 }
 
 export type Blog = {
-  blogId: number
+  id: number
   title: string
-  shortText: string
-  blogContent: string
-  imageUrl: string
+  short_text: string
+  blog_content: string
+  image_url: string
+  created_at: Date
+  updated_at: Date
+  deleted_at: Date | null
 }
 
 export type Partner = {
   id: number
   name: string
-  imageUrl: string
+  image_url: string
+}
+
+type FranchiseRequest = {
+  id: number
+  user_id: number
+  franchise_id: number
+  user?: User
+  full_name: string
+  phone: string
+  country_id: number
+  city: string
+  company_name: string
+  business_type: string
+  have_experience: boolean
+  franchise_type_id: number
+  status: "Active" | "Inactive" | "Pending"
+
+  franchise: Franchise
+  franchise_type: FranchiseType
+  country: Country
+}
+
+type RequestHistory = {
+  id: number
+  franchise_request_id: number
+  status: string
+  changed_at: string
+  changed_by: number
+  remarks: string
 }

@@ -24,19 +24,17 @@ export function CountriesTable({ countries }: Props) {
           <TableRow>
             <TableHead>رقم التعريف</TableHead>
             <TableHead>الاسم</TableHead>
-            <TableHead>عدد الخدمات</TableHead>
             <TableHead>حرر</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {countries.map((country) => (
-            <TableRow key={`country-row-${country.countryId}`}>
-              <TableCell>{country.countryId}</TableCell>
-              <TableCell>{country.countryName}</TableCell>
-              <TableCell>{country.franchises.length} خدمة</TableCell>
+            <TableRow key={`country-row-${country.id}`}>
+              <TableCell>{country.id}</TableCell>
+              <TableCell>{country.name}</TableCell>
               <TableCell className="flex gap-2">
                 <UpdateCountryModal country={country} />
-                <DeleteModal forceAction={deleteCountryAction} deletedId={country.countryId} />
+                <DeleteModal forceAction={deleteCountryAction} deletedId={country.id} />
               </TableCell>
             </TableRow>
           ))}

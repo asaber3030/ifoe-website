@@ -37,16 +37,16 @@ export const UpdateFranchiseCharacteristicsModal = ({
   const form = useForm({
     resolver: zodResolver(FranchiesCharacteristicsSchema.Update),
     defaultValues: {
-      franchiseFees: franchiesCharacteristic.franchiseFees,
-      royaltyFees: franchiesCharacteristic.royaltyFees,
-      marketingFees: franchiesCharacteristic.marketingFees,
-      investmentsCost: franchiesCharacteristic.investmentsCost
+      franchiseFees: franchiesCharacteristic.franchise_fees,
+      royaltyFees: franchiesCharacteristic.royalty_fees,
+      marketingFees: franchiesCharacteristic.marketing_fees,
+      investmentsCost: franchiesCharacteristic.investments_cost
     }
   })
 
   const updateMutation = useMutation({
     mutationFn: ({ data }: { data: z.infer<typeof FranchiesCharacteristicsSchema.Update> }) =>
-      updateFranchiesCharacteristicAction(franchiesCharacteristic.franchiseCharacteristicsId, data),
+      updateFranchiesCharacteristicAction(franchiesCharacteristic.id, data),
     onSuccess: (data) =>
       showResponse(data, () => {
         setOpen(false)
@@ -70,7 +70,7 @@ export const UpdateFranchiseCharacteristicsModal = ({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            تعديل الخصائص - <b>#{franchiesCharacteristic.franchiseCharacteristicsId}</b>
+            تعديل الخصائص - <b>#{franchiesCharacteristic.id}</b>
           </DialogTitle>
           <DialogDescription>تعديل الخصائص بالتفاصيل</DialogDescription>
         </DialogHeader>

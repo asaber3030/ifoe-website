@@ -11,10 +11,18 @@ export const adminRoutes = {
     update: (id: number) => `/admin/users/${id}/update`,
     view: (id: number) => `/admin/users/${id}`
   },
+  units: {
+    root: `/admin/units`,
+    create: `/admin/units/create`,
+    update: (id: number) => `/admin/units/${id}/update`,
+    view: (id: number) => `/admin/units/${id}`
+  },
   franchises: {
     root: `/admin/franchises`,
     create: `/admin/franchises/create`,
     update: (id: number) => `/admin/franchises/${id}/update`,
+    requests: (id: number) => `/admin/franchises/${id}/requests`,
+    viewRequest: (id: number, requestId: number) => `/admin/franchises/${id}/requests/${requestId}`,
     view: (id: number) => `/admin/franchises/${id}`
   },
   countries: {
@@ -59,6 +67,12 @@ export const adminRoutes = {
     update: (id: number) => `/admin/franchise-characteristics/${id}/update`,
     view: (id: number) => `/admin/franchise-characteristics/${id}`
   },
+  franchiseTypes: {
+    root: `/admin/franchise-types`,
+    create: `/admin/franchise-types/create`,
+    update: (id: number) => `/admin/franchise-types/${id}/update`,
+    view: (id: number) => `/admin/franchise-types/${id}`
+  },
   partners: {
     root: `/admin/partners`,
     create: `/admin/partners/create`,
@@ -74,7 +88,8 @@ export const routes = {
   },
   franchises: {
     root: `/franchises`,
-    view: (id: number) => `/franchises/${id}`
+    view: (id: number) => `/franchises/${id}`,
+    newRequest: (id: number) => `/franchises/${id}/new-request`
   },
   partners: {
     root: `/partners`,
