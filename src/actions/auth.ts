@@ -4,24 +4,26 @@ import { API_URL, AUTH_COOKIE_NAME } from "@/lib/constants"
 import { UserSchema } from "@/lib/schema"
 import { APIResponse, User } from "@/types"
 
-import { defaultHeaders } from "@/lib/utils"
+import { actionResponse, defaultHeaders } from "@/lib/utils"
 import { cookies } from "next/headers"
 import { z } from "zod"
+import { getAuthorizationToken } from "./app"
 
 type TRegisterResponse = {
   user?: User
   token?: string
 }
-type TRegisterReturn = Promise<APIResponse<TRegisterResponse>>
+type TRegisterReturn = Promise<APIResponse<TRegisterResponse | undefined>>
+
 type TLoginResponse = {
   user?: User
   token?: string
 }
+
 type TLoginReturn = Promise<APIResponse<TLoginResponse>>
 
 export async function getUser(): Promise<User | null> {
-  const cookiesStore = cookies()
-  const token = (await cookiesStore).get(AUTH_COOKIE_NAME)?.value
+  const token = await getAuthorizationToken()
 
   try {
     const response = await fetch(`${API_URL}/me`, {
@@ -39,7 +41,9 @@ export async function getUser(): Promise<User | null> {
   }
 }
 
-export async function registerAction(values: z.infer<typeof UserSchema.Create>): TRegisterReturn {
+export async function registerAction(
+  values: z.infer<typeof UserSchema.Create>
+): Promise<TRegisterReturn> {
   try {
     const response = await fetch(`${API_URL}/register`, {
       method: "POST",
@@ -55,12 +59,7 @@ export async function registerAction(values: z.infer<typeof UserSchema.Create>):
 
     const data: APIResponse<TRegisterResponse> = await response.json()
 
-    if (!response.ok) {
-      return {
-        status: data.status,
-        message: data?.message || "Failed to register user"
-      }
-    }
+    if (!response.ok) return actionResponse("Failed to register user", data.status)
 
     if (data?.data?.token) {
       const cookiesStore = cookies()
@@ -73,14 +72,11 @@ export async function registerAction(values: z.infer<typeof UserSchema.Create>):
 
     return data
   } catch (error) {
-    return {
-      status: 500,
-      message: "Failed to register user"
-    }
+    return actionResponse("Failed to register user", 500)
   }
 }
 
-export async function loginAction(values: z.infer<typeof UserSchema.Login>): TLoginReturn {
+export async function loginAction(values: z.infer<typeof UserSchema.Login>): Promise<TLoginReturn> {
   try {
     const response = await fetch(`${API_URL}/login`, {
       method: "POST",
@@ -93,12 +89,7 @@ export async function loginAction(values: z.infer<typeof UserSchema.Login>): TLo
 
     const data: APIResponse<TLoginResponse> = await response.json()
 
-    if (!response.ok) {
-      return {
-        status: data.status,
-        message: data?.message || "Failed to login"
-      }
-    }
+    if (!response.ok) actionResponse("Failed to login", data.status)
 
     if (data?.data?.token) {
       const cookiesStore = cookies()
@@ -111,9 +102,64 @@ export async function loginAction(values: z.infer<typeof UserSchema.Login>): TLo
 
     return data
   } catch (error) {
-    return {
-      status: 500,
-      message: "Failed to login-"
-    }
+    return actionResponse("Failed to login", 500)
+  }
+}
+
+export async function logoutAction() {
+  const cookiesStore = cookies()
+  const cookie = (await cookiesStore).delete(AUTH_COOKIE_NAME)
+  return {
+    status: 200,
+    message: "تم تسجيل الخروج بنجاح"
+  }
+}
+
+export async function changePersonalInformationAction(values: z.infer<typeof UserSchema.Update>) {
+  const token = await getAuthorizationToken()
+
+  try {
+    const response = await fetch(`${API_URL}/update/profile`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        name: values.name,
+        email: values.email
+      }),
+      headers: defaultHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    })
+
+    const data: APIResponse<User> = await response.json()
+
+    console.dir(data, { depth: null })
+
+    if (!response.ok) return actionResponse("Failed to update user", data.status)
+
+    return data
+  } catch (error) {
+    return actionResponse("Failed to update user", 500)
+  }
+}
+
+export async function changePasswordAction(values: z.infer<typeof UserSchema.Password>) {
+  const token = await getAuthorizationToken()
+  try {
+    const response = await fetch(`${API_URL}/update/password`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        current_password: values.current_password,
+        new_password: values.new_password,
+        new_password_confirmation: values.new_password_confirmation
+      }),
+      headers: defaultHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    })
+    const data: APIResponse<User> = await response.json()
+    if (!response.ok) return actionResponse("Failed to update password", data.status)
+    return data
+  } catch (error) {
+    return actionResponse("Failed to update password", 500)
   }
 }

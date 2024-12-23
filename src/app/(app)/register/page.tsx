@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description: "تسجيل حساب جديد"
 }
 
+export const dynamic = "force-dynamic"
+
 export default function RegisterPage() {
   return (
     <div className="min-h-screen bg-background text-foreground p-2">

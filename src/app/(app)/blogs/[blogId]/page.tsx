@@ -1,13 +1,15 @@
-import Image from "next/image"
-
 import { getBlog } from "@/actions/blogs"
 import { notFound } from "next/navigation"
+
+import moment from "moment"
 
 type Props = {
   params: Promise<{
     blogId: string
   }>
 }
+
+export const dynamic = "force-dynamic"
 
 export default async function BlogIdPage({ params }: Props) {
   const blogId = +(await params).blogId
@@ -22,7 +24,9 @@ export default async function BlogIdPage({ params }: Props) {
           <h1 className="text-4xl font-bold mb-2">{blog.blog.title}</h1>
           <p className="text-xl text-muted-foreground mb-4">{blog.blog.short_text}</p>
           <div className="flex items-center justify-between text-muted-foreground">
-            <time dateTime="2023-05-15">May 15, 2023</time>
+            <p>
+              <bdi>{moment(blog.blog.created_at).fromNow()}</bdi>
+            </p>
           </div>
         </header>
 

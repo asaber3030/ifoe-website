@@ -48,6 +48,16 @@ export const UserSidebar = () => {
               </li>
               <li>
                 <Link
+                  href="/blogs"
+                  className={`block ${
+                    isActive("/blogs") ? "text-blue-500" : "hover:text-gray-400"
+                  }`}
+                >
+                  المقالات
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/about"
                   className={`block ${
                     isActive("/about") ? "text-blue-500" : "hover:text-gray-400"
@@ -58,9 +68,9 @@ export const UserSidebar = () => {
               </li>
               <li>
                 <Link
-                  href="/services"
+                  href="/franchises"
                   className={`block ${
-                    isActive("/services") ? "text-blue-500" : "hover:text-gray-400"
+                    isActive("/franchises") ? "text-blue-500" : "hover:text-gray-400"
                   }`}
                 >
                   الامتيازات

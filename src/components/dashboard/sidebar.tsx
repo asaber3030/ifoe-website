@@ -20,7 +20,7 @@ export function DashboardSidebar() {
             return (
               <li
                 key={href}
-                className={`p-2 rounded-lg ${
+                className={`p-1.5 rounded-lg text-sm ${
                   isActive(href) ? "bg-[#e9e9e9] text-blue-700" : "text-gray-600"
                 }`}
               >

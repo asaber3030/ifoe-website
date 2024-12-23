@@ -1,9 +1,12 @@
-import { BlogPost } from "@/components/app/blogs/single-blog"
+import { getBlogs } from "@/actions/blogs"
+
 import { type Metadata } from "next"
 
-import { getBlogs } from "@/actions/blogs"
 import { PaginateData } from "@/components/dashboard/pagination"
+import { BlogPost } from "@/components/app/blogs/single-blog"
 import { EmptyState } from "@/components/app/empty-state"
+
+export const dynamic = "force-dynamic"
 
 export const metadata: Metadata = {
   title: "المقالات",

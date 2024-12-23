@@ -1,26 +1,37 @@
 "use client"
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { useMutation } from "@tanstack/react-query"
+import { useUser } from "@/hooks/use-user"
+import { useForm } from "react-hook-form"
+
+import { changePasswordAction } from "@/actions/auth"
+import { showResponse } from "@/lib/utils"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { LoadingButton } from "@/components/common/loading-button"
+import { UserSchema } from "@/lib/schema"
+import { InputField } from "@/components/common/input-field"
+import { Form } from "@/components/ui/form"
 
 export function PasswordUpdateForm() {
-  const [formData, setFormData] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: ""
+  const form = useForm({
+    resolver: zodResolver(UserSchema.Password),
+    defaultValues: {
+      current_password: "",
+      new_password: "",
+      new_password_confirmation: ""
+    }
   })
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+  const mutation = useMutation({
+    mutationFn: (data: z.infer<typeof UserSchema.Password>) => changePasswordAction(data),
+    onSuccess: (data) => showResponse(data)
+  })
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission (e.g., API call to update password)
-    console.log("Submitting password update:", formData)
+  const handleSubmit = () => {
+    mutation.mutate(form.getValues())
   }
 
   return (
@@ -28,46 +39,35 @@ export function PasswordUpdateForm() {
       <CardHeader>
         <CardTitle>تغيير كلمة المرور</CardTitle>
       </CardHeader>
-      <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="currentPassword">كلمة المرور الحالية</Label>
-            <Input
-              id="currentPassword"
-              name="currentPassword"
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleSubmit)}>
+          <CardContent className="space-y-4">
+            <InputField
+              label="كلمة المرور الحالية"
+              name="current_password"
               type="password"
-              value={formData.currentPassword}
-              onChange={handleChange}
-              required
+              control={form.control}
             />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="newPassword">كلمة المرور الجديدة</Label>
-            <Input
-              id="newPassword"
-              name="newPassword"
+            <InputField
+              label="كلمة المرور الجديدة"
+              name="new_password"
               type="password"
-              value={formData.newPassword}
-              onChange={handleChange}
-              required
+              control={form.control}
             />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="confirmPassword">تأكيد كلمة المرور</Label>
-            <Input
-              id="confirmPassword"
-              name="confirmPassword"
+            <InputField
+              label="تأكيد كلمة المرور"
+              name="new_password_confirmation"
               type="password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
+              control={form.control}
             />
-          </div>
-        </CardContent>
-        <CardFooter>
-          <Button type="submit">حفظ كلمة المرور</Button>
-        </CardFooter>
-      </form>
+          </CardContent>
+          <CardFooter>
+            <LoadingButton loading={mutation.isPending} type="submit">
+              حفظ كلمة المرور
+            </LoadingButton>
+          </CardFooter>
+        </form>
+      </Form>
     </Card>
   )
 }

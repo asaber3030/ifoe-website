@@ -1,20 +1,20 @@
-import Image from "next/image"
 import React from "react"
 
 import { type Metadata } from "next"
 
 import { FrenchiseCard } from "@/components/app/franchises/card"
 import { Button } from "@/components/ui/button"
-
-import { LinkBtn } from "@/components/ui/link-btn"
-import { routes } from "@/lib/routes"
-import { filterFranchises } from "@/actions/franchises"
-
-import { PaginateData } from "@/components/dashboard/pagination"
-import { getCountries } from "@/actions/countries"
-import { getCategories } from "@/actions/categories"
 import { FranchiseFilters } from "@/components/app/franchises/filters"
 import { EmptyState } from "@/components/app/empty-state"
+import { PaginateData } from "@/components/dashboard/pagination"
+import { LastAddedBlog } from "@/components/app/blogs/last-added"
+
+import { filterFranchises } from "@/actions/franchises"
+import { getCategories } from "@/actions/categories"
+import { getCountries } from "@/actions/countries"
+import { getLastAddedBlog } from "@/actions/blogs"
+
+export const dynamic = "force-dynamic"
 
 export const metadata: Metadata = {
   title: "الخدمات",
@@ -37,20 +37,20 @@ export default async function Franchises({ searchParams }: Props) {
   const franchisesPromise = filterFranchises(page, category, country)
   const countriesPromise = getCountries()
   const categoriesPromise = getCategories()
+  const lastAddedBlogPromise = getLastAddedBlog()
 
-  const [franchises, countries, categories] = await Promise.all([
+  const [franchises, countries, categories, lastAddedBlog] = await Promise.all([
     franchisesPromise,
     countriesPromise,
-    categoriesPromise
+    categoriesPromise,
+    lastAddedBlogPromise
   ])
 
   return (
     <main>
       <section
         className="relative md:h-screen h-[600px] bg-cover bg-center"
-        style={{
-          backgroundImage: "url('/bg.jpg')"
-        }}
+        style={{ backgroundImage: "url('/bg.jpg')" }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         <div className="relative z-10 h-full px-14 text-white pt-[150px]">
@@ -66,37 +66,7 @@ export default async function Franchises({ searchParams }: Props) {
         </div>
       </section>
 
-      <div className="grid xl:grid-cols-3 grid-cols-1 gap-10 p-10 xl:px-24">
-        <div className="relative xl:cols-span-1">
-          <Image
-            src={"/bg.jpg"}
-            width={500}
-            height={500}
-            alt={"IMAGE"}
-            className="rounded-md object-cover w-full"
-          />
-        </div>
-        <div className="space-y-6 xl:col-span-2">
-          <h1 className="mb-4">عنوان 1</h1>
-          <p>
-            In this example, btn may be a pre-defined class name in React components while
-            bg-red-500 is a class name defined in Tailwind CSS. The cn function combines these two
-            class names to create the result of btn bg-red-500 class name. In conclusion, you can
-            easily combine React and Tailwind class names using the cn utility function. This method
-            helps to prevent collisions between class names and create more readable and manageable
-            code.
-          </p>
-
-          <div className="flex justify-end gap-2">
-            <Button className="rounded-3xl border-black" variant="outline">
-              عرض التفاصيل
-            </Button>
-            <LinkBtn href={routes.blogs.root} className="rounded-3xl " variant="blue">
-              عرض الكل
-            </LinkBtn>
-          </div>
-        </div>
-      </div>
+      <LastAddedBlog blog={lastAddedBlog} />
 
       <div className="p-10 xl:px-24" id="franchises-id">
         <div>
@@ -125,90 +95,6 @@ export default async function Franchises({ searchParams }: Props) {
           />
         </div>
       </div>
-
-      {/* <div className="p-10 xl:px-24">
-        <h1 className="text-blue-600 my-4 mb-10">الامتيازات</h1>
-
-        <div className="grid xl:grid-cols-3 gap-8 grid-cols-1">
-          <div className="flex items-center p-4 gap-4 border shadow-sm bg-white rounded-md">
-            <div className="size-12 rounded-full bg-blue-200 flex justify-center items-center">
-              <HomeIcon className="size-6 text-blue-600" />
-            </div>
-            <div>
-              <p className="text-blue-600">عنوان 1</p>
-              <p className="text-gray-500">عنوان 1</p>
-            </div>
-          </div>
-
-          <div className="flex items-center p-4 gap-4 border shadow-sm bg-white rounded-md">
-            <div className="size-12 rounded-full bg-blue-200 flex justify-center items-center">
-              <HomeIcon className="size-6 text-blue-600" />
-            </div>
-            <div>
-              <p className="text-blue-600">عنوان 1</p>
-              <p className="text-gray-500">عنوان 1</p>
-            </div>
-          </div>
-
-          <div className="flex items-center p-4 gap-4 border shadow-sm bg-white rounded-md">
-            <div className="size-12 rounded-full bg-blue-200 flex justify-center items-center">
-              <HomeIcon className="size-6 text-blue-600" />
-            </div>
-            <div>
-              <p className="text-blue-600">عنوان 1</p>
-              <p className="text-gray-500">عنوان 1</p>
-            </div>
-          </div>
-
-          <div className="flex items-center p-4 gap-4 border shadow-sm bg-white rounded-md">
-            <div className="size-12 rounded-full bg-blue-200 flex justify-center items-center">
-              <HomeIcon className="size-6 text-blue-600" />
-            </div>
-            <div>
-              <p className="text-blue-600">عنوان 1</p>
-              <p className="text-gray-500">عنوان 1</p>
-            </div>
-          </div>
-
-          <div className="flex items-center p-4 gap-4 border shadow-sm bg-white rounded-md">
-            <div className="size-12 rounded-full bg-blue-200 flex justify-center items-center">
-              <HomeIcon className="size-6 text-blue-600" />
-            </div>
-            <div>
-              <p className="text-blue-600">عنوان 1</p>
-              <p className="text-gray-500">عنوان 1</p>
-            </div>
-          </div>
-
-          <div className="flex items-center p-4 gap-4 border shadow-sm bg-white rounded-md">
-            <div className="size-12 rounded-full bg-blue-200 flex justify-center items-center">
-              <HomeIcon className="size-6 text-blue-600" />
-            </div>
-            <div>
-              <p className="text-blue-600">عنوان 1</p>
-              <p className="text-gray-500">عنوان 1</p>
-            </div>
-          </div>
-        </div>
-      </div> */}
-
-      {/* <div className="p-10 xl:px-24">
-        <h1 className="text-blue-600 my-4 mb-10">شركاء النجاح</h1>
-        <div className="grid xl:grid-cols-6 gap-8 grid-cols-2">
-          <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-          <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-          <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-          <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-          <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-          <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-          <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-          <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-          <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-          <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-          <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-          <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-        </div>
-      </div> */}
 
       <div className="m-10 xl:mx-24 bg-blue-600 rounded-[100px] grid xl:grid-cols-3 justify-between items-center xl:p-20 p-10 gap-20">
         <div className="xl:col-span-2">

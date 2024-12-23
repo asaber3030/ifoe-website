@@ -54,7 +54,7 @@ export type Role = {
 export type FranchiseImage = {
   id: number
   franchise_id: number
-  image_url: number
+  image_url: string
 }
 
 export type SpaceRequired = {

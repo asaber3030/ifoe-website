@@ -3,7 +3,7 @@
 import { API_URL } from "@/lib/constants"
 
 import { FranchiseSchema } from "@/lib/schema"
-import { APIResponse, Franchise, PaginatedData } from "@/types"
+import { APIResponse, Franchise, FranchiseImage, PaginatedData } from "@/types"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 import { v4 as uuid } from "uuid"
 import { storage } from "@/services/firebase"
@@ -19,38 +19,37 @@ export async function filterFranchises(
   page?: string,
   category?: string,
   country?: string
-): Promise<PaginatedData<Franchise[]> | undefined> {
-  try {
-    const params = build({
-      page,
-      category,
-      country
-    })
-    console.log({ params })
-    const res = await fetch(`${API_URL}/franchises-filter?${params}`)
-    const data: APIResponse<PaginatedData<Franchise[]>> = await res.json()
-    return data.data
-  } catch (error) {
-    return undefined
-  }
+): Promise<PaginatedData<Franchise[]>> {
+  const params = build({
+    page,
+    category,
+    country
+  })
+  console.log({ params })
+  const res = await fetch(`${API_URL}/franchises-filter?${params}`)
+  const data: APIResponse<PaginatedData<Franchise[]>> = await res.json()
+  return data.data
 }
 
-export async function getFranchises(): Promise<PaginatedData<Franchise[]> | undefined> {
-  try {
-    const res = await fetch(`${API_URL}/franchises`)
-    const data: APIResponse<PaginatedData<Franchise[]>> = await res.json()
-    return data.data
-  } catch (error) {
-    return undefined
-  }
+export async function getFranchises(): Promise<PaginatedData<Franchise[]>> {
+  const res = await fetch(`${API_URL}/franchises`)
+  const data: APIResponse<PaginatedData<Franchise[]>> = await res.json()
+  return data.data
 }
 
 export async function getFranchise(franchiseId: number) {
-  const res = await fetch(`${API_URL}/franchises/${franchiseId}`)
-  const data: APIResponse<Franchise> = await res.json()
-  return {
-    franchise: data.data,
-    status: res.status
+  try {
+    const res = await fetch(`${API_URL}/franchises/${franchiseId}`)
+    const data: APIResponse<Franchise> = await res.json()
+    return {
+      franchise: data.data,
+      status: res.status
+    }
+  } catch (error) {
+    return {
+      franchise: null,
+      status: 500
+    }
   }
 }
 
@@ -132,6 +131,85 @@ export async function deleteFranchiseAction(franchiseId: number) {
       })
     })
     revalidatePath(adminRoutes.franchises.root)
+    const data = await res.json()
+    return data
+  } catch (error) {
+    return actionResponse("حدث خطأ ما", 500)
+  }
+}
+
+export async function getFranchiseImages(franchiseId: number): Promise<FranchiseImage[]> {
+  try {
+    const res = await fetch(`${API_URL}/franchises/${franchiseId}/images`)
+    const data: APIResponse<FranchiseImage[]> = await res.json()
+    return data.data
+  } catch (error) {
+    return []
+  }
+}
+
+export async function createFranchiseImageAction(franchiseId: number, file: File | null) {
+  try {
+    const storageRef = ref(storage, `franchises/${uuid()}`)
+    const uploaded = await uploadBytes(storageRef, file as any)
+    const imageUrl = await getDownloadURL(storageRef)
+
+    const token = await getAuthorizationToken()
+    const res = await fetch(`${API_URL}/franchise-images`, {
+      method: "POST",
+      body: JSON.stringify({
+        image_url: imageUrl,
+        franchise_id: franchiseId
+      }),
+      headers: defaultHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    })
+    revalidatePath(adminRoutes.franchises.images(franchiseId))
+    const data = await res.json()
+    return data
+  } catch (error) {
+    return actionResponse("حدث خطأ ما", 500)
+  }
+}
+
+export async function updateFranchiseImageAction(
+  franchiseId: number,
+  imageId: number,
+  file: File | null
+) {
+  try {
+    const storageRef = ref(storage, `franchises/${uuid()}`)
+    const uploaded = await uploadBytes(storageRef, file as any)
+    const imageUrl = await getDownloadURL(storageRef)
+
+    const token = await getAuthorizationToken()
+    const res = await fetch(`${API_URL}/franchises/${franchiseId}/images/${imageId}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        image_url: imageUrl
+      }),
+      headers: defaultHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    })
+    revalidatePath(adminRoutes.franchises.images(franchiseId))
+    const data = await res.json()
+    return data
+  } catch (error) {
+    return actionResponse("حدث خطأ ما", 500)
+  }
+}
+
+export async function deleteFranchiseImageAction(imageId: number) {
+  try {
+    const token = await getAuthorizationToken()
+    const res = await fetch(`${API_URL}/franchise-images/${imageId}`, {
+      method: "DELETE",
+      headers: defaultHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    })
     const data = await res.json()
     return data
   } catch (error) {

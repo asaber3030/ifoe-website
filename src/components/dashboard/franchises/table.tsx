@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table"
 import { Pagination } from "@/components/app/pagination"
 import { Button } from "@/components/ui/button"
-import { Edit, Eye, Trash } from "lucide-react"
+import { Edit, Eye, ImageIcon, Trash } from "lucide-react"
 import { Franchise } from "@/types"
 import { LinkBtn } from "@/components/ui/link-btn"
 import { adminRoutes } from "@/lib/routes"
@@ -46,6 +46,9 @@ export function FranchisesTable({ franchises }: { franchises: Franchise[] }) {
                 />
               </TableCell>
               <TableCell className="flex gap-2">
+                <LinkBtn href={adminRoutes.franchises.images(fr.id)} variant="outline" size="icon">
+                  <ImageIcon size={16} />
+                </LinkBtn>
                 <LinkBtn
                   href={adminRoutes.franchises.requests(fr.id)}
                   variant="outline"

@@ -1,27 +1,38 @@
 "use client"
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { useUser } from "@/hooks/use-user"
+import { useForm } from "react-hook-form"
+import { useMutation } from "@tanstack/react-query"
+
+import { changePersonalInformationAction } from "@/actions/auth"
+import { showResponse } from "@/lib/utils"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+
+import { UserSchema } from "@/lib/schema"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { InputField } from "@/components/common/input-field"
+import { LoadingButton } from "@/components/common/loading-button"
+import { Form } from "@/components/ui/form"
 
 export function PersonalInfoForm() {
   const user = useUser()
 
-  const [formData, setFormData] = useState({
-    name: user?.name,
-    email: user?.email
+  const form = useForm({
+    resolver: zodResolver(UserSchema.Update),
+    defaultValues: {
+      name: user?.name,
+      email: user?.email
+    }
   })
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+  const mutation = useMutation({
+    mutationFn: (data: z.infer<typeof UserSchema.Update>) => changePersonalInformationAction(data),
+    onSuccess: (data) => showResponse(data)
+  })
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("Submitting personal info:", formData)
+  const handleSubmit = () => {
+    mutation.mutate(form.getValues())
   }
 
   return (
@@ -29,36 +40,24 @@ export function PersonalInfoForm() {
       <CardHeader>
         <CardTitle>البيانات الشخصية</CardTitle>
       </CardHeader>
-      <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="name">الاسم</Label>
-            <Input
-              id="name"
-              name="name"
-              type="text"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="email">البريد الالكتروني</Label>
-            <Input
-              id="email"
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleSubmit)}>
+          <CardContent className="space-y-4">
+            <InputField label="الاسم" name="name" type="text" control={form.control} />
+            <InputField
+              label="البريد الالكتروني"
               name="email"
               type="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
+              control={form.control}
             />
-          </div>
-        </CardContent>
-        <CardFooter>
-          <Button type="submit">تعديل البيانات الشخصيه</Button>
-        </CardFooter>
-      </form>
+          </CardContent>
+          <CardFooter>
+            <LoadingButton loading={mutation.isPending} type="submit">
+              تعديل البيانات الشخصيه
+            </LoadingButton>
+          </CardFooter>
+        </form>
+      </Form>
     </Card>
   )
 }

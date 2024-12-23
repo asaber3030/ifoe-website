@@ -22,6 +22,7 @@ export const adminRoutes = {
     create: `/admin/franchises/create`,
     update: (id: number) => `/admin/franchises/${id}/update`,
     requests: (id: number) => `/admin/franchises/${id}/requests`,
+    images: (id: number) => `/admin/franchises/${id}/images`,
     viewRequest: (id: number, requestId: number) => `/admin/franchises/${id}/requests/${requestId}`,
     view: (id: number) => `/admin/franchises/${id}`
   },
@@ -94,5 +95,10 @@ export const routes = {
   partners: {
     root: `/partners`,
     view: (id: number) => `/partners/${id}`
+  },
+  profile: {
+    root: `/profile`,
+    changePassword: `/profile/password`,
+    franchises: `/profile/franchises`
   }
 }

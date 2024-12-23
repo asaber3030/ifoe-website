@@ -88,7 +88,12 @@ export const NewFranchiseRequestForm = ({ countries, types, franchiseId }: Props
             ))}
           </SelectField>
 
-          <SelectField valueAsNumber name="franchise_type_id" control={form.control} label="الدولة">
+          <SelectField
+            valueAsNumber
+            name="franchise_type_id"
+            control={form.control}
+            label="نوع الامتياز"
+          >
             {types.map((type) => (
               <SelectItem key={`type-${type.id}`} value={type.id.toString()}>
                 {type.franchise_type}

@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
 import { LoadingButton } from "@/components/common/loading-button"
-import { FranchiesCharacteristicsSchema } from "@/lib/schema"
+import { UserSchema } from "@/lib/schema"
 import { InputField } from "@/components/common/input-field"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
@@ -23,28 +23,35 @@ import {
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/dialog"
-import { createFranchiesCharacteristicAction } from "@/actions/franchies-characteristics"
+import { createUserAction } from "@/actions/users"
+import { Role } from "@/types"
+import { SelectField } from "@/components/common/select-field"
+import { SelectItem } from "@/components/ui/select"
 
-export const CreateFranchiesCharacteristicModal = () => {
+export const CreateUserModal = ({ roles }: { roles: Role[] }) => {
   const [open, setOpen] = useState(false)
 
   const form = useForm({
-    resolver: zodResolver(FranchiesCharacteristicsSchema.Create),
+    resolver: zodResolver(UserSchema.CreateAdmin),
     defaultValues: {
-      franchiseFees: "",
-      royaltyFees: "",
-      marketingFees: "",
-      investmentsCost: ""
+      name: "",
+      email: "",
+      password: "",
+      role_id: 0
     }
   })
 
   const createMutation = useMutation({
-    mutationFn: ({ data }: { data: z.infer<typeof FranchiesCharacteristicsSchema.Create> }) =>
-      createFranchiesCharacteristicAction(data),
+    mutationFn: ({ data }: { data: z.infer<typeof UserSchema.CreateAdmin> }) =>
+      createUserAction(data),
     onSuccess: (data) => {
       showResponse(data, () => {
-        setOpen(false)
+        if (data.status == 201 || data.status == 200) {
+          setOpen(false)
+          form.reset()
+        }
       })
+      console.log(data)
     }
   })
 
@@ -59,21 +66,33 @@ export const CreateFranchiesCharacteristicModal = () => {
       <DialogTrigger asChild>
         <Button variant="blue">
           <Plus className="size-4" />
-          انشاء خصائص الخدمة
+          انشاء مستخدم
         </Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>انشاء خصائص الخدمة</DialogTitle>
+          <DialogTitle>انشاء مستخدم</DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-            <InputField name="franchiseFees" label="تكلفة الامتياز" control={form.control} />
-            <InputField name="royaltyFees" label="تكلفة الامتلاك" control={form.control} />
-            <InputField name="marketingFees" label="تكلفة التسويق" control={form.control} />
-            <InputField name="investmentsCost" label="تكلفة الاستثمار" control={form.control} />
+            <SelectField valueAsNumber name="role_id" label="الدور" control={form.control}>
+              {roles?.map((role) => (
+                <SelectItem key={`role-${role.id}`} value={role.id.toString()}>
+                  {role.name}
+                </SelectItem>
+              ))}
+            </SelectField>
+
+            <InputField name="name" label="الاسم" control={form.control} />
+            <InputField name="email" label="البريد الالكتروني" control={form.control} />
+            <InputField
+              name="password"
+              label="كلمة المرور"
+              type="password"
+              control={form.control}
+            />
 
             <DialogFooter>
               <DialogClose asChild>

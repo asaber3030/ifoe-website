@@ -2,34 +2,36 @@
 
 import { APIResponse, Blog, PaginatedData } from "@/types"
 import { BlogSchema } from "@/lib/schema"
-
 import { API_URL } from "@/lib/constants"
 
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
+import { actionResponse, defaultHeaders } from "@/lib/utils"
+import { getAuthorizationToken } from "./app"
 import { revalidatePath } from "next/cache"
 import { adminRoutes } from "@/lib/routes"
 import { v4 as uuid } from "uuid"
 import { storage } from "@/services/firebase"
 import { z } from "zod"
-import { getAuthorizationToken } from "./app"
-import { actionResponse, defaultHeaders } from "@/lib/utils"
 
-export async function getBlogs(page?: number): Promise<PaginatedData<Blog[]> | undefined> {
-  try {
-    const res = await fetch(`${API_URL}/blogs` + (page && page > 0 ? `?page=${page}` : ""))
-    const data: APIResponse<PaginatedData<Blog[]>> = await res.json()
-    return data.data
-  } catch (error) {
-    return undefined
-  }
+export async function getBlogs(page?: number): Promise<PaginatedData<Blog[]>> {
+  const url = `${API_URL}/blogs` + (page && page > 0 ? `?page=${page}` : "")
+  const res = await fetch(url)
+  const data: APIResponse<PaginatedData<Blog[]>> = await res.json()
+  return data?.data
 }
 
 export async function getBlog(blogId: number) {
   const res = await fetch(`${API_URL}/blogs/${blogId}`)
   const data: APIResponse<Blog> = await res.json()
   return {
-    blog: data.data
+    blog: data?.data
   }
+}
+
+export async function getLastAddedBlog() {
+  const res = await fetch(`${API_URL}/blogs/last-added`)
+  const data: APIResponse<Blog | undefined> = await res.json()
+  return data.data
 }
 
 export async function createBlogAction(

@@ -21,7 +21,7 @@ export default async function NewFranchiseRequest({ params }: Props) {
   if (isNaN(franchiseId) || !franchise) notFound()
 
   return (
-    <div className="grid xl:grid-cols-7 grid-cols-1 gap-4 mx-auto container mt-10">
+    <div className="grid xl:grid-cols-7 grid-cols-1 gap-4 mx-auto container mt-10 pb-10">
       <div className="col-span-5">
         <h1 className="text-2xl font-bold mb-4">ارسال طلب امتياز جديد - {franchise.name}</h1>
         <NewFranchiseRequestForm franchiseId={franchiseId} countries={countries} types={types} />

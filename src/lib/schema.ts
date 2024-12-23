@@ -15,6 +15,42 @@ export const UserSchema = {
       .min(8, { message: "كلمة السر يجب ان تكون 8 احرف على الاقل" }),
     remember: z.boolean().optional()
   }),
+  CreateAdmin: z.object({
+    name: z
+      .string({ message: "هذا المدخل يجب ان يكون حروف" })
+      .nonempty({ message: "لا يمكن اهمال هذا المدخل" }),
+    email: z
+      .string()
+      .nonempty({ message: "لا يمكن اهمال هذا المدخل" })
+      .email({ message: "البريد الالكتروني غير صحيح" }),
+    password: z
+      .string()
+      .nonempty({ message: "لا يمكن اهمال هذا المدخل" })
+      .min(8, { message: "كلمة السر يجب ان تكون 8 احرف على الاقل" }),
+    role_id: z
+      .number({ message: "هذا المدخل يجب ان يكون ارقام" })
+      .min(0, { message: "لا يمكن اهمال هذا المدخل" })
+  }),
+  UpdateAdmin: z.object({
+    name: z
+      .string({ message: "هذا المدخل يجب ان يكون حروف" })
+      .nonempty({ message: "لا يمكن اهمال هذا المدخل" })
+      .optional(),
+    email: z
+      .string()
+      .nonempty({ message: "لا يمكن اهمال هذا المدخل" })
+      .email({ message: "البريد الالكتروني غير صحيح" })
+      .optional(),
+    password: z
+      .string()
+      .nonempty({ message: "لا يمكن اهمال هذا المدخل" })
+      .min(8, { message: "كلمة السر يجب ان تكون 8 احرف على الاقل" })
+      .optional(),
+    role_id: z
+      .number({ message: "هذا المدخل يجب ان يكون ارقام" })
+      .min(0, { message: "لا يمكن اهمال هذا المدخل" })
+      .optional()
+  }),
   Login: z.object({
     email: z
       .string()
@@ -35,12 +71,20 @@ export const UserSchema = {
       .string()
       .nonempty({ message: "لا يمكن اهمال هذا المدخل" })
       .email({ message: "البريد الالكتروني غير صحيح" })
-      .optional(),
-    password: z
+      .optional()
+  }),
+  Password: z.object({
+    current_password: z
+      .string({ message: "هذا المدخل يجب ان يكون حروف وارقام" })
+      .nonempty({ message: "لا يمكن اهمال هذا المدخل" }),
+    new_password: z
+      .string()
+      .nonempty({ message: "لا يمكن اهمال هذا المدخل" })
+      .min(8, { message: "كلمة السر يجب ان تكون 8 احرف على الاقل" }),
+    new_password_confirmation: z
       .string()
       .nonempty({ message: "لا يمكن اهمال هذا المدخل" })
       .min(8, { message: "كلمة السر يجب ان تكون 8 احرف على الاقل" })
-      .optional()
   })
 }
 
@@ -245,3 +289,14 @@ export const RequestHistorySchema = {
     remarks: z.string().min(1, "Notes are required").optional()
   })
 }
+
+export const ContactSchema = z.object({
+  firstName: z.string().nonempty({ message: "لا يمكن اهمال هذا المدخل" }),
+  lastName: z.string().nonempty({ message: "لا يمكن اهمال هذا المدخل" }),
+  email: z
+    .string()
+    .nonempty({ message: "لا يمكن اهمال هذا المدخل" })
+    .email({ message: "البريد الالكتروني غير صحيح" }),
+  message: z.string().nonempty({ message: "لا يمكن اهمال هذا المدخل" }),
+  subject: z.string().nonempty({ message: "لا يمكن اهمال هذا المدخل" })
+})

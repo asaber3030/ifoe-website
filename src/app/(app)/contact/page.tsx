@@ -3,6 +3,7 @@ import { FaEnvelope } from "react-icons/fa"
 import { FaMapPin } from "react-icons/fa"
 
 import { type Metadata } from "next"
+import { ContactForm } from "@/components/app/contact/form"
 
 export const metadata: Metadata = {
   title: "تواصل معنا",
@@ -56,48 +57,9 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* Form and Map Section */}
         <section className="py-12">
           <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Form */}
-            <div className="bg-gray-50 p-8 rounded-lg shadow-md">
-              <h2 className="text-2xl font-bold mb-6">راسلنا و سنتواصل معك في أقرب وقت</h2>
-              <form className="mt-auto">
-                <div className="mb-4">
-                  <input
-                    type="text"
-                    placeholder="الاسم"
-                    className="w-full p-3 border border-gray-300 rounded-lg"
-                  />
-                </div>
-                <div className="mb-4">
-                  <input
-                    type="text"
-                    placeholder="رقم الهاتف"
-                    className="w-full p-3 border border-gray-300 rounded-lg"
-                  />
-                </div>
-                <div className="mb-4">
-                  <input
-                    type="email"
-                    placeholder="البريد الإلكتروني"
-                    className="w-full p-3 border border-gray-300 rounded-lg"
-                  />
-                </div>
-                <div className="mb-4">
-                  <textarea
-                    placeholder="رسالتك"
-                    className="w-full p-3 border border-gray-300 rounded-lg"
-                  ></textarea>
-                </div>
-                <button
-                  type="submit"
-                  className="bg-blue-600 hover:bg-red-600 text-white py-3 px-6 rounded-lg w-full"
-                >
-                  إرسال
-                </button>
-              </form>
-            </div>
+            <ContactForm />
 
             <div className="rounded-lg overflow-hidden shadow-md">
               <iframe

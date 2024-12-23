@@ -77,10 +77,10 @@ export const UpdateFranchiseCharacteristicsModal = ({
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-            <InputField name="franchiseFees" label="_franchiesFees" control={form.control} />
-            <InputField name="royaltyFees" label="_royaltyFees" control={form.control} />
-            <InputField name="marketingFees" label="_marketingFees" control={form.control} />
-            <InputField name="investmentsCost" label="_investmentsCost" control={form.control} />
+            <InputField name="franchiseFees" label="تكلفة الامتياز" control={form.control} />
+            <InputField name="royaltyFees" label="تكلفة الامتلاك" control={form.control} />
+            <InputField name="marketingFees" label="تكلفة التسويق" control={form.control} />
+            <InputField name="investmentsCost" label="تكلفة الاستثمار" control={form.control} />
 
             <DialogFooter>
               <DialogClose asChild>

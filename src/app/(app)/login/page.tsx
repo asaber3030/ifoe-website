@@ -1,6 +1,8 @@
 import { LoginForm } from "@/components/app/auth/login-form"
 import { type Metadata } from "next"
 
+export const dynamic = "force-dynamic"
+
 export const metadata: Metadata = {
   title: "تسجيل الدخول الى حسابك",
   description: "تسجيل الدخول الى حسابك"

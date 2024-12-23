@@ -1,6 +1,7 @@
 import { getCurrentUserFranchiseRequest, getFranchiseRequest } from "@/actions/franchise-requests"
 import { FranchiseRequestsTableProfile } from "@/components/app/profile/requests-table"
-import { PersonalInfoForm } from "@/components/app/profile/update-info"
+
+export const dynamic = "force-dynamic"
 
 const ProfilePage = async () => {
   const requests = await getCurrentUserFranchiseRequest()

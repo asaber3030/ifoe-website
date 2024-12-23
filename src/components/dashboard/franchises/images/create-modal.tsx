@@ -4,16 +4,19 @@ import { useMutation } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import { useState } from "react"
 
-import { showResponse } from "@/lib/utils"
+import { showResponse, validateFile } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { toast } from "react-toastify"
+import { createPartnerAction } from "@/actions/partners"
 import { z } from "zod"
 
 import { LoadingButton } from "@/components/common/loading-button"
-import { FranchiesCharacteristicsSchema } from "@/lib/schema"
+import { PartnerSchema } from "@/lib/schema"
 import { InputField } from "@/components/common/input-field"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { Plus } from "lucide-react"
+import { FileField } from "@/components/common/file-field"
 import {
   Dialog,
   DialogClose,
@@ -23,35 +26,35 @@ import {
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/dialog"
-import { createFranchiesCharacteristicAction } from "@/actions/franchies-characteristics"
+import { createFranchiseImageAction } from "@/actions/franchises"
 
-export const CreateFranchiesCharacteristicModal = () => {
+type TMutation = {
+  file: File | null
+}
+
+export const CreateFranchiseImageModal = ({ franchiseId }: { franchiseId: number }) => {
   const [open, setOpen] = useState(false)
+  const [file, setFile] = useState<File | null>(null)
 
-  const form = useForm({
-    resolver: zodResolver(FranchiesCharacteristicsSchema.Create),
-    defaultValues: {
-      franchiseFees: "",
-      royaltyFees: "",
-      marketingFees: "",
-      investmentsCost: ""
-    }
-  })
+  const form = useForm()
 
   const createMutation = useMutation({
-    mutationFn: ({ data }: { data: z.infer<typeof FranchiesCharacteristicsSchema.Create> }) =>
-      createFranchiesCharacteristicAction(data),
-    onSuccess: (data) => {
+    mutationFn: ({ file }: TMutation) => createFranchiseImageAction(franchiseId, file),
+    onSuccess: (data) =>
       showResponse(data, () => {
         setOpen(false)
+        form.reset()
+        setFile(null)
       })
-    }
   })
 
   const handleSubmit = () => {
-    createMutation.mutate({
-      data: form.getValues()
-    })
+    const validation = validateFile(file)
+    if (validation.error) {
+      toast.error(validation.message)
+      return
+    }
+    createMutation.mutate({ file })
   }
 
   return (
@@ -59,21 +62,18 @@ export const CreateFranchiesCharacteristicModal = () => {
       <DialogTrigger asChild>
         <Button variant="blue">
           <Plus className="size-4" />
-          انشاء خصائص الخدمة
+          انشاء صورة جديدة
         </Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>انشاء خصائص الخدمة</DialogTitle>
+          <DialogTitle>انشاء صورة </DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-            <InputField name="franchiseFees" label="تكلفة الامتياز" control={form.control} />
-            <InputField name="royaltyFees" label="تكلفة الامتلاك" control={form.control} />
-            <InputField name="marketingFees" label="تكلفة التسويق" control={form.control} />
-            <InputField name="investmentsCost" label="تكلفة الاستثمار" control={form.control} />
+            <FileField label="الصورة" onChange={setFile} />
 
             <DialogFooter>
               <DialogClose asChild>

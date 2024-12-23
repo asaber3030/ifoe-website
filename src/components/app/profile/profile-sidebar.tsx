@@ -2,12 +2,16 @@
 
 import Link from "next/link"
 
-import { usePathname } from "next/navigation"
-
-import { User, Key, Building } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
+import { usePathname, useRouter } from "next/navigation"
+import { useMutation } from "@tanstack/react-query"
 import { useUser } from "@/hooks/use-user"
+
+import { logoutAction } from "@/actions/auth"
+import { toast } from "react-toastify"
+
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { User, Key, Building } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 const menuItems = [
   { icon: User, label: "المعلومات الشخصية", href: "/profile" },
@@ -18,10 +22,23 @@ const menuItems = [
 export const ProfileSidebar = () => {
   const pathname = usePathname()
   const user = useUser()
+  const router = useRouter()
+
+  const logoutMutation = useMutation({
+    mutationFn: () => logoutAction(),
+    onSuccess: (data) => {
+      router.push("/")
+      toast.success(data.message)
+    }
+  })
+
+  const handleLogout = () => {
+    logoutMutation.mutate()
+  }
 
   return (
     <aside>
-      <div className="flex flex-col h-full bg-gray-100 rounded-md shadow-md">
+      <div className="flex flex-col h-full bg-gray-100 rounded-md shadow-md overflow-hidden">
         <div className="border-b border-border px-4 py-6">
           <div className="flex items-center gap-4">
             <Avatar className="h-12 w-12">
@@ -56,7 +73,7 @@ export const ProfileSidebar = () => {
           </ul>
         </nav>
         <div className="border-t border-border p-4">
-          <Button variant="outlineDestructive" className="w-full">
+          <Button onClick={handleLogout} variant="outlineDestructive" className="w-full">
             تسجيل الخروج
           </Button>
         </div>
