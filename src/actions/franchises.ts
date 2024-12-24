@@ -20,15 +20,18 @@ export async function filterFranchises(
   category?: string,
   country?: string
 ): Promise<PaginatedData<Franchise[]>> {
-  const params = build({
-    page,
-    category,
-    country
-  })
-  console.log({ params })
-  const res = await fetch(`${API_URL}/franchises-filter?${params}`)
-  const data: APIResponse<PaginatedData<Franchise[]>> = await res.json()
-  return data.data
+  try {
+    const params = build({
+      page,
+      category,
+      country
+    })
+    const res = await fetch(`${API_URL}/franchises-filter?${params}`)
+    const data: APIResponse<PaginatedData<Franchise[]>> = await res.json()
+    return data.data
+  } catch (error) {
+    return []
+  }
 }
 
 export async function getFranchises(): Promise<PaginatedData<Franchise[]>> {

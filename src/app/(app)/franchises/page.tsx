@@ -66,7 +66,7 @@ export default async function Franchises({ searchParams }: Props) {
         </div>
       </section>
 
-      <LastAddedBlog blog={lastAddedBlog} />
+      {lastAddedBlog && <LastAddedBlog blog={lastAddedBlog} />}
 
       <div className="p-10 xl:px-24" id="franchises-id">
         <div>

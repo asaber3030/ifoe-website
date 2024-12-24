@@ -29,9 +29,13 @@ export async function getBlog(blogId: number) {
 }
 
 export async function getLastAddedBlog() {
-  const res = await fetch(`${API_URL}/blogs/last-added`)
-  const data: APIResponse<Blog | undefined> = await res.json()
-  return data.data
+  try {
+    const res = await fetch(`${API_URL}/blogs/last-added`)
+    const data: APIResponse<Blog | undefined> = await res.json()
+    return data.data
+  } catch (error) {
+    return null
+  }
 }
 
 export async function createBlogAction(
