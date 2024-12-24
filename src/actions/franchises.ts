@@ -15,6 +15,8 @@ import { z } from "zod"
 import { getUser } from "./auth"
 import { build } from "search-params"
 
+export async function test() {}
+
 export async function filterFranchises(
   page?: string,
   category?: string,
