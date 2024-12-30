@@ -23,6 +23,11 @@ const nextConfig: NextConfig = {
         hostname: "placehold.co",
         protocol: "https",
         pathname: "**"
+      },
+      {
+        hostname: "example.com",
+        protocol: "https",
+        pathname: "**"
       }
     ]
   }
