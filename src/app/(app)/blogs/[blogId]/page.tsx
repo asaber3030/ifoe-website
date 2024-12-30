@@ -35,7 +35,7 @@ export default async function BlogIdPage({ params }: Props) {
           alt={blog.blog.title}
           width={800}
           height={400}
-          className="w-full h-auto rounded-lg mb-8"
+          className="h-auto rounded-lg mb-8"
         />
 
         <div

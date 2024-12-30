@@ -23,8 +23,6 @@ export const metadata: Metadata = {
 export default async function AboutPage() {
   const partners = await getPartners()
 
-  return <AboutLoading />
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <HeroSection />
