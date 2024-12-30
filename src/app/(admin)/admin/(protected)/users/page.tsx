@@ -1,25 +1,34 @@
-import Link from "next/link"
-
 import { AdminPageTitle } from "@/components/dashboard/title"
+import { PaginateData } from "@/components/dashboard/pagination"
+import { EmptyState } from "@/components/app/empty-state"
 import { UsersTable } from "@/components/dashboard/users/table"
-import { PlusIcon } from "lucide-react"
-import { Button } from "@/components/ui/button"
 
-import { adminRoutes } from "@/lib/routes"
+import { getUsers } from "@/actions/users"
+import { getRoles } from "@/actions/app"
+import { CreateUserModal } from "@/components/dashboard/users/create-modal"
 
-export default function AdminBlogsPage() {
+export default async function AdminBlogsPage() {
+  const users = await getUsers()
+  const roles = await getRoles()
+
   return (
     <div>
       <AdminPageTitle title="المستخدمين">
-        <Link href={adminRoutes.users.create}>
-          <Button variant="blue">
-            <PlusIcon className="size-4" />
-            اضافة مستخدم
-          </Button>
-        </Link>
+        <CreateUserModal roles={roles} />
       </AdminPageTitle>
 
-      <UsersTable />
+      {!users?.data || users?.data?.length === 0 ? (
+        <EmptyState />
+      ) : (
+        <div className="space-y-4">
+          <UsersTable roles={roles} users={users.data} />
+          <PaginateData
+            hasNextPage={!!users.next_page_url}
+            hasPreviousPage={!!users.prev_page_url}
+            links={users.links}
+          />
+        </div>
+      )}
     </div>
   )
 }

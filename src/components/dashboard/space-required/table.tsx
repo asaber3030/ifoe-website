@@ -30,16 +30,13 @@ export function SpaceRequiredsTable({ spaceRequireds }: Props) {
         </TableHeader>
         <TableBody>
           {spaceRequireds.map((sp) => (
-            <TableRow key={`category-row-${sp.spaceRequiredId}`}>
-              <TableCell>{sp.spaceRequiredId}</TableCell>
-              <TableCell>{sp.unit}</TableCell>
+            <TableRow key={`category-row-${sp.id}`}>
+              <TableCell>{sp.id}</TableCell>
+              <TableCell>{sp.unit?.name}</TableCell>
               <TableCell>{sp.value}</TableCell>
               <TableCell className="flex gap-2">
                 <UpdateSpaceRequiredModal spaceRequired={sp} />
-                <DeleteModal
-                  forceAction={deleteSpaceRequiredAction}
-                  deletedId={sp.spaceRequiredId}
-                />
+                <DeleteModal forceAction={deleteSpaceRequiredAction} deletedId={sp.id} />
               </TableCell>
             </TableRow>
           ))}

@@ -23,27 +23,24 @@ export function FranchiseCharacteristicsTable({ franchiseCharacteristics }: Prop
         <TableHeader>
           <TableRow>
             <TableHead>رقم التعريف</TableHead>
-            <TableHead>franchiseFees</TableHead>
-            <TableHead>royaltyFees</TableHead>
-            <TableHead>marketingFees</TableHead>
-            <TableHead>investmentsCost</TableHead>
+            <TableHead>تكلفة الامتياز</TableHead>
+            <TableHead>تكلفة حقوق الملكية</TableHead>
+            <TableHead>تكلفة التسويق</TableHead>
+            <TableHead>تكلفة الاستثمار</TableHead>
             <TableHead>حرر</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {franchiseCharacteristics.map((ch) => (
-            <TableRow key={`category-row-${ch.franchiseCharacteristicsId}`}>
-              <TableCell>{ch.franchiseCharacteristicsId}</TableCell>
-              <TableHead>{ch.franchiseFees}</TableHead>
-              <TableHead>{ch.royaltyFees}</TableHead>
-              <TableHead>{ch.marketingFees}</TableHead>
-              <TableHead>{ch.investmentsCost}</TableHead>
+            <TableRow key={`category-row-${ch.id}`}>
+              <TableCell>{ch.id}</TableCell>
+              <TableHead>{ch.franchise_fees}</TableHead>
+              <TableHead>{ch.royalty_fees}</TableHead>
+              <TableHead>{ch.marketing_fees}</TableHead>
+              <TableHead>{ch.investments_cost}</TableHead>
               <TableCell className="flex gap-2">
                 <UpdateFranchiseCharacteristicsModal franchiesCharacteristic={ch} />
-                <DeleteModal
-                  forceAction={deleteFranchiesCharacteristicAction}
-                  deletedId={ch.franchiseCharacteristicsId}
-                />
+                <DeleteModal forceAction={deleteFranchiesCharacteristicAction} deletedId={ch.id} />
               </TableCell>
             </TableRow>
           ))}

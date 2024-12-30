@@ -37,16 +37,16 @@ export const UpdateFranchiseCharacteristicsModal = ({
   const form = useForm({
     resolver: zodResolver(FranchiesCharacteristicsSchema.Update),
     defaultValues: {
-      franchiseFees: franchiesCharacteristic.franchiseFees,
-      royaltyFees: franchiesCharacteristic.royaltyFees,
-      marketingFees: franchiesCharacteristic.marketingFees,
-      investmentsCost: franchiesCharacteristic.investmentsCost
+      franchiseFees: franchiesCharacteristic.franchise_fees,
+      royaltyFees: franchiesCharacteristic.royalty_fees,
+      marketingFees: franchiesCharacteristic.marketing_fees,
+      investmentsCost: franchiesCharacteristic.investments_cost
     }
   })
 
   const updateMutation = useMutation({
     mutationFn: ({ data }: { data: z.infer<typeof FranchiesCharacteristicsSchema.Update> }) =>
-      updateFranchiesCharacteristicAction(franchiesCharacteristic.franchiseCharacteristicsId, data),
+      updateFranchiesCharacteristicAction(franchiesCharacteristic.id, data),
     onSuccess: (data) =>
       showResponse(data, () => {
         setOpen(false)
@@ -70,17 +70,17 @@ export const UpdateFranchiseCharacteristicsModal = ({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            تعديل الخصائص - <b>#{franchiesCharacteristic.franchiseCharacteristicsId}</b>
+            تعديل الخصائص - <b>#{franchiesCharacteristic.id}</b>
           </DialogTitle>
           <DialogDescription>تعديل الخصائص بالتفاصيل</DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-            <InputField name="franchiseFees" label="_franchiesFees" control={form.control} />
-            <InputField name="royaltyFees" label="_royaltyFees" control={form.control} />
-            <InputField name="marketingFees" label="_marketingFees" control={form.control} />
-            <InputField name="investmentsCost" label="_investmentsCost" control={form.control} />
+            <InputField name="franchiseFees" label="تكلفة الامتياز" control={form.control} />
+            <InputField name="royaltyFees" label="تكلفة الامتلاك" control={form.control} />
+            <InputField name="marketingFees" label="تكلفة التسويق" control={form.control} />
+            <InputField name="investmentsCost" label="تكلفة الاستثمار" control={form.control} />
 
             <DialogFooter>
               <DialogClose asChild>

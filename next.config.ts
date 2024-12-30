@@ -11,6 +11,20 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: "5mb"
     }
+  },
+  images: {
+    remotePatterns: [
+      {
+        hostname: "firebasestorage.googleapis.com",
+        protocol: "https",
+        pathname: "**"
+      },
+      {
+        hostname: "placehold.co",
+        protocol: "https",
+        pathname: "**"
+      }
+    ]
   }
 }
 

@@ -12,7 +12,7 @@ import { z } from "zod"
 import { ContractPeriod } from "@/types"
 import { LoadingButton } from "@/components/common/loading-button"
 import { InputField } from "@/components/common/input-field"
-import { UnitSchema } from "@/lib/schema"
+import { UnitCreateSchema } from "@/lib/schema"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { Edit } from "lucide-react"
@@ -26,6 +26,11 @@ import {
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/dialog"
+import { updateContractPeriodAction } from "@/actions/contract-periods"
+import { useUnits } from "@/hooks/use-units"
+import { SelectItem } from "@/components/ui/select"
+import { SelectField } from "@/components/common/select-field"
+import { Loader } from "lucide-react"
 
 export const UpdateContractPeriodModal = ({
   contractPeriod
@@ -33,18 +38,19 @@ export const UpdateContractPeriodModal = ({
   contractPeriod: ContractPeriod
 }) => {
   const [open, setOpen] = useState(false)
+  const { units, isLoading } = useUnits()
 
   const form = useForm({
-    resolver: zodResolver(UnitSchema.Update),
+    resolver: zodResolver(UnitCreateSchema.Update),
     defaultValues: {
-      unit: contractPeriod.unit,
+      unit_id: contractPeriod.unit_id,
       value: contractPeriod.value
     }
   })
 
   const updateMutation = useMutation({
-    mutationFn: ({ data }: { data: z.infer<typeof UnitSchema.Update> }) =>
-      updateSpaceRequiredAction(contractPeriod.contractPeriodId, data),
+    mutationFn: ({ data }: { data: z.infer<typeof UnitCreateSchema.Update> }) =>
+      updateContractPeriodAction(contractPeriod.id, data),
     onSuccess: (data) =>
       showResponse(data, () => {
         setOpen(false)
@@ -68,14 +74,21 @@ export const UpdateContractPeriodModal = ({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            تعديل فترة القعد - <b>#{contractPeriod.contractPeriodId}</b>
+            تعديل فترة العقد - <b>#{contractPeriod.id}</b>
           </DialogTitle>
-          <DialogDescription>تعديل فترة القعد بالتفاصيل</DialogDescription>
+          <DialogDescription>تعديل فترة العقد بالتفاصيل</DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-            <InputField name="unit" label="الوحدة" control={form.control} />
+            <SelectField valueAsNumber control={form.control} name="unit_id" label="الوحدة">
+              {isLoading && <Loader className="animate-spin" />}
+              {units?.map((unit) => (
+                <SelectItem key={unit.id} value={unit.id.toString()}>
+                  {unit.name}
+                </SelectItem>
+              ))}
+            </SelectField>
 
             <InputField
               type="number"

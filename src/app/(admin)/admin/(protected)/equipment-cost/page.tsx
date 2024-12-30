@@ -10,7 +10,7 @@ export default async function AdminEquipmentCostsPage() {
 
   return (
     <div>
-      <AdminPageTitle title="تكلفة الادوات">
+      <AdminPageTitle title="العملات">
         <CreateEquipmentCostModal />
       </AdminPageTitle>
       {equipmentCosts.length === 0 ? (

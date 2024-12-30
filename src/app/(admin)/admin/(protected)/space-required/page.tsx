@@ -13,11 +13,7 @@ export default async function AdminSpaceRequiredPage() {
       <AdminPageTitle title="المساحات المطلوبة">
         <CreateSpaceRequiredModal />
       </AdminPageTitle>
-      {spaceRequireds.length === 0 ? (
-        <EmptyState />
-      ) : (
-        <SpaceRequiredsTable spaceRequireds={spaceRequireds} />
-      )}
+      {!spaceRequireds ? <EmptyState /> : <SpaceRequiredsTable spaceRequireds={spaceRequireds} />}
     </div>
   )
 }

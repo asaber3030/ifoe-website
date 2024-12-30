@@ -1,4 +1,4 @@
-import Link from "next/link"
+"use client"
 
 import {
   Table,
@@ -8,47 +8,47 @@ import {
   TableHeader,
   TableRow
 } from "@/components/ui/table"
-import { Pagination } from "@/components/app/pagination"
-import { Button } from "@/components/ui/button"
-import { Edit, Eye, Trash } from "lucide-react"
 
-export function UsersTable() {
+import { Role, User } from "@/types"
+import { UpdateUserModal } from "./update-modal"
+import { DeleteModal } from "../delete-modal"
+import { deleteUserAction } from "@/actions/users"
+import { useUser } from "@/hooks/use-user"
+
+export function UsersTable({ roles, users }: { users: User[]; roles: Role[] }) {
+  const current = useUser()
+
   return (
     <div className="mt-4">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Invoice</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Method</TableHead>
-            <TableHead>Amount</TableHead>
-            <TableHead>Action</TableHead>
+            <TableHead>رقم التعريف</TableHead>
+            <TableHead>الاسم</TableHead>
+            <TableHead>الايميل</TableHead>
+            <TableHead>الدور</TableHead>
+            <TableHead>حرر</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {Array.from({ length: 5 }).map((_, index) => (
-            <TableRow key={index}>
-              <TableCell>INV001</TableCell>
-              <TableCell>Paid</TableCell>
-              <TableCell>Credit Card</TableCell>
-              <TableCell>$250.00</TableCell>
+          {users.map((user, index) => (
+            <TableRow key={user.id}>
+              <TableCell>{user.id}</TableCell>
+              <TableCell>{user.name}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>{user.role?.name}</TableCell>
               <TableCell className="flex gap-2">
-                <Button size="icon" variant="outline">
-                  <Edit className="size-4" />
-                </Button>
-                <Button size="icon" variant="outline">
-                  <Eye className="size-4" />
-                </Button>
-                <Button size="icon" variant="outlineDestructive">
-                  <Trash className="size-4" />
-                </Button>
+                {current?.id !== user.id && (
+                  <>
+                    <UpdateUserModal roles={roles} user={user} />
+                    <DeleteModal deletedId={user.id} forceAction={deleteUserAction} />
+                  </>
+                )}
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-
-      <Pagination currentPage={0} totalPages={4} />
     </div>
   )
 }

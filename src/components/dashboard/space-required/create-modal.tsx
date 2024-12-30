@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
 import { LoadingButton } from "@/components/common/loading-button"
-import { UnitSchema } from "@/lib/schema"
+import { UnitCreateSchema, UnitSchema } from "@/lib/schema"
 import { InputField } from "@/components/common/input-field"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
@@ -24,20 +24,25 @@ import {
   DialogTrigger
 } from "@/components/ui/dialog"
 import { createSpaceRequiredAction } from "@/actions/space-required"
+import { useUnits } from "@/hooks/use-units"
+import { SelectItem } from "@/components/ui/select"
+import { SelectField } from "@/components/common/select-field"
+import { Loader } from "lucide-react"
 
 export const CreateSpaceRequiredModal = () => {
   const [open, setOpen] = useState(false)
+  const { units, isLoading } = useUnits()
 
   const form = useForm({
-    resolver: zodResolver(UnitSchema.Create),
+    resolver: zodResolver(UnitCreateSchema.Create),
     defaultValues: {
-      unit: "",
+      unit_id: 0,
       value: 0
     }
   })
 
   const createMutation = useMutation({
-    mutationFn: ({ data }: { data: z.infer<typeof UnitSchema.Create> }) =>
+    mutationFn: ({ data }: { data: z.infer<typeof UnitCreateSchema.Create> }) =>
       createSpaceRequiredAction(data),
     onSuccess: (data) => {
       showResponse(data, () => {
@@ -68,7 +73,15 @@ export const CreateSpaceRequiredModal = () => {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-            <InputField name="unit" label="الوحدة" control={form.control} />
+            <SelectField valueAsNumber control={form.control} name="unit_id" label="الوحدة">
+              {isLoading && <Loader className="animate-spin" />}
+              {units?.map((unit) => (
+                <SelectItem key={unit.id} value={unit.id.toString()}>
+                  {unit.name}
+                </SelectItem>
+              ))}
+            </SelectField>
+
             <InputField
               type="number"
               name="value"

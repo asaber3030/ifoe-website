@@ -35,13 +35,13 @@ export const UpdateCountryModal = ({ country }: { country: Country }) => {
   const form = useForm({
     resolver: zodResolver(CountrySchema.Update),
     defaultValues: {
-      countryName: country.countryName
+      name: country.name
     }
   })
 
   const updateMutation = useMutation({
     mutationFn: ({ data }: { data: z.infer<typeof CountrySchema.Update> }) =>
-      updateCountryAction(country.countryId, data),
+      updateCountryAction(country.id, data),
     onSuccess: (data) =>
       showResponse(data, () => {
         setOpen(false)
@@ -65,14 +65,14 @@ export const UpdateCountryModal = ({ country }: { country: Country }) => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            تعديل الدولة - <b>{country.countryName}</b>
+            تعديل الدولة - <b>{country.name}</b>
           </DialogTitle>
           <DialogDescription>تعديل الدولة بالاسم والتفاصيل</DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-            <InputField name="countryName" label="الاسم" control={form.control} />
+            <InputField name="name" label="الاسم" control={form.control} />
 
             <DialogFooter>
               <DialogClose asChild>

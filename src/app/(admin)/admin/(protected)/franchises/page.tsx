@@ -2,10 +2,13 @@ import { FranchisesTable } from "@/components/dashboard/franchises/table"
 import { AdminPageTitle } from "@/components/dashboard/title"
 import { PlusIcon } from "lucide-react"
 import { LinkBtn } from "@/components/ui/link-btn"
+import { PaginateData } from "@/components/dashboard/pagination"
 
 import { adminRoutes } from "@/lib/routes"
+import { getFranchises } from "@/actions/franchises"
 
-export default function AdminBlogsPage() {
+export default async function AdminFranchisesPage() {
+  const franchises = await getFranchises()
   return (
     <div>
       <AdminPageTitle title="الخدمات">
@@ -15,7 +18,14 @@ export default function AdminBlogsPage() {
         </LinkBtn>
       </AdminPageTitle>
 
-      <FranchisesTable />
+      <div className="space-y-4">
+        <FranchisesTable franchises={franchises?.data!} />
+        <PaginateData
+          hasNextPage={!!franchises?.next_page_url}
+          hasPreviousPage={!!franchises?.prev_page_url}
+          links={franchises?.links!}
+        />
+      </div>
     </div>
   )
 }

@@ -1,10 +1,11 @@
 import {
   Briefcase,
+  Check,
   FlagIcon,
   ListCheck,
+  Menu,
   MoveHorizontal,
   ScrollText,
-  Star,
   Tractor
 } from "lucide-react"
 import {
@@ -12,8 +13,8 @@ import {
   KeyIcon,
   UserIcon,
   BuildingOffice2Icon,
-  ArrowRightOnRectangleIcon,
-  UserCircleIcon
+  UserCircleIcon,
+  ArrowRightOnRectangleIcon
 } from "@heroicons/react/24/outline"
 
 export const DASHBOARD_URLS = [
@@ -31,6 +32,11 @@ export const DASHBOARD_URLS = [
     href: "/admin/categories",
     icon: ListCheck,
     label: "الاقسام"
+  },
+  {
+    href: "/admin/units",
+    icon: Check,
+    label: "الوحدات"
   },
   {
     href: "/admin/franchises",
@@ -52,30 +58,31 @@ export const DASHBOARD_URLS = [
     icon: UserCircleIcon,
     label: "المستخدمين"
   },
+
   {
-    href: "/admin/franchise-characteristics",
-    icon: Star,
-    label: "خصائص الخدمات"
+    href: "/admin/franchise-types",
+    icon: Menu,
+    label: "انواع الخدمات"
   },
   {
     href: "/admin/training-periods",
     icon: Briefcase,
-    label: "فترات التدريب"
+    label: "الوحدات الزمنية للتدريب"
   },
   {
     href: "/admin/contract-periods",
     icon: ScrollText,
-    label: "العقود"
+    label: "وحدات قياس العقود"
   },
   {
     href: "/admin/equipment-cost",
     icon: Tractor,
-    label: "تكلفة الادوات"
+    label: "العملات"
   },
   {
     href: "/admin/space-required",
     icon: MoveHorizontal,
-    label: "المساحات المطلوبه"
+    label: "وحدات المساحات"
   },
   {
     href: "/admin/logout",

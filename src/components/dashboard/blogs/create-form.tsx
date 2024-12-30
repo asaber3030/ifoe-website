@@ -5,6 +5,7 @@ import Image from "next/image"
 import { useMutation } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 import { BlogSchema } from "@/lib/schema"
 import { Form } from "@/components/ui/form"
@@ -19,8 +20,8 @@ import { z } from "zod"
 
 import { createBlogAction } from "@/actions/blogs"
 import { toast } from "react-toastify"
-import { useRouter } from "next/navigation"
 import { adminRoutes } from "@/lib/routes"
+import { Textarea } from "@/components/ui/textarea"
 
 type TMutation = {
   data: z.infer<typeof BlogSchema.Create>
@@ -75,15 +76,9 @@ export const CreateBlogForm = () => {
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
             <InputField name="title" label="العنوان" control={form.control} />
             <InputField name="shortText" label="الوصف القصير" control={form.control} isTextarea />
-            <Editor
-              apiKey="ak97gh8mq9na3matau07b11mq6p4i8th8srwii58ouzmc1yc"
-              onEditorChange={handleEditorChange}
-              init={{
-                plugins:
-                  "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
-                toolbar:
-                  "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat"
-              }}
+            <Textarea
+              placeholder="الوصف"
+              onChange={(event) => setBlogContent(event.target.value)}
             />
             <FileField setPreviewUrl={setFilePreview} label="الصورة" onChange={setFile} />
             <LoadingButton loading={updateMutation.isPending}>انشاء</LoadingButton>

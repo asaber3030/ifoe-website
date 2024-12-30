@@ -8,7 +8,7 @@ import { showResponse, validateFile } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "react-toastify"
 import { createPartnerAction } from "@/actions/partners"
-import { set, z } from "zod"
+import { z } from "zod"
 
 import { LoadingButton } from "@/components/common/loading-button"
 import { PartnerSchema } from "@/lib/schema"

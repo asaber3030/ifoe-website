@@ -9,7 +9,7 @@ import { showResponse } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
-import { UnitSchema } from "@/lib/schema"
+import { UnitCreateSchema, UnitSchema } from "@/lib/schema"
 import { Form } from "@/components/ui/form"
 import { InputField } from "@/components/common/input-field"
 import { Button } from "@/components/ui/button"
@@ -26,21 +26,26 @@ import {
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/dialog"
+import { Loader } from "lucide-react"
+import { SelectItem } from "@/components/ui/select"
+import { SelectField } from "@/components/common/select-field"
+import { useUnits } from "@/hooks/use-units"
 
 export const UpdateSpaceRequiredModal = ({ spaceRequired }: { spaceRequired: SpaceRequired }) => {
   const [open, setOpen] = useState(false)
+  const { units, isLoading } = useUnits()
 
   const form = useForm({
-    resolver: zodResolver(UnitSchema.Update),
+    resolver: zodResolver(UnitCreateSchema.Update),
     defaultValues: {
-      unit: spaceRequired.unit,
+      unit_id: spaceRequired.unit_id,
       value: spaceRequired.value
     }
   })
 
   const updateMutation = useMutation({
-    mutationFn: ({ data }: { data: z.infer<typeof UnitSchema.Update> }) =>
-      updateSpaceRequiredAction(spaceRequired.spaceRequiredId, data),
+    mutationFn: ({ data }: { data: z.infer<typeof UnitCreateSchema.Update> }) =>
+      updateSpaceRequiredAction(spaceRequired.id, data),
     onSuccess: (data) =>
       showResponse(data, () => {
         setOpen(false)
@@ -64,14 +69,28 @@ export const UpdateSpaceRequiredModal = ({ spaceRequired }: { spaceRequired: Spa
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            تعديل المساحة - <b>#{spaceRequired.spaceRequiredId}</b>
+            تعديل المساحة - <b>#{spaceRequired.id}</b>
           </DialogTitle>
           <DialogDescription>تعديل المساحة بالتفاصيل</DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-            <InputField name="unit" label="الوحدة" control={form.control} />
+            <SelectField
+              defaultValue={spaceRequired.unit_id.toString()}
+              valueAsNumber
+              control={form.control}
+              name="unit_id"
+              label="الوحدة"
+            >
+              {isLoading && <Loader className="animate-spin" />}
+              {units?.map((unit) => (
+                <SelectItem key={unit.id} value={unit.id.toString()}>
+                  {unit.name}
+                </SelectItem>
+              ))}
+            </SelectField>
+
             <InputField
               type="number"
               name="value"

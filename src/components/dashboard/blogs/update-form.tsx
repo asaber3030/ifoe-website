@@ -21,6 +21,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { adminRoutes } from "@/lib/routes"
 import { toast } from "react-toastify"
 import { z } from "zod"
+import { Textarea } from "@/components/ui/textarea"
 
 type TMutation = {
   data: z.infer<typeof BlogSchema.Create>
@@ -31,7 +32,7 @@ type TMutation = {
 
 export const UpdateBlogForm = ({ blog }: { blog: Blog }) => {
   const [file, setFile] = useState<File | null>(null)
-  const [blogContent, setBlogContent] = useState<string>(blog.blogContent)
+  const [blogContent, setBlogContent] = useState<string>(blog.blog_content)
   const [filePreview, setFilePreview] = useState<string>("/bg.jpg")
 
   const router = useRouter()
@@ -39,8 +40,8 @@ export const UpdateBlogForm = ({ blog }: { blog: Blog }) => {
   const form = useForm({
     resolver: zodResolver(BlogSchema.Create),
     defaultValues: {
-      title: blog.shortText,
-      shortText: blog.shortText
+      title: blog.title,
+      shortText: blog.short_text
     }
   })
 
@@ -50,10 +51,12 @@ export const UpdateBlogForm = ({ blog }: { blog: Blog }) => {
 
   const updateMutation = useMutation({
     mutationFn: ({ data, file, blogContent, defaultImageUrl }: TMutation) =>
-      updateBlogAction(blog.blogId, data, defaultImageUrl, file, blogContent),
+      updateBlogAction(blog.id, data, defaultImageUrl, file, blogContent),
     onSuccess: (data) =>
       showResponse(data, () => {
-        router.push(adminRoutes.blogs.root)
+        if (data.status === 200) {
+          router.push(adminRoutes.blogs.root)
+        }
       })
   })
 
@@ -68,7 +71,7 @@ export const UpdateBlogForm = ({ blog }: { blog: Blog }) => {
     updateMutation.mutate({
       data: form.getValues(),
       file,
-      defaultImageUrl: blog.imageUrl,
+      defaultImageUrl: blog.image_url,
       blogContent
     })
   }
@@ -80,17 +83,7 @@ export const UpdateBlogForm = ({ blog }: { blog: Blog }) => {
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
             <InputField name="title" label="العنوان" control={form.control} />
             <InputField name="shortText" label="الوصف القصير" control={form.control} isTextarea />
-            <Editor
-              apiKey="ak97gh8mq9na3matau07b11mq6p4i8th8srwii58ouzmc1yc"
-              onEditorChange={handleEditorChange}
-              initialValue={blogContent}
-              init={{
-                plugins:
-                  "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
-                toolbar:
-                  "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat"
-              }}
-            />
+            <Textarea onChange={(event) => setBlogContent(event.target.value)} />
             <FileField setPreviewUrl={setFilePreview} label="الصورة" onChange={setFile} />
             <LoadingButton loading={updateMutation.isPending}>تعديل</LoadingButton>
           </form>

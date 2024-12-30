@@ -1,12 +1,13 @@
-import Image from "next/image"
-
 import { type Metadata } from "next"
+import { EmptyState } from "@/components/app/empty-state"
+
 import { getPartners } from "@/actions/partners"
 
 export const metadata: Metadata = {
   title: "الشركاء",
   description: "الشركاء"
 }
+export const dynamic = "force-dynamic"
 
 export default async function PartnersPage() {
   const partners = await getPartners()
@@ -15,9 +16,7 @@ export default async function PartnersPage() {
     <div className="min-h-screen mx-auto bg-background text-foreground">
       <section
         className="relative md:h-screen h-[600px] bg-cover bg-center"
-        style={{
-          backgroundImage: "url('/bg.jpg')"
-        }}
+        style={{ backgroundImage: "url('/bg.jpg')" }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
 
@@ -40,20 +39,22 @@ export default async function PartnersPage() {
       <div className="p-10 xl:px-24">
         <div className="p-10 xl:px-24">
           <h1 className="text-blue-600 my-4 mb-10">شركاء النجاح</h1>
-          <div className="grid xl:grid-cols-6 gap-8 grid-cols-2">
-            <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-            <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-            <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-            <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-            <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-            <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-            <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-            <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-            <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-            <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-            <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-            <Image src={"/ifoe-logo.png"} width={200} height={200} alt={"IMAGE"} />
-          </div>
+          {partners.length === 0 ? (
+            <EmptyState />
+          ) : (
+            <div className="grid xl:grid-cols-6 gap-8 grid-cols-2">
+              {partners.map((partner) => (
+                <img
+                  key={partner.id}
+                  src={partner.image_url}
+                  width={200}
+                  height={200}
+                  alt={"IMAGE"}
+                  className="rounded-md object-cover"
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

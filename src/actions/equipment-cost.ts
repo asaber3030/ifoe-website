@@ -2,114 +2,93 @@
 
 import { API_URL } from "@/lib/constants"
 import { adminRoutes } from "@/lib/routes"
-import { UnitSchema } from "@/lib/schema"
-import { EquipmentCost } from "@/types"
+import { UnitCreateSchema } from "@/lib/schema"
+import { APIResponse, EquipmentCost } from "@/types"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
+import { getAuthorizationToken } from "./app"
+import { actionResponse, defaultHeaders } from "@/lib/utils"
 
 export async function getEquipmentCosts(): Promise<EquipmentCost[]> {
   try {
-    const res = await fetch(`${API_URL}/EquipmentCosts`)
-    const data = await res.json()
-    return data
+    const res = await fetch(`${API_URL}/equipments-cost`)
+    const data: APIResponse<EquipmentCost[]> = await res.json()
+    return data.data
   } catch (error) {
     return []
   }
 }
 
 export async function getEquipment(equipmentCostId: number) {
-  const res = await fetch(`${API_URL}/EquipmentCosts/${equipmentCostId}`)
-  const data: EquipmentCost = await res.json()
+  const res = await fetch(`${API_URL}/equipments-cost/${equipmentCostId}`)
+  const data: APIResponse<EquipmentCost> = await res.json()
   return {
     equipmentCost: data,
     status: res.status
   }
 }
 
-export async function createEquipmentAction(data: z.infer<typeof UnitSchema.Create>) {
-  const res = await fetch(`${API_URL}/EquipmentCosts`, {
-    method: "POST",
+export async function createEquipmentAction(data: z.infer<typeof UnitCreateSchema.Create>) {
+  try {
+    const token = await getAuthorizationToken()
+    const res = await fetch(`${API_URL}/equipments-cost`, {
+      method: "POST",
+      body: JSON.stringify({
+        value: data.value,
+        unit_id: data.unit_id
+      }),
+      headers: defaultHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    })
+    revalidatePath(adminRoutes.equipmentCost.root)
 
-    body: JSON.stringify({
-      EquipmentCostId: Math.floor(Math.random() * 10000000),
-      Unit: data.unit,
-      Value: data.value
-    }),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
-
-  const resData = await res.json()
-  console.log(resData)
-
-  if (!res.ok) {
-    return {
-      status: res.status,
-      message: "حدث خطأ ما",
-      response: resData
-    }
-  }
-
-  revalidatePath(adminRoutes.equipmentCost.root)
-  return {
-    status: res.status,
-    message: "تم تحديث البيانات بنجاح",
-    response: resData
+    const response = await res.json()
+    return response
+  } catch (error) {
+    return actionResponse("حدث خطأ ما", 500)
   }
 }
 
 export async function updateEquipmentAction(
   equipmentCostId: number,
-  data: z.infer<typeof UnitSchema.Update>
+  data: z.infer<typeof UnitCreateSchema.Update>
 ) {
-  const res = await fetch(`${API_URL}/EquipmentCosts/${equipmentCostId}`, {
-    method: "PUT",
-    body: JSON.stringify({
-      EquipmentCostId: equipmentCostId,
-      Unit: data.unit,
-      Value: data.value
-    }),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
+  try {
+    const token = await getAuthorizationToken()
+    const res = await fetch(`${API_URL}/equipments-cost/${equipmentCostId}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        value: data.value,
+        unit_id: data.unit_id
+      }),
+      headers: defaultHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    })
+    revalidatePath(adminRoutes.equipmentCost.root)
 
-  if (!res.ok) {
-    return {
-      status: res.status,
-      message: "حدث خطأ ما"
-    }
-  }
-  revalidatePath(adminRoutes.equipmentCost.root)
-  return {
-    status: res.status,
-    message: "تم تحديث البيانات بنجاح"
+    const response = await res.json()
+    return response
+  } catch (error) {
+    return actionResponse("حدث خطأ ما", 500)
   }
 }
 
 export async function deleteEquipmentAction(equipmentCostId: number) {
-  const response = await fetch(`${API_URL}/EquipmentCosts/${equipmentCostId}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      Id: equipmentCostId
+  try {
+    const token = await getAuthorizationToken()
+    const response = await fetch(`${API_URL}/equipments-cost/${equipmentCostId}`, {
+      method: "DELETE",
+      headers: defaultHeaders({
+        Authorization: `Bearer ${token}`
+      })
     })
-  })
-  revalidatePath(adminRoutes.equipmentCost.root)
-  const data = await response.json()
+    revalidatePath(adminRoutes.equipmentCost.root)
+    const data = await response.json()
 
-  if (!response.ok) {
-    return {
-      status: response.status,
-      message: data?.title || "حدث خطأ ما"
-    }
-  }
-
-  return {
-    status: response.status,
-    message: "تم حذف الشريك بنجاح"
+    return data
+  } catch (error) {
+    return actionResponse("حدث خطأ ما", 500)
   }
 }

@@ -1,28 +1,43 @@
-import Link from "next/link"
-
 import { AdminPageTitle } from "@/components/dashboard/title"
 import { BlogsTable } from "@/components/dashboard/blogs/table"
 import { PlusIcon } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { EmptyState } from "@/components/app/empty-state"
+import { LinkBtn } from "@/components/ui/link-btn"
+import { PaginateData } from "@/components/dashboard/pagination"
 
 import { adminRoutes } from "@/lib/routes"
 import { getBlogs } from "@/actions/blogs"
 
-export default async function AdminBlogsPage() {
-  const blogs = await getBlogs()
+type Props = {
+  searchParams: Promise<{
+    page: string
+  }>
+}
+
+export default async function AdminBlogsPage({ searchParams }: Props) {
+  const blogs = await getBlogs(+(await searchParams).page)
 
   return (
     <div>
       <AdminPageTitle title="المقالات">
-        <Link href={adminRoutes.blogs.create}>
-          <Button variant="blue">
-            <PlusIcon className="size-4" />
-            اضافة مقالة
-          </Button>
-        </Link>
+        <LinkBtn href={adminRoutes.blogs.create} variant="blue">
+          <PlusIcon className="size-4" />
+          اضافة مقالة
+        </LinkBtn>
       </AdminPageTitle>
 
-      <BlogsTable blogs={blogs} />
+      {!blogs?.data || blogs?.data?.length === 0 ? (
+        <EmptyState />
+      ) : (
+        <div className="space-y-4">
+          <BlogsTable blogs={blogs.data} />
+          <PaginateData
+            hasNextPage={!!blogs.next_page_url}
+            hasPreviousPage={!!blogs.prev_page_url}
+            links={blogs.links}
+          />
+        </div>
+      )}
     </div>
   )
 }
