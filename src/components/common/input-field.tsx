@@ -18,6 +18,7 @@ type Props = {
   defaultValue?: string | number
   valuseAsNumber?: boolean
   className?: ClassValue
+  step?: any
 }
 
 export const InputField = ({
@@ -31,7 +32,8 @@ export const InputField = ({
   register,
   valuseAsNumber,
   defaultValue,
-  className
+  className,
+  step
 }: Props) => {
   return (
     <FormField
@@ -57,6 +59,7 @@ export const InputField = ({
                 placeholder={placeholder}
                 defaultValue={defaultValue}
                 className={cn(className)}
+                step={step}
                 {...field}
                 {...register}
                 onChange={

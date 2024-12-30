@@ -212,34 +212,83 @@ export const FranchiesTypeSchema = {
 export const FranchiseSchema = {
   Create: z.object({
     name: z.string().min(1, "Name is required"),
-    description: z.string(),
-    equipment_cost_id: z.number(),
-    category_id: z.number(),
-    country_id: z.number(),
-    number_of_branches: z.number().int("Must be an integer"),
-    space_required_id: z.number(),
-    number_of_labors: z.number().int("Must be an integer"),
-    training_period_id: z.number(),
+    description: z.string().min(100, "Description must be at least 100 characters long"),
+    category_id: z.number({ required_error: "Required" }).gt(0, "Category is required"),
+    country_id: z.number({ required_error: "Required" }).gt(0, "Country is required"),
+    number_of_branches: z
+      .number({ required_error: "Required" })
+      .int("Must be an integer")
+      .gt(0, "Required"),
+    number_of_labors: z
+      .number({ required_error: "Required" })
+      .int("Must be an integer")
+      .gt(0, "Required"),
     establish_year: z
-      .number()
+      .number({ required_error: "Required" })
       .int("Must be an integer")
       .min(1900, "Year must be after 1900")
       .max(new Date().getFullYear(), "Year cannot be in the future"),
-    center_office: z.string(),
-    franchise_characteristics_id: z.number(),
-    contract_period_id: z.number()
+    center_office: z.string().nonempty("Center office is required"),
+    space_required: z.object({
+      unit_id: z.number({ required_error: "Required" }).gt(0),
+      value: z.number({ required_error: "Required" }).gt(0)
+    }),
+    equipment_cost: z.object({
+      unit_id: z.number({ required_error: "Required" }).gt(0),
+      value: z.number({ required_error: "Required" }).gt(0)
+    }),
+    training_period: z.object({
+      unit_id: z.number({ required_error: "Required" }).gt(0),
+      value: z.number({ required_error: "Required" }).gt(0)
+    }),
+    contract_period: z.object({
+      unit_id: z.number({ required_error: "Required" }).gt(0),
+      value: z.number({ required_error: "Required" }).gt(0)
+    }),
+    franchise_characteristics: z.object({
+      franchise_fees: z
+        .union([z.string(), z.number()])
+        .transform((value) => {
+          return typeof value === "string" ? parseFloat(value) : value
+        })
+        .refine((value) => !isNaN(value), {
+          message: "The value must be a valid number"
+        }),
+      royalty_fees: z
+        .union([z.string(), z.number()])
+        .transform((value) => {
+          return typeof value === "string" ? parseFloat(value) : value
+        })
+        .refine((value) => !isNaN(value), {
+          message: "The value must be a valid number"
+        }),
+      marketing_fees: z
+        .union([z.string(), z.number()])
+        .transform((value) => {
+          return typeof value === "string" ? parseFloat(value) : value
+        })
+        .refine((value) => !isNaN(value), {
+          message: "The value must be a valid number"
+        }),
+      investments_cost: z
+        .union([z.string(), z.number()])
+        .transform((value) => {
+          return typeof value === "string" ? parseFloat(value) : value
+        })
+        .refine((value) => !isNaN(value), {
+          message: "The value must be a valid number"
+        })
+    })
   }),
 
   Update: z.object({
     name: z.string().min(1, "Name is required").optional(),
     description: z.string().optional(),
-    equipment_cost_id: z.number().optional(),
     category_id: z.number().optional(),
     country_id: z.number().optional(),
+    image_url: z.string().url("Invalid URL format").optional(),
     number_of_branches: z.number().int("Must be an integer").optional(),
-    space_required_id: z.number().optional(),
     number_of_labors: z.number().int("Must be an integer").optional(),
-    training_period_id: z.number().optional(),
     establish_year: z
       .number()
       .int("Must be an integer")
@@ -247,8 +296,39 @@ export const FranchiseSchema = {
       .max(new Date().getFullYear(), "Year cannot be in the future")
       .optional(),
     center_office: z.string().optional(),
-    franchise_characteristics_id: z.number().optional(),
-    contract_period_id: z.number().optional()
+    added_by: z.number().optional(),
+    space_required: z
+      .object({
+        unit_id: z.number().optional(),
+        value: z.number().optional()
+      })
+      .optional(),
+    equipment_cost: z
+      .object({
+        unit_id: z.number().optional(),
+        value: z.number().optional()
+      })
+      .optional(),
+    training_period: z
+      .object({
+        unit_id: z.number().optional(),
+        value: z.number().optional()
+      })
+      .optional(),
+    contract_period: z
+      .object({
+        unit_id: z.number().optional(),
+        value: z.number().optional()
+      })
+      .optional(),
+    franchise_characteristics: z
+      .object({
+        franchise_fees: z.string().transform((v) => Number(v)),
+        royalty_fees: z.string().transform((v) => Number(v)),
+        marketing_fees: z.string().transform((v) => Number(v)),
+        investments_cost: z.string().transform((v) => Number(v))
+      })
+      .optional()
   })
 }
 

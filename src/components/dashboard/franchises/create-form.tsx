@@ -2,40 +2,28 @@
 
 import { useMutation } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
+import { useState } from "react"
 
-import { zodResolver } from "@hookform/resolvers/zod"
+import { createFranchiseAction } from "@/actions/franchises"
 import { showResponse, validateFile } from "@/lib/utils"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { toast } from "react-toastify"
 import { z } from "zod"
 
 import { FranchiseSchema } from "@/lib/schema"
+import { Category, Country, Unit } from "@/types"
 import { Form } from "@/components/ui/form"
 import { InputField } from "@/components/common/input-field"
-import { Button } from "@/components/ui/button"
 import { SelectField } from "@/components/common/select-field"
 import { SelectItem } from "@/components/ui/select"
-import {
-  Category,
-  ContractPeriod,
-  Country,
-  EquipmentCost,
-  FranchiseCharacteristics,
-  SpaceRequired,
-  TrainingPeriod
-} from "@/types"
-import { createFranchiseAction } from "@/actions/franchises"
-import { useState } from "react"
 import { FileField } from "@/components/common/file-field"
-import { toast } from "react-toastify"
 import { LoadingButton } from "@/components/common/loading-button"
+import { Button } from "@/components/ui/button"
 
 type Props = {
-  equipments: EquipmentCost[]
   categories: Category[]
   countries: Country[]
-  spaces: SpaceRequired[]
-  trainings: TrainingPeriod[]
-  characteristics: FranchiseCharacteristics[]
-  contracts: ContractPeriod[]
+  units: Unit[]
 }
 
 type TMutation = {
@@ -43,40 +31,23 @@ type TMutation = {
   file: File | null
 }
 
-export const CreateFranchiseForm = ({
-  equipments,
-  categories,
-  characteristics,
-  countries,
-  spaces,
-  trainings,
-  contracts
-}: Props) => {
+export const CreateFranchiseForm = ({ categories, countries, units }: Props) => {
   const [file, setFile] = useState<File | null>(null)
   const [filePreview, setFilePreview] = useState<string>("/bg.jpg")
 
   const form = useForm({
-    resolver: zodResolver(FranchiseSchema.Create),
-    defaultValues: {
-      name: "",
-      description: "",
-      equipment_cost_id: 0,
-      category_id: 0,
-      country_id: 0,
-      number_of_branches: 0,
-      space_required_id: 0,
-      number_of_labors: 0,
-      training_period_id: 0,
-      establish_year: 0,
-      center_office: "",
-      franchise_characteristics_id: 0,
-      contract_period_id: 0
-    }
+    resolver: zodResolver(FranchiseSchema.Create)
   })
 
   const createMutation = useMutation({
     mutationFn: ({ data, file }: TMutation) => createFranchiseAction(data, file),
-    onSuccess: (data) => showResponse(data)
+    onSuccess: (data) =>
+      showResponse(data, () => {
+        if (data.status === 201) {
+          form.reset()
+          setFile(null)
+        }
+      })
   })
 
   const handleSubmit = () => {
@@ -86,7 +57,7 @@ export const CreateFranchiseForm = ({
       return
     }
     createMutation.mutate({
-      data: form.getValues(),
+      data: form.getValues() as z.infer<typeof FranchiseSchema.Create>,
       file
     })
   }
@@ -95,27 +66,32 @@ export const CreateFranchiseForm = ({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
         <InputField name="name" label="الاسم" control={form.control} />
-        <InputField name="description" label="الوصف" control={form.control} />
+        <InputField isTextarea name="description" label="الوصف" control={form.control} />
         <InputField
           name="number_of_branches"
-          label="number_of_branches"
+          label="عدد الفروع"
           control={form.control}
           valuseAsNumber
+          type="number"
         />
         <InputField
           valuseAsNumber
           name="number_of_labors"
-          label="number_of_labors"
+          label="عدد الموظفين"
           control={form.control}
+          type="number"
         />
         <InputField
           valuseAsNumber
           name="establish_year"
-          label="establish_year"
+          label="تاريخ الانشاء"
           control={form.control}
+          type="number"
         />
-        <InputField name="center_office" label="center_office" control={form.control} />
 
+        <InputField name="center_office" label="مركز المكتب" control={form.control} />
+
+        {/* Categories & Countries */}
         <div className="grid xl:grid-cols-2 grid-cols-1 gap-4">
           <SelectField valueAsNumber name="category_id" control={form.control} label="القسم">
             {categories.map((category) => (
@@ -134,74 +110,142 @@ export const CreateFranchiseForm = ({
           </SelectField>
         </div>
 
-        <div className="grid xl:grid-cols-2 grid-cols-1 gap-4">
-          <SelectField
-            valueAsNumber
-            name="equipment_cost_id"
-            control={form.control}
-            label="تكلفة الادوات"
-          >
-            {equipments.map((equipment) => (
-              <SelectItem key={`equipment-${equipment.id}`} value={equipment.id.toString()}>
-                {equipment.unit.name} / {equipment.value}
-              </SelectItem>
-            ))}
-          </SelectField>
+        <div className="grid grid-cols-1 gap-4">
+          {/* Space */}
+          <div className="grid xl:grid-cols-5 grid-cols-1 gap-2">
+            <div className="col-span-1">
+              <SelectField
+                valueAsNumber
+                name="space_required.unit_id"
+                control={form.control}
+                label="الوحدة"
+              >
+                {units.map((unit) => (
+                  <SelectItem key={`space-unit-${unit.id}`} value={unit.id.toString()}>
+                    {unit.name}
+                  </SelectItem>
+                ))}
+              </SelectField>
+            </div>
+            <div className="col-span-4">
+              <InputField
+                name="space_required.value"
+                label="قيمة وحدة المساحات"
+                control={form.control}
+                valuseAsNumber
+                type="number"
+              />
+            </div>
+          </div>
 
-          <SelectField
-            valueAsNumber
-            name="space_required_id"
-            control={form.control}
-            label="المساحة المطلوبة"
-          >
-            {spaces.map((space) => (
-              <SelectItem key={`space-${space.id}`} value={space.id.toString()}>
-                {space.unit.name} / {space.value}
-              </SelectItem>
-            ))}
-          </SelectField>
+          {/* Equipment */}
+          <div className="grid xl:grid-cols-5 grid-cols-1 gap-2">
+            <div className="col-span-1">
+              <SelectField
+                valueAsNumber
+                name="equipment_cost.unit_id"
+                control={form.control}
+                label="الوحدة"
+              >
+                {units.map((unit) => (
+                  <SelectItem key={`equipment-unit-${unit.id}`} value={unit.id.toString()}>
+                    {unit.name}
+                  </SelectItem>
+                ))}
+              </SelectField>
+            </div>
+            <div className="col-span-4">
+              <InputField
+                name="equipment_cost.value"
+                label="تكلفة الادوات"
+                control={form.control}
+                valuseAsNumber
+                type="number"
+              />
+            </div>
+          </div>
         </div>
 
-        <div className="grid xl:grid-cols-2 grid-cols-1 gap-4">
-          <SelectField
-            valueAsNumber
-            name="training_period_id"
-            control={form.control}
-            label="فترة التدريب"
-          >
-            {trainings.map((training) => (
-              <SelectItem key={`training-${training.id}`} value={training.id.toString()}>
-                {training.unit.name} / {training.value}
-              </SelectItem>
-            ))}
-          </SelectField>
+        <div className="grid grid-cols-1 gap-4">
+          <div className="grid xl:grid-cols-5 grid-cols-1 gap-2">
+            <div className="col-span-1">
+              <SelectField
+                valueAsNumber
+                name="training_period.unit_id"
+                control={form.control}
+                label="الوحدة"
+              >
+                {units.map((unit) => (
+                  <SelectItem key={`training_period-unit-${unit.id}`} value={unit.id.toString()}>
+                    {unit.name}
+                  </SelectItem>
+                ))}
+              </SelectField>
+            </div>
+            <div className="col-span-4">
+              <InputField
+                name="training_period.value"
+                label="تكلفة فترة التدريب"
+                control={form.control}
+                valuseAsNumber
+                type="number"
+              />
+            </div>
+          </div>
 
-          <SelectField
-            valueAsNumber
-            name="contract_period_id"
-            control={form.control}
-            label="فترة العقد"
-          >
-            {contracts.map((contract) => (
-              <SelectItem key={`contract-${contract.id}`} value={contract.id.toString()}>
-                {contract.unit.name} / {contract.value}
-              </SelectItem>
-            ))}
-          </SelectField>
+          <div className="grid xl:grid-cols-5 grid-cols-1 gap-2">
+            <div className="col-span-1">
+              <SelectField
+                valueAsNumber
+                name="contract_period.unit_id"
+                control={form.control}
+                label="الوحدة"
+              >
+                {units.map((unit) => (
+                  <SelectItem key={`contract_period-unit-${unit.id}`} value={unit.id.toString()}>
+                    {unit.name}
+                  </SelectItem>
+                ))}
+              </SelectField>
+            </div>
+            <div className="col-span-4">
+              <InputField
+                name="contract_period.value"
+                label="تكلفة الادوات"
+                control={form.control}
+                valuseAsNumber
+                type="number"
+              />
+            </div>
+          </div>
         </div>
 
-        <SelectField
-          valueAsNumber
-          name="franchise_characteristics_id"
-          control={form.control}
-          label="خصائص الخدمة"
-        >
-          {characteristics.map((ch) => (
-            <SelectItem key={`ch-${ch.id}`} value={ch.id.toString()}>
-              #{ch.id}
-            </SelectItem>
-          ))}
-        </SelectField>
+        <div className="border p-4 rounded-md bg-white shadow-md">
+          <h1 className="text-lg mb-4">خصائص الخدمات</h1>
+
+          <div className="grid xl:grid-cols-2 grid-cols-1 gap-4">
+            <InputField
+              name="franchise_characteristics.franchise_fees"
+              label="تكلفة الامتياز"
+              control={form.control}
+            />
+            <InputField
+              name="franchise_characteristics.royalty_fees"
+              label="رسوم الامتياز"
+              control={form.control}
+            />
+            <InputField
+              name="franchise_characteristics.marketing_fees"
+              label="تكلفة التسويق"
+              control={form.control}
+            />
+            <InputField
+              name="franchise_characteristics.investments_cost"
+              label="تكلفة الاستثمار"
+              control={form.control}
+            />
+          </div>
+        </div>
 
         <FileField setPreviewUrl={setFilePreview} label="الصورة" onChange={setFile} />
 

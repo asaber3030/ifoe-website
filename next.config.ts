@@ -13,7 +13,18 @@ const nextConfig: NextConfig = {
     }
   },
   images: {
-    domains: ["firebasestorage.googleapis.com", "placehold.co"]
+    remotePatterns: [
+      {
+        hostname: "firebasestorage.googleapis.com",
+        protocol: "https",
+        pathname: "**"
+      },
+      {
+        hostname: "placehold.co",
+        protocol: "https",
+        pathname: "**"
+      }
+    ]
   }
 }
 

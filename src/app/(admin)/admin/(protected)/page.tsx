@@ -5,7 +5,6 @@ import { StatsItem } from "@/components/dashboard/home/stats-item"
 import { AdminPageTitle } from "@/components/dashboard/title"
 import { LinkBtn } from "@/components/ui/link-btn"
 import { adminRoutes } from "@/lib/routes"
-import Link from "next/link"
 
 export default async function DashboardPage() {
   const counts = await getCounts()

@@ -11,6 +11,7 @@ import { getEquipmentCosts } from "@/actions/equipment-cost"
 import { getFranchiseCharacteristics } from "@/actions/franchies-characteristics"
 import { getSpaceRequireds } from "@/actions/space-required"
 import { getTrainingPeriods } from "@/actions/training-periods"
+import { getUnits } from "@/actions/units"
 
 type Props = {
   params: Promise<{
@@ -21,24 +22,15 @@ type Props = {
 export default async function UpdateFranchisePage({ params }: Props) {
   const franchiseId = +(await params).franchiesId
   const franchise = await getFranchise(franchiseId)
-  const equipmentsPromise = getEquipmentCosts()
   const categoriesPromise = getCategories()
   const countriesPromise = getCountries()
-  const spacesPromise = getSpaceRequireds()
-  const trainingsPromise = getTrainingPeriods()
-  const characteristicsPromise = getFranchiseCharacteristics()
-  const contractsPromise = getContractPeriods()
+  const unitsPromise = getUnits()
 
-  const [equipments, categories, countries, spaces, trainings, characteristics, contracts] =
-    await Promise.all([
-      equipmentsPromise,
-      categoriesPromise,
-      countriesPromise,
-      spacesPromise,
-      trainingsPromise,
-      characteristicsPromise,
-      contractsPromise
-    ])
+  const [categories, countries, units] = await Promise.all([
+    categoriesPromise,
+    countriesPromise,
+    unitsPromise
+  ])
   if (!franchise.franchise) return notFound()
 
   return (
@@ -47,13 +39,9 @@ export default async function UpdateFranchisePage({ params }: Props) {
       <div className="max-w-2xl">
         <UpdateFranchiseForm
           franchise={franchise.franchise}
-          equipments={equipments!}
+          units={units}
           categories={categories!}
           countries={countries!}
-          spaces={spaces!}
-          trainings={trainings!}
-          characteristics={characteristics!}
-          contracts={contracts!}
         />
       </div>
     </div>

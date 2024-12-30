@@ -32,7 +32,7 @@ export function EquipmentCostsTable({ equipmentCosts }: Props) {
           {equipmentCosts.map((eq) => (
             <TableRow key={`category-row-${eq.id}`}>
               <TableCell>{eq.id}</TableCell>
-              <TableCell>{eq.unit?.id}</TableCell>
+              <TableCell>{eq.unit?.name}</TableCell>
               <TableCell>{eq.value}</TableCell>
               <TableCell className="flex gap-2">
                 <UpdateEquipmentCostModal equipmentCost={eq} />

@@ -2,18 +2,13 @@ import Image from "next/image"
 
 import { type Metadata } from "next"
 
-import { getFranchises } from "@/actions/franchises"
-import { getPartners } from "@/actions/partners"
-
 import { LinkBtn } from "@/components/ui/link-btn"
 import { HomeBanner } from "@/components/app/home/banner"
 import { ContactForm } from "@/components/app/contact/form"
 import { HomeSocialDetails } from "@/components/app/home/social-details"
-import { HomeFranchisesList } from "@/components/app/home/franchises"
-import { HomePartnersList } from "@/components/app/home/partners"
-
-import { Suspense } from "react"
-import HomeLoading from "./loading"
+import { FranchiseLoadingCard } from "@/components/app/franchises/loading-card"
+import { routes } from "@/lib/routes"
+import { Skeleton } from "@/components/ui/skeleton"
 
 export const metadata: Metadata = {
   title: "الرئيسية",
@@ -22,12 +17,7 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic"
 
-export default async function Home() {
-  const franchisesPromise = getFranchises()
-  const partnersPromise = getPartners()
-
-  const [franchises, partners] = await Promise.all([franchisesPromise, partnersPromise])
-
+export default function HomeLoading() {
   return (
     <main>
       <HomeBanner />
@@ -40,6 +30,7 @@ export default async function Home() {
             className="rounded-md ml-auto"
             width={500}
             height={500}
+            loading="lazy"
           />
         </div>
 
@@ -63,9 +54,30 @@ export default async function Home() {
         </div>
       </div>
 
-      <HomeFranchisesList franchises={franchises?.data!} />
+      <div className="p-10 xl:px-24">
+        <div className="flex justify-between">
+          <h1 className="text-blue-600 my-4 mb-10">الامتيازات</h1>
+          <LinkBtn href={routes.franchises.root} className="rounded-3xl" variant="blue">
+            عرض الكل
+          </LinkBtn>
+        </div>
+        <div className="grid xl:grid-cols-4 grid-cols-1 gap-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={`loading-card-fr-${i}`}>
+              <FranchiseLoadingCard />
+            </div>
+          ))}
+        </div>
+      </div>
 
-      <HomePartnersList partners={partners} />
+      <div className="p-10 xl:px-24">
+        <h1 className="text-blue-600 my-4 mb-10">شركاء النجاح</h1>
+        <div className="grid xl:grid-cols-6 gap-8 grid-cols-2">
+          {Array.from({ length: 6 }).map((partner) => (
+            <Skeleton key={`loading-partner-${partner}`} className="w-full h-40 rounded-md" />
+          ))}
+        </div>
+      </div>
 
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 my-10">
         <HomeSocialDetails />
