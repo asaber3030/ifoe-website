@@ -8,13 +8,6 @@ export async function middleware(request: NextRequest) {
   const token = (await cookiesStore).get(AUTH_COOKIE_NAME)?.value
   const url = request.nextUrl.pathname
 
-  if (url.includes("admin")) {
-    const admin = await getUser()
-    if (!admin || !admin?.role || admin.role.name !== "Admin") {
-      return NextResponse.redirect(new URL("/login", request.url))
-    }
-  }
-
   if (url.includes("profile")) {
     const user = await getUser()
     if (!token || !user) {
