@@ -47,12 +47,12 @@ export default async function Franchises({ searchParams }: Props) {
 
   return (
     <main>
-      <div className="p-10 xl:px-24" id="franchises-id">
+      <div className='p-10 xl:px-24' id='franchises-id'>
         <FranchisesIntro />
 
-        <div className="mt-10">
-          <div className="flex justify-between flex-wrap">
-            <h1 className="text-blue-600 my-4 mb-10">الامتيازات</h1>
+        <div className='mt-10'>
+          <div className='flex justify-between flex-wrap mb-2'>
+            <h1 className='text-blue-600 my-4'>الامتيازات</h1>
             {categories && countries && (
               <FranchiseFilters categories={categories} countries={countries} />
             )}
@@ -60,7 +60,7 @@ export default async function Franchises({ searchParams }: Props) {
           {franchises?.data.length === 0 ? (
             <EmptyState />
           ) : (
-            <section className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8">
+            <section className='grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8'>
               {franchises?.data.map((franchise, i) => (
                 <FrenchiseCard key={i} franchise={franchise} />
               ))}
@@ -68,7 +68,7 @@ export default async function Franchises({ searchParams }: Props) {
           )}
         </div>
 
-        <div className="mt-4">
+        <div className='mt-4'>
           <PaginateData
             links={franchises?.links!}
             hasNextPage={!!franchises?.next_page_url}

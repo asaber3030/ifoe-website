@@ -13,10 +13,10 @@ import moment from "moment"
 export function BlogPost({ post }: { post: Blog }) {
   return (
     <Card>
-      <CardHeader className="p-2 mb-4 space-y-4">
-        <Link href={routes.blogs.view(post.id)} className="hover:opacity-80">
+      <CardHeader className='p-2 space-y-2'>
+        <Link href={routes.blogs.view(post.id)} className='hover:opacity-80'>
           <img
-            className="w-full object-cover rounded-xl"
+            className='w-full object-cover rounded-xl'
             src={post.image_url}
             alt={post.title}
             width={400}
@@ -24,14 +24,14 @@ export function BlogPost({ post }: { post: Blog }) {
           />
         </Link>
         <div>
-          <CardTitle className="text-xl">{post.title}</CardTitle>
-          <CardDescription className="mb-4">{post.short_text}</CardDescription>
-          <bdi className="text-gray-500 text-sm">{moment(post.created_at).fromNow()}</bdi>
+          <CardTitle className='text-xl'>{post.title}</CardTitle>
+          <CardDescription className='mb-4'>{post.short_text}</CardDescription>
+          <bdi className='text-gray-500 text-sm'>{moment(post.created_at).fromNow()}</bdi>
         </div>
       </CardHeader>
-      <CardFooter className="p-2">
-        <Link href={routes.blogs.view(post.id)} className="w-full block">
-          <Button className="w-full" variant="blue">
+      <CardFooter className='p-2'>
+        <Link href={routes.blogs.view(post.id)} className='w-full block'>
+          <Button className='w-full' variant='blue'>
             اقرأ المزيد
           </Button>
         </Link>

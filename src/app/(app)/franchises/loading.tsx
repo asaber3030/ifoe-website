@@ -1,27 +1,26 @@
 import { FranchisesIntro } from "@/components/app/franchises/intro-section"
 import { FranchiseLoadingCard } from "@/components/app/franchises/loading-card"
 import { FranchisesStartJourneyBox } from "@/components/app/franchises/start-journey-box"
-import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import React from "react"
 
 export default function LoadingFrancises() {
   return (
     <main>
-      <div className="p-10 xl:px-24">
+      <div className='p-10 xl:px-24'>
         <FranchisesIntro />
 
         <div>
-          <div className="flex justify-between flex-wrap">
-            <h1 className="text-blue-600 my-4 mb-10">الامتيازات</h1>
-            <div className="flex gap-2 items-center">
-              <Skeleton className="w-40 h-10" />
-              <Skeleton className="w-40 h-10" />
+          <div className='flex justify-between flex-wrap'>
+            <h1 className='text-blue-600 my-4 mb-10'>الامتيازات</h1>
+            <div className='flex gap-2 items-center'>
+              <Skeleton className='w-40 h-10' />
+              <Skeleton className='w-40 h-10' />
             </div>
           </div>
 
-          <section className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8">
-            {Array.from({ length: 3 }).map((_, index) => (
+          <section className='grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8'>
+            {Array.from({ length: 6 }).map((_, index) => (
               <FranchiseLoadingCard key={`loading-card-${index}-fr`} />
             ))}
           </section>

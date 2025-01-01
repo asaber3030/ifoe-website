@@ -16,15 +16,15 @@ export const Header = () => {
   const isActive = (path: string) => pathname === path
 
   return (
-    <header className="bg-white shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 py-6 flex items-center justify-between">
+    <header className='bg-white shadow-sm border-b'>
+      <div className='max-w-7xl mx-auto px-4 py-6 flex items-center justify-between'>
         <AppLogo />
 
-        <nav className="hidden md:flex space-x-6">
-          <ul className="flex space-x-10 text-gray-600">
+        <nav className='hidden md:flex space-x-6'>
+          <ul className='flex space-x-10 text-gray-600'>
             <li>
               <Link
-                href="/"
+                href='/'
                 className={`${isActive("/") ? "text-blue-500" : "hover:text-gray-400"} ml-10`}
               >
                 الرئيسية
@@ -32,7 +32,7 @@ export const Header = () => {
             </li>
             <li>
               <Link
-                href="/about"
+                href='/about'
                 className={`${isActive("/about") ? "text-blue-500" : "hover:text-gray-400"}`}
               >
                 عنا
@@ -40,7 +40,7 @@ export const Header = () => {
             </li>
             <li>
               <Link
-                href="/blogs"
+                href='/blogs'
                 className={`${isActive("/blogs") ? "text-blue-500" : "hover:text-gray-400"}`}
               >
                 المقالات
@@ -48,7 +48,7 @@ export const Header = () => {
             </li>
             <li>
               <Link
-                href="/franchises"
+                href='/franchises'
                 className={`${isActive("/franchises") ? "text-blue-500" : "hover:text-gray-400"}`}
               >
                 الامتيازات
@@ -56,7 +56,7 @@ export const Header = () => {
             </li>
             <li>
               <Link
-                href="/partners"
+                href='/partners'
                 className={`${isActive("/partners") ? "text-blue-500" : "hover:text-gray-400"}`}
               >
                 شركائنا
@@ -64,7 +64,7 @@ export const Header = () => {
             </li>
             <li>
               <Link
-                href="/contact"
+                href='/contact'
                 className={`${isActive("/contact") ? "text-blue-500" : "hover:text-gray-400"}`}
               >
                 تواصل معنا
@@ -73,8 +73,8 @@ export const Header = () => {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-2">
-          {user ? <HeaderUserItems /> : <HeaderGuestItems />}
+        <div className='flex items-center gap-2'>
+          <div className='hidden xl:block'>{user ? <HeaderUserItems /> : <HeaderGuestItems />}</div>
           <UserSidebar />
         </div>
       </div>

@@ -42,10 +42,10 @@ export const FranchiseFilters = ({ categories, countries }: Props) => {
   }
 
   return (
-    <div className="grid xl:grid-cols-2 grid-cols-1 gap-2">
+    <div className='grid xl:grid-cols-2 grid-cols-1 gap-2'>
       <Select defaultValue={categoryId ?? ""} onValueChange={handleCategoryChange}>
-        <SelectTrigger className="min-w-[250px]">
-          <SelectValue placeholder="اختار القسم" defaultValue={categoryId || ""} />
+        <SelectTrigger className='xl:min-w-[250px] w-full'>
+          <SelectValue placeholder='اختار القسم' defaultValue={categoryId || ""} />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
@@ -60,8 +60,8 @@ export const FranchiseFilters = ({ categories, countries }: Props) => {
       </Select>
 
       <Select defaultValue={countryId ?? ""} onValueChange={handleCountryChange}>
-        <SelectTrigger className="min-w-[250px]">
-          <SelectValue placeholder="اختار الدولة" defaultValue={countryId || ""} />
+        <SelectTrigger className='min-w-[250px]'>
+          <SelectValue placeholder='اختار الدولة' defaultValue={countryId || ""} />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
