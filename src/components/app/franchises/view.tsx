@@ -4,24 +4,23 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { LinkBtn } from "@/components/ui/link-btn"
 import { Separator } from "@/components/ui/separator"
 import { routes } from "@/lib/routes"
-import { Franchise } from "@/types"
+import { Franchise, FranchiseImage } from "@/types"
 import { CalendarIcon, DollarSignIcon, MapPinIcon, UsersIcon } from "lucide-react"
+import { FranchiseImagesCard } from "./franchise-images"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { FranchiseVideoCard } from "./franchise-video"
 
-import Image from "next/image"
+type Props = {
+  images: FranchiseImage[]
+  data: Franchise
+}
 
-export default function FranchiseView({ data }: { data: Franchise }) {
+export default function FranchiseView({ images, data }: Props) {
   if (!data) null
+  console.log(data.id)
 
   return (
     <div className='container mx-auto py-10 px-4'>
-      <Image
-        src='/bg.jpg'
-        className='max-w-full h-[300px] object-cover rounded-md mb-4'
-        width={1000}
-        height={1000}
-        alt='Franchise Image'
-      />
-
       <Card className='w-full'>
         <CardHeader>
           <div className='flex justify-between'>
@@ -118,7 +117,9 @@ export default function FranchiseView({ data }: { data: Franchise }) {
               </CardContent>
             </Card>
           </div>
+
           <Separator className='my-6' />
+
           <div className='grid gap-6 md:grid-cols-4'>
             <Card>
               <CardHeader>
@@ -152,6 +153,7 @@ export default function FranchiseView({ data }: { data: Franchise }) {
                 </p>
               </CardContent>
             </Card>
+
             <Card>
               <CardHeader>
                 <CardTitle>فترة العقود</CardTitle>
@@ -163,6 +165,27 @@ export default function FranchiseView({ data }: { data: Franchise }) {
               </CardContent>
             </Card>
           </div>
+
+          <Tabs defaultValue='video' className='mx-auto mt-5 justify-center'>
+            <TabsList className='justify-center mx-auto w-fit flex'>
+              <TabsTrigger value='video'>الفيديو</TabsTrigger>
+              <TabsTrigger value='images'>الصور</TabsTrigger>
+            </TabsList>
+            <TabsContent value='video'>
+              {data?.video_url ? (
+                <FranchiseVideoCard videoUrl={data?.video_url} thumbnail={data.image_url} />
+              ) : (
+                <p className='text-center my-5 text-lg text-gray-500'>لا يوجد فيديو</p>
+              )}
+            </TabsContent>
+            <TabsContent value='images'>
+              {images?.length > 0 ? (
+                <FranchiseImagesCard images={images} />
+              ) : (
+                <p className='text-center my-5 text-lg text-gray-500'>لا يوجد صور.</p>
+              )}
+            </TabsContent>
+          </Tabs>
         </CardContent>
       </Card>
     </div>

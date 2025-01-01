@@ -117,6 +117,7 @@ export type Franchise = {
   category_id: number
   country_id: number
   image_url: string
+  video_url: string
   number_of_branches: number
   space_required_id: number
   number_of_labors: number
@@ -149,6 +150,7 @@ export type Blog = {
   title: string
   short_text: string
   blog_content: string
+  keywords: string
   image_url: string
   created_at: Date
   updated_at: Date

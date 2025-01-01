@@ -19,13 +19,12 @@ import { deleteFranchiseAction } from "@/actions/franchises"
 
 export function FranchisesTable({ franchises }: { franchises: Franchise[] }) {
   return (
-    <div className="mt-4">
+    <div className='mt-4'>
       <Table>
         <TableHeader>
           <TableRow>
             <TableHead>رقم التعريف</TableHead>
             <TableHead>الاسم</TableHead>
-            <TableHead>الوصف</TableHead>
             <TableHead>الصورة</TableHead>
             <TableHead>حرر</TableHead>
           </TableRow>
@@ -35,28 +34,27 @@ export function FranchisesTable({ franchises }: { franchises: Franchise[] }) {
             <TableRow key={index}>
               <TableCell>{fr.id}</TableCell>
               <TableCell>{fr.name}</TableCell>
-              <TableCell className="line-clamp-1">{fr.description}</TableCell>
               <TableCell>
                 <img
                   src={fr.image_url}
-                  alt="Franchise Image"
+                  alt='Franchise Image'
                   width={60}
                   height={60}
-                  className="object-cover rounded-md"
+                  className='object-cover rounded-md'
                 />
               </TableCell>
-              <TableCell className="flex gap-2">
-                <LinkBtn href={adminRoutes.franchises.images(fr.id)} variant="outline" size="icon">
+              <TableCell className='flex gap-2'>
+                <LinkBtn href={adminRoutes.franchises.images(fr.id)} variant='outline' size='icon'>
                   <ImageIcon size={16} />
                 </LinkBtn>
                 <LinkBtn
                   href={adminRoutes.franchises.requests(fr.id)}
-                  variant="outline"
-                  size="icon"
+                  variant='outline'
+                  size='icon'
                 >
                   <Eye size={16} />
                 </LinkBtn>
-                <LinkBtn href={adminRoutes.franchises.update(fr.id)} variant="outline" size="icon">
+                <LinkBtn href={adminRoutes.franchises.update(fr.id)} variant='outline' size='icon'>
                   <Edit size={16} />
                 </LinkBtn>
                 <DeleteModal deletedId={fr.id} forceAction={deleteFranchiseAction} />
