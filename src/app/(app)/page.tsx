@@ -32,31 +32,28 @@ export default async function Home() {
     <main>
       <HomeBanner />
 
-      <div className="container mx-auto px-4 py-16 text-center lg:text-left flex flex-col lg:flex-row items-center space-y-10 lg:space-y-0 lg:space-x-10">
-        <div className="w-full lg:w-1/2">
+      <div className='container mx-auto px-4 py-16 text-center lg:text-left flex flex-col lg:flex-row items-center space-y-10 lg:space-y-0 lg:space-x-10'>
+        <div className='w-full lg:w-1/2'>
           <Image
-            src="/bg.jpg"
-            alt="Hero Image"
-            className="rounded-md ml-auto"
+            src='/bg.jpg'
+            alt='Hero Image'
+            className='rounded-md ml-auto'
             width={500}
             height={500}
           />
         </div>
 
-        <div className="max-w-lg md:text-right text-center">
-          <h1 className="font-bold text-gray-800">
-            <span className="text-blue-600">معرض </span>
-            الامتياز التجاري الدولي
-          </h1>
-          <p className="mt-4 text-gray-600 text-lg">
+        <div className='max-w-lg md:text-right text-center'>
+          <h1 className='font-bold text-gray-800'>الامتياز التجاري الدولي</h1>
+          <p className='mt-4 text-gray-600 text-lg'>
             Your ultimate destination for fixing things with ease. Discover our range of services
             tailored just for you.
           </p>
-          <div className="mt-6 flex gap-2 md:justify-start justify-center space-x-4">
-            <LinkBtn variant="outlineBlue" href="/about">
+          <div className='mt-6 flex gap-2 md:justify-start justify-center space-x-4'>
+            <LinkBtn variant='outlineBlue' href='/about'>
               تعرف علينا أكثر
             </LinkBtn>
-            <LinkBtn variant="blue" href="/contact">
+            <LinkBtn variant='blue' href='/contact'>
               تواصل معنا
             </LinkBtn>
           </div>
@@ -67,7 +64,7 @@ export default async function Home() {
 
       <HomePartnersList partners={partners} />
 
-      <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 my-10">
+      <div className='container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 my-10'>
         <HomeSocialDetails />
         <ContactForm />
       </div>

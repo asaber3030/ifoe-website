@@ -13,42 +13,52 @@ import {
   SheetContent,
   SheetTrigger
 } from "@/components/ui/sheet"
-import { Menu } from "lucide-react"
+import { LogIn, Menu, UserPlus } from "lucide-react"
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa"
 import { AppLogo } from "../logo"
+import { useUser } from "@/hooks/use-user"
+import { HeaderUserItems } from "./user-items"
+import { useState } from "react"
 
 export const UserSidebar = () => {
   const pathname = usePathname()
   const isActive = (path: string) => pathname === path
+  const user = useUser()
+
+  const [open, setOpen] = useState(false)
+
+  const hideSheet = () => {
+    setOpen(false)
+  }
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button size="icon" variant="blue">
+        <Button size='icon' variant='blue'>
           <Menu size={17} />
         </Button>
       </SheetTrigger>
       <SheetContent>
-        <SheetHeader className="mt-4">
+        <SheetHeader className='mt-4'>
           <SheetTitle>
             <AppLogo />
           </SheetTitle>
         </SheetHeader>
 
-        <div className="p-6">
-          <nav className="mt-6 space-y-4">
-            <ul className="space-y-4">
-              <li>
+        <div className='p-6'>
+          <nav className='mt-6 space-y-4'>
+            <ul className='space-y-4'>
+              <li onClick={hideSheet}>
                 <Link
-                  href="/"
+                  href='/'
                   className={`block ${isActive("/") ? "text-blue-500" : "hover:text-gray-400"}`}
                 >
                   الرئيسية
                 </Link>
               </li>
-              <li>
+              <li onClick={hideSheet}>
                 <Link
-                  href="/blogs"
+                  href='/blogs'
                   className={`block ${
                     isActive("/blogs") ? "text-blue-500" : "hover:text-gray-400"
                   }`}
@@ -56,9 +66,9 @@ export const UserSidebar = () => {
                   المقالات
                 </Link>
               </li>
-              <li>
+              <li onClick={hideSheet}>
                 <Link
-                  href="/about"
+                  href='/about'
                   className={`block ${
                     isActive("/about") ? "text-blue-500" : "hover:text-gray-400"
                   }`}
@@ -66,9 +76,9 @@ export const UserSidebar = () => {
                   من نحن
                 </Link>
               </li>
-              <li>
+              <li onClick={hideSheet}>
                 <Link
-                  href="/franchises"
+                  href='/franchises'
                   className={`block ${
                     isActive("/franchises") ? "text-blue-500" : "hover:text-gray-400"
                   }`}
@@ -76,9 +86,9 @@ export const UserSidebar = () => {
                   الامتيازات
                 </Link>
               </li>
-              <li>
+              <li onClick={hideSheet}>
                 <Link
-                  href="/partners"
+                  href='/partners'
                   className={`block ${
                     isActive("/partners") ? "text-blue-500" : "hover:text-gray-400"
                   }`}
@@ -88,7 +98,7 @@ export const UserSidebar = () => {
               </li>
               <li>
                 <Link
-                  href="/contact"
+                  href='/contact'
                   className={`block ${
                     isActive("/contact") ? "text-blue-500" : "hover:text-gray-400"
                   }`}
@@ -96,31 +106,60 @@ export const UserSidebar = () => {
                   تواصل معنا
                 </Link>
               </li>
+
+              {!user ? (
+                <>
+                  <li onClick={hideSheet}>
+                    <Link
+                      href='/register'
+                      className={`flex gap-2 items-center ${
+                        isActive("/register") ? "text-blue-500" : "hover:text-gray-400"
+                      }`}
+                    >
+                      <UserPlus size={16} />
+                      تسجيل حساب جديد
+                    </Link>
+                  </li>
+                  <li onClick={hideSheet}>
+                    <Link
+                      href='/login'
+                      className={`flex gap-2 items-center ${
+                        isActive("/login") ? "text-blue-500" : "hover:text-gray-400"
+                      }`}
+                    >
+                      <LogIn size={16} />
+                      تسجيل الدخول
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <HeaderUserItems />
+              )}
             </ul>
           </nav>
 
-          <div className="flex gap-4 text-blue-700 mt-6">
+          <div className='flex gap-4 text-blue-700 mt-6'>
             {/* Social Icons */}
-            <a href="#" className="text-xl hover:text-gray-300 ml-4">
+            <a href='#' className='text-xl hover:text-gray-300 ml-4'>
               <FaFacebook />
             </a>
-            <a href="#" className="text-xl hover:text-gray-300">
+            <a href='#' className='text-xl hover:text-gray-300'>
               <FaTwitter />
             </a>
-            <a href="#" className="text-xl hover:text-gray-300">
+            <a href='#' className='text-xl hover:text-gray-300'>
               <FaInstagram />
             </a>
-            <a href="#" className="text-xl hover:text-gray-300">
+            <a href='#' className='text-xl hover:text-gray-300'>
               <FaLinkedin />
             </a>
-            <a href="#" className="text-xl hover:text-gray-300">
+            <a href='#' className='text-xl hover:text-gray-300'>
               <FaYoutube />
             </a>
           </div>
 
-          <div className="mt-8 flex gap-5">
-            <p className="text-sm text-gray-600">info@example.com</p>
-            <p className="text-sm text-gray-600">+123456789</p>
+          <div className='mt-8 flex gap-5'>
+            <p className='text-sm text-gray-600'>info@example.com</p>
+            <p className='text-sm text-gray-600'>+123456789</p>
           </div>
         </div>
       </SheetContent>

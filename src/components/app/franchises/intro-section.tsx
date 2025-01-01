@@ -1,37 +1,68 @@
+"use client"
+
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Search, FileText, Users, TrendingUp } from "lucide-react"
+import Link from "next/link"
+
+const services = [
+  {
+    title: "البحث عن الامتياز",
+    description: "ابحث عن فرصة الامتياز المثالية التي تتناسب مع اهتماماتك وميزانيتك.",
+    icon: Search,
+    action: "ابدأ البحث",
+    link: "/search"
+  },
+  {
+    title: "مساعدة في الوثائق",
+    description: "احصل على مساعدة خبراء في جميع المستندات القانونية والأوراق المطلوبة.",
+    icon: FileText,
+    action: "احصل على المساعدة",
+    link: "/documentation"
+  },
+  {
+    title: "شبكة أصحاب الامتياز",
+    description: "تواصل مع أصحاب الامتياز الآخرين لتبادل الخبرات وأفضل الممارسات.",
+    icon: Users,
+    action: "انضم إلى الشبكة",
+    link: "/network"
+  },
+  {
+    title: "استراتيجيات النمو",
+    description: "اطلع على استراتيجيات مصممة خصيصًا لنمو وتوسيع أعمال الامتياز الخاصة بك.",
+    icon: TrendingUp,
+    action: "استكشف الاستراتيجيات",
+    link: "/growth"
+  }
+]
+
 export const FranchisesIntro = () => {
   return (
-    <div className="bg-gray-100">
-      <header className="bg-white shadow">
-        <div className="mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900">الامتيازات الخاصة بنا</h1>
-        </div>
-      </header>
-      <main>
-        <div className="mx-auto py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-6 sm:px-0">
-            <div className="border-4 border-dashed border-gray-200 rounded-lg p-6">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">مرحبًا بكم في IFOE</h2>
-              <div className="space-y-6">
-                <p className="text-lg text-gray-700">
-                  اكتشف عالماً من الفرص مع مجموعتنا المتنوعة من الامتيازات. سواء كنت شغوفًا بالطعام
-                  أو اللياقة البدنية أو الخدمات، لدينا الامتياز المثالي لمساعدتك في تحقيق أحلامك
-                  الريادية.
-                </p>
-                <div className="bg-white p-6 rounded-lg shadow-md">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">لماذا تختار IFOE؟</h3>
-                  <ul className="list-disc list-inside space-y-2 text-gray-700">
-                    <li>نماذج أعمال مثبتة مع اعتراف واسع بالعلامة التجارية</li>
-                    <li>تدريب شامل ودعم مستمر</li>
-                    <li>الوصول إلى أنظمة وتقنيات خاصة</li>
-                    <li>مساعدة في التسويق والإعلانات</li>
-                    <li>قوة شراء جماعية ومزايا في سلسلة التوريد</li>
-                  </ul>
+    <section className='py-8 bg-gray-50 rounded-md shadow-md border'>
+      <div className='container mx-auto px-4'>
+        <h2 className='text-3xl font-bold mb-8'>الخدمات الخاصة بنا</h2>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
+          {services.map((service, index) => (
+            <Card
+              key={index}
+              className='flex flex-col h-full transition-all duration-300 hover:shadow-lg'
+            >
+              <CardHeader>
+                <div className='w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4'>
+                  <service.icon className='w-6 h-6 text-blue-600' />
                 </div>
-              </div>
-            </div>
-          </div>
+                <CardTitle className='text-xl mb-2'>{service.title}</CardTitle>
+                <CardDescription>{service.description}</CardDescription>
+              </CardHeader>
+              <CardFooter className='mt-auto'>
+                <Link href={service.link} passHref className='w-full'>
+                  <Button className='w-full'>{service.action}</Button>
+                </Link>
+              </CardFooter>
+            </Card>
+          ))}
         </div>
-      </main>
-    </div>
+      </div>
+    </section>
   )
 }

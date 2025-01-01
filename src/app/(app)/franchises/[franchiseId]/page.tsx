@@ -2,6 +2,7 @@ import FranchiseView from "@/components/app/franchises/view"
 
 import { getFranchise } from "@/actions/franchises"
 import { notFound } from "next/navigation"
+import LoadingFrancises from "./loading"
 
 type Props = {
   params: Promise<{ franchiseId: string }>
@@ -14,9 +15,5 @@ export default async function FranchiseIdPage({ params }: Props) {
 
   if (isNaN(franchiseId) || !franchise) notFound()
 
-  return (
-    <div>
-      <FranchiseView data={franchise} />
-    </div>
-  )
+  return <FranchiseView data={franchise} />
 }
