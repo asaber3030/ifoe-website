@@ -30,10 +30,12 @@ type Props = {
 type TMutation = {
   data: z.infer<typeof FranchiseSchema.Update>
   file: File | null
+  video: File | null
 }
 
 export const UpdateFranchiseForm = ({ franchise, categories, countries, units }: Props) => {
   const [file, setFile] = useState<File | null>(null)
+  const [video, setVideo] = useState<File | null>(null)
   const [filePreview, setFilePreview] = useState<string>("/bg.jpg")
 
   const form = useForm({
@@ -75,7 +77,14 @@ export const UpdateFranchiseForm = ({ franchise, categories, countries, units }:
 
   const updateMutatuion = useMutation({
     mutationFn: ({ data, file }: TMutation) =>
-      updateFranchiseAction(franchise.id, data, franchise.image_url, file),
+      updateFranchiseAction(
+        franchise.id,
+        data,
+        franchise.image_url,
+        franchise.video_url,
+        file,
+        video
+      ),
     onSuccess: (data) =>
       showResponse(data, () => {
         if (data.status === 200 || data.status === 201) {
@@ -95,47 +104,48 @@ export const UpdateFranchiseForm = ({ franchise, categories, countries, units }:
 
     updateMutatuion.mutate({
       data: form.getValues() as any as z.infer<typeof FranchiseSchema.Update>,
-      file
+      file,
+      video
     })
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-        <InputField name="name" label="الاسم" control={form.control} />
-        <InputField isTextarea name="description" label="الوصف" control={form.control} />
+      <form onSubmit={form.handleSubmit(handleSubmit)} className='space-y-4'>
+        <InputField name='name' label='الاسم' control={form.control} />
+        <InputField isTextarea name='description' label='الوصف' control={form.control} />
         <InputField
-          name="number_of_branches"
-          label="عدد الفروع"
+          name='number_of_branches'
+          label='عدد الفروع'
           control={form.control}
           valuseAsNumber
-          type="number"
+          type='number'
         />
         <InputField
           valuseAsNumber
-          name="number_of_labors"
-          label="عدد الموظفين"
+          name='number_of_labors'
+          label='عدد الموظفين'
           control={form.control}
-          type="number"
+          type='number'
         />
         <InputField
           valuseAsNumber
-          name="establish_year"
-          label="تاريخ الانشاء"
+          name='establish_year'
+          label='تاريخ الانشاء'
           control={form.control}
-          type="number"
+          type='number'
         />
 
-        <InputField name="center_office" label="مركز المكتب" control={form.control} />
+        <InputField name='center_office' label='مركز المكتب' control={form.control} />
 
         {/* Categories & Countries */}
-        <div className="grid xl:grid-cols-2 grid-cols-1 gap-4">
+        <div className='grid xl:grid-cols-2 grid-cols-1 gap-4'>
           <SelectField
             defaultValue={franchise.category_id.toString()}
             valueAsNumber
-            name="category_id"
+            name='category_id'
             control={form.control}
-            label="القسم"
+            label='القسم'
           >
             {categories.map((category) => (
               <SelectItem key={`category-${category.id}`} value={category.id.toString()}>
@@ -147,9 +157,9 @@ export const UpdateFranchiseForm = ({ franchise, categories, countries, units }:
           <SelectField
             defaultValue={franchise.country_id.toString()}
             valueAsNumber
-            name="country_id"
+            name='country_id'
             control={form.control}
-            label="الدولة"
+            label='الدولة'
           >
             {countries.map((country) => (
               <SelectItem key={`country-${country.id}`} value={country.id.toString()}>
@@ -159,15 +169,15 @@ export const UpdateFranchiseForm = ({ franchise, categories, countries, units }:
           </SelectField>
         </div>
 
-        <div className="grid grid-cols-1 gap-4">
+        <div className='grid grid-cols-1 gap-4'>
           {/* Space */}
-          <div className="grid xl:grid-cols-5 grid-cols-1 gap-2">
-            <div className="col-span-1">
+          <div className='grid xl:grid-cols-5 grid-cols-1 gap-2'>
+            <div className='col-span-1'>
               <SelectField
                 valueAsNumber
-                name="space_required.unit_id"
+                name='space_required.unit_id'
                 control={form.control}
-                label="الوحدة"
+                label='الوحدة'
                 defaultValue={franchise.space_required.unit_id.toString()}
               >
                 {units.map((unit) => (
@@ -177,25 +187,25 @@ export const UpdateFranchiseForm = ({ franchise, categories, countries, units }:
                 ))}
               </SelectField>
             </div>
-            <div className="col-span-4">
+            <div className='col-span-4'>
               <InputField
-                name="space_required.value"
-                label="قيمة وحدة المساحات"
+                name='space_required.value'
+                label='قيمة وحدة المساحات'
                 control={form.control}
                 valuseAsNumber
-                type="number"
+                type='number'
               />
             </div>
           </div>
 
           {/* Equipment */}
-          <div className="grid xl:grid-cols-5 grid-cols-1 gap-2">
-            <div className="col-span-1">
+          <div className='grid xl:grid-cols-5 grid-cols-1 gap-2'>
+            <div className='col-span-1'>
               <SelectField
                 valueAsNumber
-                name="equipment_cost.unit_id"
+                name='equipment_cost.unit_id'
                 control={form.control}
-                label="الوحدة"
+                label='الوحدة'
                 defaultValue={franchise.equipment_cost.unit_id.toString()}
               >
                 {units.map((unit) => (
@@ -205,26 +215,26 @@ export const UpdateFranchiseForm = ({ franchise, categories, countries, units }:
                 ))}
               </SelectField>
             </div>
-            <div className="col-span-4">
+            <div className='col-span-4'>
               <InputField
-                name="equipment_cost.value"
-                label="تكلفة الادوات"
+                name='equipment_cost.value'
+                label='تكلفة الادوات'
                 control={form.control}
                 valuseAsNumber
-                type="number"
+                type='number'
               />
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-4">
-          <div className="grid xl:grid-cols-5 grid-cols-1 gap-2">
-            <div className="col-span-1">
+        <div className='grid grid-cols-1 gap-4'>
+          <div className='grid xl:grid-cols-5 grid-cols-1 gap-2'>
+            <div className='col-span-1'>
               <SelectField
                 valueAsNumber
-                name="training_period.unit_id"
+                name='training_period.unit_id'
                 control={form.control}
-                label="الوحدة"
+                label='الوحدة'
                 defaultValue={franchise.training_period.unit_id.toString()}
               >
                 {units.map((unit) => (
@@ -234,24 +244,24 @@ export const UpdateFranchiseForm = ({ franchise, categories, countries, units }:
                 ))}
               </SelectField>
             </div>
-            <div className="col-span-4">
+            <div className='col-span-4'>
               <InputField
-                name="training_period.value"
-                label="تكلفة فترة التدريب"
+                name='training_period.value'
+                label='تكلفة فترة التدريب'
                 control={form.control}
                 valuseAsNumber
-                type="number"
+                type='number'
               />
             </div>
           </div>
 
-          <div className="grid xl:grid-cols-5 grid-cols-1 gap-2">
-            <div className="col-span-1">
+          <div className='grid xl:grid-cols-5 grid-cols-1 gap-2'>
+            <div className='col-span-1'>
               <SelectField
                 valueAsNumber
-                name="contract_period.unit_id"
+                name='contract_period.unit_id'
                 control={form.control}
-                label="الوحدة"
+                label='الوحدة'
                 defaultValue={franchise.contract_period.unit_id.toString()}
               >
                 {units.map((unit) => (
@@ -261,46 +271,48 @@ export const UpdateFranchiseForm = ({ franchise, categories, countries, units }:
                 ))}
               </SelectField>
             </div>
-            <div className="col-span-4">
+            <div className='col-span-4'>
               <InputField
-                name="contract_period.value"
-                label="تكلفة الادوات"
+                name='contract_period.value'
+                label='تكلفة الادوات'
                 control={form.control}
                 valuseAsNumber
-                type="number"
+                type='number'
               />
             </div>
           </div>
         </div>
 
-        <div className="border p-4 rounded-md bg-white shadow-md">
-          <h1 className="text-lg mb-4">خصائص الخدمات</h1>
+        <div className='border p-4 rounded-md bg-white shadow-md'>
+          <h1 className='text-lg mb-4'>خصائص الخدمات</h1>
 
-          <div className="grid xl:grid-cols-2 grid-cols-1 gap-4">
+          <div className='grid xl:grid-cols-2 grid-cols-1 gap-4'>
             <InputField
-              name="franchise_characteristics.franchise_fees"
-              label="تكلفة الامتياز"
+              name='franchise_characteristics.franchise_fees'
+              label='تكلفة الامتياز'
               control={form.control}
             />
             <InputField
-              name="franchise_characteristics.royalty_fees"
-              label="رسوم الامتياز"
+              name='franchise_characteristics.royalty_fees'
+              label='رسوم الامتياز'
               control={form.control}
             />
             <InputField
-              name="franchise_characteristics.marketing_fees"
-              label="تكلفة التسويق"
+              name='franchise_characteristics.marketing_fees'
+              label='تكلفة التسويق'
               control={form.control}
             />
             <InputField
-              name="franchise_characteristics.investments_cost"
-              label="تكلفة الاستثمار"
+              name='franchise_characteristics.investments_cost'
+              label='تكلفة الاستثمار'
               control={form.control}
             />
           </div>
         </div>
 
-        <FileField setPreviewUrl={setFilePreview} label="الصورة" onChange={setFile} />
+        <FileField setPreviewUrl={setFilePreview} label='الصورة' onChange={setFile} />
+        <FileField accept='video/mp4,video/x-m4v,video/*' label='الفيديو' onChange={setVideo} />
+
         <LoadingButton loading={updateMutatuion.isPending}>تعديل</LoadingButton>
       </form>
     </Form>

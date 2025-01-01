@@ -1,15 +1,11 @@
-import { FranchisesIntro } from "@/components/app/franchises/intro-section"
 import { FranchiseLoadingCard } from "@/components/app/franchises/loading-card"
 import { FranchisesStartJourneyBox } from "@/components/app/franchises/start-journey-box"
 import { Skeleton } from "@/components/ui/skeleton"
-import React from "react"
 
 export default function LoadingFrancises() {
   return (
     <main>
       <div className='p-10 xl:px-24'>
-        <FranchisesIntro />
-
         <div>
           <div className='flex justify-between flex-wrap'>
             <h1 className='text-blue-600 my-4 mb-10'>الامتيازات</h1>

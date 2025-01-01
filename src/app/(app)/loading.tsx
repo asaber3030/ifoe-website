@@ -35,10 +35,7 @@ export default function HomeLoading() {
         </div>
 
         <div className='max-w-lg md:text-right text-center'>
-          <h1 className='font-bold text-gray-800'>
-            <span className='text-blue-600'>معرض </span>
-            الامتياز التجاري الدولي
-          </h1>
+          <h1 className='font-bold text-gray-800'>الامتياز التجاري الدولي</h1>
           <p className='mt-4 text-gray-600 text-lg'>
             Your ultimate destination for fixing things with ease. Discover our range of services
             tailored just for you.

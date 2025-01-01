@@ -41,7 +41,8 @@ export async function getLastAddedBlog() {
 export async function createBlogAction(
   data: z.infer<typeof BlogSchema.Create>,
   file: File | null,
-  blogContent: string
+  blogContent: string,
+  keywords: string
 ): Promise<APIResponse<any>> {
   try {
     const storageRef = ref(storage, `blogs/${uuid()}`)
@@ -56,7 +57,8 @@ export async function createBlogAction(
         title: data.title,
         short_text: data.shortText,
         image_url: imageUrl,
-        blog_content: blogContent
+        blog_content: blogContent,
+        keywords
       }),
       headers: defaultHeaders({
         Authorization: `Bearer ${token}`
@@ -75,7 +77,8 @@ export async function updateBlogAction(
   data: z.infer<typeof BlogSchema.Create>,
   defaultImageUrl: string,
   file: File | null,
-  blogContent: string
+  blogContent: string,
+  keywords: string
 ): Promise<APIResponse<any>> {
   let imageUrl = defaultImageUrl
 
@@ -93,7 +96,8 @@ export async function updateBlogAction(
         title: data.title,
         short_text: data.shortText,
         image_url: imageUrl,
-        blog_content: blogContent
+        blog_content: blogContent,
+        keywords
       }),
       headers: defaultHeaders({
         Authorization: `Bearer ${token}`

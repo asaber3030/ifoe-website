@@ -48,8 +48,6 @@ export default async function Franchises({ searchParams }: Props) {
   return (
     <main>
       <div className='p-10 xl:px-24' id='franchises-id'>
-        <FranchisesIntro />
-
         <div className='mt-10'>
           <div className='flex justify-between flex-wrap mb-2'>
             <h1 className='text-blue-600 my-4'>الامتيازات</h1>

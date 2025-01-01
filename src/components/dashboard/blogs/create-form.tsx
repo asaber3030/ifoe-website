@@ -7,32 +7,34 @@ import { useForm } from "react-hook-form"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 
+import { LoadingButton } from "@/components/common/loading-button"
+import { InputField } from "@/components/common/input-field"
 import { BlogSchema } from "@/lib/schema"
 import { Form } from "@/components/ui/form"
-import { InputField } from "@/components/common/input-field"
 import { FileField } from "@/components/common/file-field"
-import { LoadingButton } from "@/components/common/loading-button"
-import { Editor } from "@tinymce/tinymce-react"
-
-import { zodResolver } from "@hookform/resolvers/zod"
-import { showResponse, validateFile } from "@/lib/utils"
-import { z } from "zod"
-
-import { createBlogAction } from "@/actions/blogs"
-import { toast } from "react-toastify"
-import { adminRoutes } from "@/lib/routes"
 import { Textarea } from "@/components/ui/textarea"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+
+import { showResponse, validateFile } from "@/lib/utils"
+import { createBlogAction } from "@/actions/blogs"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { adminRoutes } from "@/lib/routes"
+import { toast } from "react-toastify"
+import { z } from "zod"
 
 type TMutation = {
   data: z.infer<typeof BlogSchema.Create>
   file: File | null
   blogContent: string
+  keywords: string
 }
 
 export const CreateBlogForm = () => {
   const [file, setFile] = useState<File | null>(null)
   const [blogContent, setBlogContent] = useState<string>("")
   const [filePreview, setFilePreview] = useState<string>("/bg.jpg")
+  const [keywords, setKeywords] = useState<string>("")
 
   const router = useRouter()
 
@@ -44,19 +46,15 @@ export const CreateBlogForm = () => {
     }
   })
 
-  const handleEditorChange = (value: any) => {
-    setBlogContent(value)
-  }
-
   const updateMutation = useMutation({
-    mutationFn: ({ data, file, blogContent }: TMutation) =>
-      createBlogAction(data, file, blogContent),
+    mutationFn: ({ data, file, blogContent, keywords }: TMutation) =>
+      createBlogAction(data, file, blogContent, keywords),
     onSuccess: (data) =>
       showResponse(data, () => {
         router.push(adminRoutes.blogs.root)
       }),
     onError: (error) => {
-      console.log({ error })
+      console.error({ error })
     }
   })
 
@@ -66,32 +64,52 @@ export const CreateBlogForm = () => {
       toast.error(validation.message)
       return
     }
-    updateMutation.mutate({ data: form.getValues(), file, blogContent })
+    updateMutation.mutate({ data: form.getValues(), file, blogContent, keywords })
   }
 
   return (
-    <div className="grid xl:grid-cols-5 gap-4">
-      <div className="xl:col-span-3">
+    <div className='grid xl:grid-cols-5 gap-4'>
+      <div className='xl:col-span-3'>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-            <InputField name="title" label="العنوان" control={form.control} />
-            <InputField name="shortText" label="الوصف القصير" control={form.control} isTextarea />
-            <Textarea
-              placeholder="الوصف"
-              onChange={(event) => setBlogContent(event.target.value)}
-            />
-            <FileField setPreviewUrl={setFilePreview} label="الصورة" onChange={setFile} />
+          <form onSubmit={form.handleSubmit(handleSubmit)} className='space-y-4'>
+            <InputField name='title' label='العنوان' control={form.control} />
+            <InputField name='shortText' label='الوصف القصير' control={form.control} isTextarea />
+
+            <div>
+              <Label className='mb-1'>الوصف العام للمقالة</Label>
+              <Textarea className='h-44' onChange={(event) => setBlogContent(event.target.value)} />
+            </div>
+
+            <div>
+              <Label className='mb-1'>الكلمات الدلالية</Label>
+              <Input value={keywords} onChange={(e) => setKeywords(e.target.value)} />
+              <p className='text-xs text-gray-500 mt-1'>اكتب الكلمات الدلالية بينها فاصلة.</p>
+            </div>
+
+            <div className='flex flex-wrap gap-1 items-center'>
+              {[...new Set(keywords.split(","))].map((keyword, index) => (
+                <>
+                  {keyword && (
+                    <div key={index} className='bg-white rounded-md p-1 text-xs px-2 border'>
+                      {keyword}
+                    </div>
+                  )}
+                </>
+              ))}
+            </div>
+
+            <FileField setPreviewUrl={setFilePreview} label='الصورة' onChange={setFile} />
             <LoadingButton loading={updateMutation.isPending}>انشاء</LoadingButton>
           </form>
         </Form>
       </div>
 
-      <div className="xl:col-span-2">
-        <h3 className="text-3xl font-bold mb-4 mt-4">صورة المقالة</h3>
+      <div className='xl:col-span-2'>
+        <h3 className='text-3xl font-bold mb-4 mt-4'>صورة المقالة</h3>
         <Image
-          className="w-full h-auto rounded-xl"
+          className='w-full h-auto rounded-xl'
           src={filePreview}
-          alt="Image"
+          alt='Image'
           width={1000}
           height={1000}
         />

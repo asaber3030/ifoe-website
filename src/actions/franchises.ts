@@ -56,12 +56,17 @@ export async function getFranchise(franchiseId: number) {
 
 export async function createFranchiseAction(
   values: z.infer<typeof FranchiseSchema.Create>,
-  file: File | null
+  file: File | null,
+  video: File | null
 ) {
   try {
     const storageRef = ref(storage, `blogs/${uuid()}`)
     const uploaded = await uploadBytes(storageRef, file as any)
     const imageUrl = await getDownloadURL(storageRef)
+
+    const storageVideosRef = ref(storage, `franchises/videos/${uuid()}`)
+    const uploadedVideo = await uploadBytes(storageVideosRef, video as any)
+    const videoUrl = await getDownloadURL(storageVideosRef)
 
     const user = await getUser()
     const token = await getAuthorizationToken()
@@ -70,7 +75,8 @@ export async function createFranchiseAction(
       body: JSON.stringify({
         ...values,
         added_by: user?.id,
-        image_url: imageUrl
+        image_url: imageUrl,
+        video_url: videoUrl
       }),
       headers: defaultHeaders({
         Authorization: `Bearer ${token}`
@@ -88,18 +94,25 @@ export async function updateFranchiseAction(
   franchiseId: number,
   values: z.infer<typeof FranchiseSchema.Update>,
   defaultImageUrl: string,
-  file: File | null
+  defaultVideoUrl: string,
+  file: File | null,
+  video: File | null
 ) {
   try {
     let imageUrl = defaultImageUrl
+    let videoUrl = defaultVideoUrl
 
     if (file) {
-      const storageRef = ref(storage, `blogs/${uuid()}`)
+      const storageRef = ref(storage, `franchises/videos/${uuid()}`)
       const uploaded = await uploadBytes(storageRef, file as any)
       imageUrl = await getDownloadURL(storageRef)
     }
 
-    const user = await getUser()
+    if (video) {
+      const storageVideoRef = ref(storage, `franchises/videos/${uuid()}`)
+      const uploaded = await uploadBytes(storageVideoRef, video as any)
+      videoUrl = await getDownloadURL(storageVideoRef)
+    }
 
     const token = await getAuthorizationToken()
     const res = await fetch(`${API_URL}/franchises/${franchiseId}`, {
@@ -107,7 +120,7 @@ export async function updateFranchiseAction(
       body: JSON.stringify({
         ...values,
         image_url: imageUrl,
-        added_by: user?.id
+        video_url: videoUrl
       }),
       headers: defaultHeaders({
         Authorization: `Bearer ${token}`

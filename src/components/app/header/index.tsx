@@ -48,6 +48,14 @@ export const Header = () => {
             </li>
             <li>
               <Link
+                href='/services'
+                className={`${isActive("/services") ? "text-blue-500" : "hover:text-gray-400"}`}
+              >
+                الخدمات
+              </Link>
+            </li>
+            <li>
+              <Link
                 href='/franchises'
                 className={`${isActive("/franchises") ? "text-blue-500" : "hover:text-gray-400"}`}
               >
