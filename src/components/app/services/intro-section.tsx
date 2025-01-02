@@ -7,28 +7,28 @@ import Link from "next/link"
 
 const services = [
   {
-    title: "البحث عن الامتياز",
+    title: "استثمر في سوق الفرانشايز",
     description: "ابحث عن فرصة الامتياز المثالية التي تتناسب مع اهتماماتك وميزانيتك.",
     icon: Search,
     action: "ابدأ البحث",
     link: "/search"
   },
   {
-    title: "مساعدة في الوثائق",
+    title: "اطلب استشارة",
     description: "احصل على مساعدة خبراء في جميع المستندات القانونية والأوراق المطلوبة.",
     icon: FileText,
     action: "احصل على المساعدة",
     link: "/documentation"
   },
   {
-    title: "شبكة أصحاب الامتياز",
+    title: "اجعل البراند الخاص بك فرانشايز",
     description: "تواصل مع أصحاب الامتياز الآخرين لتبادل الخبرات وأفضل الممارسات.",
     icon: Users,
     action: "انضم إلى الشبكة",
     link: "/network"
   },
   {
-    title: "استراتيجيات النمو",
+    title: "طور علامتك التجارية",
     description: "اطلع على استراتيجيات مصممة خصيصًا لنمو وتوسيع أعمال الامتياز الخاصة بك.",
     icon: TrendingUp,
     action: "استكشف الاستراتيجيات",
@@ -55,7 +55,7 @@ export const ServicesList = () => {
                 <CardDescription>{service.description}</CardDescription>
               </CardHeader>
               <CardFooter className='mt-auto'>
-                <Link href={service.link} passHref className='w-full'>
+                <Link href={"#"} passHref className='w-full'>
                   <Button className='w-full'>{service.action}</Button>
                 </Link>
               </CardFooter>
