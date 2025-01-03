@@ -13,6 +13,7 @@ import { HomeFranchisesList } from "@/components/app/home/franchises"
 import { HomePartnersList } from "@/components/app/home/partners"
 import { getLanguage } from "@/actions/app"
 import translate from "@/lib/translate"
+import { cn } from "@/lib/utils"
 
 export const metadata: Metadata = {
   title: "الرئيسية",
@@ -43,7 +44,7 @@ export default async function Home() {
           />
         </div>
 
-        <div className='max-w-lg text-center'>
+        <div className={cn("max-w-lg", language === "ar" ? "text-right" : "text-left")}>
           <h1 className='font-bold text-gray-800'>
             {translate("secondSectionhomePageTitle", language)}
           </h1>

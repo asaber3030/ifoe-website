@@ -94,5 +94,10 @@ export const ArabicTranslations: Record<string, string> = {
   services: "الخدمات",
   partners: "الشركاء",
   myAccount: "حسابي",
-  dashboard: "لوحة التحكم"
+  dashboard: "لوحة التحكم",
+
+  franchiseCost: "تكلفة الامتياز",
+  royaltyCost: "تكلفة التمليك",
+  marketingCost: "تكلفة التسويق",
+  investmentCost: "تكلفة الاستثمار"
 }

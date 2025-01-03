@@ -1,17 +1,18 @@
 "use client"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { LinkBtn } from "@/components/ui/link-btn"
-import { Separator } from "@/components/ui/separator"
-import { routes } from "@/lib/routes"
-import { Franchise, FranchiseImage } from "@/types"
-import { CalendarIcon, DollarSignIcon, MapPinIcon, UsersIcon } from "lucide-react"
-import { FranchiseImagesCard } from "./franchise-images"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { FranchiseVideoCard } from "./franchise-video"
 import { useTranslate } from "@/hooks/use-translate"
+import { routes } from "@/lib/routes"
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { CalendarIcon, DollarSignIcon, MapPinIcon, UsersIcon } from "lucide-react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Franchise, FranchiseImage } from "@/types"
+import { FranchiseImagesCard } from "./franchise-images"
+import { FranchiseVideoCard } from "./franchise-video"
+import { Separator } from "@/components/ui/separator"
+import { LinkBtn } from "@/components/ui/link-btn"
+import { Badge } from "@/components/ui/badge"
 
 type Props = {
   images: FranchiseImage[]
@@ -20,7 +21,6 @@ type Props = {
 
 export default function FranchiseView({ images, data }: Props) {
   const translate = useTranslate()
-
   if (!data) null
 
   return (
@@ -87,34 +87,34 @@ export default function FranchiseView({ images, data }: Props) {
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>تفاصيل الامتياز</CardTitle>
+                <CardTitle>{translate("franchiseDetails")}</CardTitle>
               </CardHeader>
               <CardContent className='grid gap-2'>
                 <div className='flex items-center gap-2 justify-between'>
                   <span className='flex gap-2 items-center'>
                     <DollarSignIcon className='mr-2 h-4 w-4' />
-                    تكلفة الامتياز:
+                    {translate("franchiseCost")}:
                   </span>
                   <span>{data?.franchise_characteristic?.franchise_fees}</span>
                 </div>
                 <div className='flex items-center gap-2 justify-between'>
                   <span className='flex gap-2 items-center'>
                     <DollarSignIcon className='mr-2 h-4 w-4' />
-                    رسوم الملكية:
+                    {translate("royaltyCost")}:
                   </span>
                   <span>{data?.franchise_characteristic?.royalty_fees}</span>
                 </div>
                 <div className='flex items-center gap-2 justify-between'>
                   <span className='flex gap-2 items-center'>
                     <DollarSignIcon className='mr-2 h-4 w-4' />
-                    تكلفة التسويق:
+                    {translate("marketingCost")}:
                   </span>
                   <span>{data?.franchise_characteristic?.marketing_fees}</span>
                 </div>
                 <div className='flex items-center gap-2 justify-between'>
                   <span className='flex gap-2 items-center'>
                     <DollarSignIcon className='mr-2 h-4 w-4' />
-                    تكلفة الاستثمار:
+                    {translate("investmentCost")}:
                   </span>
                   <span>{data?.franchise_characteristic?.investments_cost}</span>
                 </div>

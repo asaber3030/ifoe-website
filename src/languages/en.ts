@@ -95,5 +95,10 @@ export const EnglishTranslations: Record<string, string> = {
   services: "Services",
   partners: "Partners",
   myAccount: "My account",
-  dashboard: "Dashboard"
+  dashboard: "Dashboard",
+
+  franchiseCost: "Franchise cost",
+  royaltyCost: "Royalty cost",
+  marketingCost: "Marketing cost",
+  investmentCost: "Investment cost"
 }
