@@ -7,6 +7,8 @@ import { Alexandria } from "next/font/google"
 import { Metadata } from "next"
 
 import { getUser } from "@/actions/auth"
+import { getLanguage } from "@/actions/app"
+import { LanguageProvider } from "@/providers/language"
 
 const alexandria = Alexandria({ subsets: ["latin", "arabic"] })
 
@@ -28,15 +30,18 @@ interface Props {
 
 export default async function Home({ children }: Props) {
   const user = await getUser()
+  const language = await getLanguage()
 
   return (
-    <html dir="rtl" suppressHydrationWarning>
+    <html dir={language === "ar" ? "rtl" : "ltr"}>
       <body>
         <ReactQueryProvider>
-          <AuthProvider user={user}>
-            <ToastContainer />
-            <div className={alexandria.className}>{children}</div>
-          </AuthProvider>
+          <LanguageProvider language={language}>
+            <AuthProvider user={user}>
+              <ToastContainer />
+              <div className={alexandria.className}>{children}</div>
+            </AuthProvider>
+          </LanguageProvider>
         </ReactQueryProvider>
       </body>
     </html>

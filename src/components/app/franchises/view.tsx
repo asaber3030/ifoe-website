@@ -1,3 +1,5 @@
+"use client"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -9,6 +11,7 @@ import { CalendarIcon, DollarSignIcon, MapPinIcon, UsersIcon } from "lucide-reac
 import { FranchiseImagesCard } from "./franchise-images"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { FranchiseVideoCard } from "./franchise-video"
+import { useTranslate } from "@/hooks/use-translate"
 
 type Props = {
   images: FranchiseImage[]
@@ -16,8 +19,9 @@ type Props = {
 }
 
 export default function FranchiseView({ images, data }: Props) {
+  const translate = useTranslate()
+
   if (!data) null
-  console.log(data.id)
 
   return (
     <div className='container mx-auto py-10 px-4'>
@@ -40,7 +44,7 @@ export default function FranchiseView({ images, data }: Props) {
             </div>
 
             <LinkBtn href={routes.franchises.newRequest(data.id)} variant='blue'>
-              طلب الامتياز
+              {translate("requestFranchise")}
             </LinkBtn>
           </div>
         </CardHeader>
@@ -48,34 +52,34 @@ export default function FranchiseView({ images, data }: Props) {
           <div className='grid gap-6 md:grid-cols-2'>
             <Card>
               <CardHeader>
-                <CardTitle>التفاصيل العامة</CardTitle>
+                <CardTitle>{translate("details")}</CardTitle>
               </CardHeader>
               <CardContent className='grid gap-2'>
                 <div className='flex items-center gap-2 justify-between'>
                   <span className='flex gap-2 items-center'>
                     <MapPinIcon className='mr-2 h-4 w-4' />
-                    مركز المكتب:
+                    {translate("centerOffice")}:
                   </span>
                   <span>{data?.center_office}</span>
                 </div>
                 <div className='flex items-center gap-2 justify-between'>
                   <span className='flex gap-2 items-center'>
                     <UsersIcon className='mr-2 h-4 w-4' />
-                    عدد الفروع:
+                    {translate("numberOfBranches")}:
                   </span>
                   <span>{data?.number_of_branches}</span>
                 </div>
                 <div className='flex items-center gap-2 justify-between'>
                   <span className='flex gap-2 items-center'>
                     <UsersIcon className='mr-2 h-4 w-4' />
-                    عدد الموظفيين:
+                    {translate("numberOfLabors")}:
                   </span>
                   <span>{data?.number_of_labors}</span>
                 </div>
                 <div className='flex items-center gap-2 justify-between'>
                   <span className='flex gap-2 items-center'>
                     <CalendarIcon className='mr-2 h-4 w-4' />
-                    تم الانشاء في سنة:
+                    {translate("establishYear")}:
                   </span>
                   <span>{data?.establish_year}</span>
                 </div>
@@ -123,7 +127,7 @@ export default function FranchiseView({ images, data }: Props) {
           <div className='grid gap-6 md:grid-cols-4'>
             <Card>
               <CardHeader>
-                <CardTitle>المساحات المطلوب</CardTitle>
+                <CardTitle>{translate("spaceRequired")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className='text-2xl font-bold'>
@@ -134,7 +138,7 @@ export default function FranchiseView({ images, data }: Props) {
 
             <Card>
               <CardHeader>
-                <CardTitle>تكلفة الادوات</CardTitle>
+                <CardTitle>{translate("equipmentCost")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className='text-2xl font-bold'>
@@ -145,7 +149,7 @@ export default function FranchiseView({ images, data }: Props) {
 
             <Card>
               <CardHeader>
-                <CardTitle>فترات التدريب</CardTitle>
+                <CardTitle>{translate("trainingPeriod")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className='text-2xl font-bold'>
@@ -156,7 +160,7 @@ export default function FranchiseView({ images, data }: Props) {
 
             <Card>
               <CardHeader>
-                <CardTitle>فترة العقود</CardTitle>
+                <CardTitle>{translate("contractPeriod")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className='text-2xl font-bold'>
@@ -168,21 +172,21 @@ export default function FranchiseView({ images, data }: Props) {
 
           <Tabs defaultValue='video' className='mx-auto mt-5 justify-center'>
             <TabsList className='justify-center mx-auto w-fit flex'>
-              <TabsTrigger value='video'>الفيديو</TabsTrigger>
-              <TabsTrigger value='images'>الصور</TabsTrigger>
+              <TabsTrigger value='video'>{translate("video")}</TabsTrigger>
+              <TabsTrigger value='images'>{translate("images")}</TabsTrigger>
             </TabsList>
             <TabsContent value='video'>
               {data?.video_url ? (
                 <FranchiseVideoCard videoUrl={data?.video_url} thumbnail={data.image_url} />
               ) : (
-                <p className='text-center my-5 text-lg text-gray-500'>لا يوجد فيديو</p>
+                <p className='text-center my-5 text-lg text-gray-500'>{translate("emptyState")}</p>
               )}
             </TabsContent>
             <TabsContent value='images'>
               {images?.length > 0 ? (
                 <FranchiseImagesCard images={images} />
               ) : (
-                <p className='text-center my-5 text-lg text-gray-500'>لا يوجد صور.</p>
+                <p className='text-center my-5 text-lg text-gray-500'>{translate("emptyState")}</p>
               )}
             </TabsContent>
           </Tabs>

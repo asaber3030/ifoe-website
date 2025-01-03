@@ -8,7 +8,7 @@ export default function LoadingFrancises() {
       <div className='p-10 xl:px-24'>
         <div>
           <div className='flex justify-between flex-wrap'>
-            <h1 className='text-blue-600 my-4 mb-10'>الامتيازات</h1>
+            <Skeleton className='w-44 h-6 mb-12' />
             <div className='flex gap-2 items-center'>
               <Skeleton className='w-40 h-10' />
               <Skeleton className='w-40 h-10' />

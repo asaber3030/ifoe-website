@@ -4,13 +4,17 @@ import { FaMapPin } from "react-icons/fa"
 
 import { type Metadata } from "next"
 import { ContactForm } from "@/components/app/contact/form"
+import { getLanguage } from "@/actions/app"
+import translate from "@/lib/translate"
 
 export const metadata: Metadata = {
   title: "تواصل معنا",
   description: "نحن هنا للإجابة عن أسئلتك وتقديم الدعم اللازم"
 }
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const language = await getLanguage()
+
   return (
     <main>
       <section
@@ -20,9 +24,9 @@ export default function ContactPage() {
         }}
       >
         <div className='absolute inset-0 bg-black bg-opacity-50'></div>
-        <div className='relative container mx-auto text-center md:text-right text-white px-4'>
-          <h1 className='text-4xl font-bold'>تواصل معنا</h1>
-          <p className='text-lg mt-2'>نحن هنا للإجابة عن أسئلتك وتقديم الدعم اللازم</p>
+        <div className='relative container mx-auto text-center text-white px-4'>
+          <h1 className='text-4xl font-bold'>{translate("contactUs", language)}</h1>
+          <p className='text-lg mt-2'>{translate("contactUsTitle", language)}</p>
         </div>
       </section>
 
@@ -32,7 +36,7 @@ export default function ContactPage() {
             <div className='text-blue-600 text-3xl mb-5'>
               <FaEnvelope />
             </div>
-            <h3 className='text-xl font-semibold mb-2'>البريد الإلكتروني</h3>
+            <h3 className='text-xl font-semibold mb-2'>{translate("email", language)}</h3>
             <p>info@example.com</p>
           </div>
 
@@ -41,7 +45,7 @@ export default function ContactPage() {
             <div className='text-blue-600 text-3xl mb-5'>
               <FaPhoneAlt />
             </div>
-            <h3 className='text-xl font-semibold mb-2'>رقم الهاتف</h3>
+            <h3 className='text-xl font-semibold mb-2'>{translate("phone", language)}</h3>
             <p>+966123456789</p>
           </div>
 
@@ -50,7 +54,7 @@ export default function ContactPage() {
             <div className='text-blue-600 text-3xl mb-5'>
               <FaMapPin />
             </div>
-            <h3 className='text-xl font-semibold mb-2'>العنوان</h3>
+            <h3 className='text-xl font-semibold mb-2'>{translate("address", language)}</h3>
             <p>123 شارع التعاون، الرياض، السعودية</p>
           </div>
         </div>

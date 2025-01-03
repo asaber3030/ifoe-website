@@ -1,3 +1,5 @@
+import "./main.css"
+
 import { DashboardSidebar } from "@/components/dashboard/sidebar"
 import { DashboardNavbar } from "@/components/dashboard/navbar"
 
@@ -16,11 +18,11 @@ export default async function DashboardLayout({ children }: { children: React.Re
   if (!user || !user?.role || user?.role?.name !== "Admin") return redirect("/login")
 
   return (
-    <div className="flex min-h-screen">
+    <div className='flex min-h-screen'>
       <DashboardSidebar />
-      <main className="flex-1 bg-gray-100 ">
+      <main className='flex-1 bg-gray-100 '>
         <DashboardNavbar />
-        <div className="px-8 py-8">{children}</div>
+        <div className='px-8 py-8'>{children}</div>
       </main>
     </div>
   )

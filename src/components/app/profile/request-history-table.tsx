@@ -1,3 +1,5 @@
+"use client"
+
 import {
   Table,
   TableBody,
@@ -10,19 +12,22 @@ import { RequestHistory } from "@/types"
 
 import moment from "moment"
 import { EmptyState } from "../empty-state"
+import { useTranslate } from "@/hooks/use-translate"
 
 export function FranchiseRequestHistoryTableProfile({ history }: { history: RequestHistory[] }) {
+  const translate = useTranslate()
+
   if (history.length === 0) return <EmptyState />
 
   return (
-    <div className="mt-4">
+    <div className='mt-4'>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>رقم التعريف</TableHead>
-            <TableHead>الحالة</TableHead>
-            <TableHead>تم التغيير في</TableHead>
-            <TableHead>ملاحظات</TableHead>
+            <TableHead>{translate("id")}</TableHead>
+            <TableHead>{translate("status")}</TableHead>
+            <TableHead>{translate("changedAt")}</TableHead>
+            <TableHead>{translate("notes")}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

@@ -12,14 +12,16 @@ import { toast } from "react-toastify"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { User, Key, Building } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useTranslate } from "@/hooks/use-translate"
 
 const menuItems = [
-  { icon: User, label: "المعلومات الشخصية", href: "/profile" },
-  { icon: Key, label: "تغيير كلمة المرور", href: "/profile/password" },
-  { icon: Building, label: "طلبات الامتيازات", href: "/profile/franchises" }
+  { icon: User, label: "personalInfo", href: "/profile" },
+  { icon: Key, label: "changePassword", href: "/profile/password" },
+  { icon: Building, label: "franchiseRequests", href: "/profile/franchises" }
 ]
 
 export const ProfileSidebar = () => {
+  const translate = useTranslate()
   const pathname = usePathname()
   const user = useUser()
   const router = useRouter()
@@ -38,20 +40,20 @@ export const ProfileSidebar = () => {
 
   return (
     <aside>
-      <div className="flex flex-col h-full bg-gray-100 rounded-md shadow-md overflow-hidden">
-        <div className="border-b border-border px-4 py-6">
-          <div className="flex items-center gap-4">
-            <Avatar className="h-12 w-12">
-              <AvatarFallback className="bg-blue-600 text-white">{user?.name[0]}</AvatarFallback>
+      <div className='flex flex-col h-full bg-gray-100 rounded-md shadow-md overflow-hidden'>
+        <div className='border-b border-border px-4 py-6'>
+          <div className='flex items-center gap-4'>
+            <Avatar className='h-12 w-12'>
+              <AvatarFallback className='bg-blue-600 text-white'>{user?.name[0]}</AvatarFallback>
             </Avatar>
             <div>
-              <h2 className="text-lg font-semibold">{user?.name}</h2>
-              <p className="text-sm text-muted-foreground">{user?.email}</p>
+              <h2 className='text-lg font-semibold'>{user?.name}</h2>
+              <p className='text-sm text-muted-foreground'>{user?.email}</p>
             </div>
           </div>
         </div>
-        <nav className="flex-1 overflow-y-auto py-4">
-          <ul className="space-y-1 px-3">
+        <nav className='flex-1 overflow-y-auto py-4'>
+          <ul className='space-y-1 px-3'>
             {menuItems.map((item) => (
               <li key={item.href}>
                 <Link
@@ -65,16 +67,16 @@ export const ProfileSidebar = () => {
                       }
                     `}
                 >
-                  <item.icon className="h-4 w-4" />
-                  <span>{item.label}</span>
+                  <item.icon className='h-4 w-4' />
+                  <span>{translate(item.label)}</span>
                 </Link>
               </li>
             ))}
           </ul>
         </nav>
-        <div className="border-t border-border p-4">
-          <Button onClick={handleLogout} variant="outlineDestructive" className="w-full">
-            تسجيل الخروج
+        <div className='border-t border-border p-4'>
+          <Button onClick={handleLogout} variant='outlineDestructive' className='w-full'>
+            {translate("logout")}
           </Button>
         </div>
       </div>

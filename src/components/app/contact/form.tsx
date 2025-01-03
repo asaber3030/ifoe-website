@@ -12,8 +12,10 @@ import { ContactSchema } from "@/lib/schema"
 import { InputField } from "@/components/common/input-field"
 import { LoadingButton } from "@/components/common/loading-button"
 import { Form } from "@/components/ui/form"
+import { useTranslate } from "@/hooks/use-translate"
 
 export const ContactForm = () => {
+  const translate = useTranslate()
   const form = useForm({
     resolver: zodResolver(ContactSchema),
     defaultValues: {
@@ -39,29 +41,44 @@ export const ContactForm = () => {
   }
 
   return (
-    <div className="bg-gray-100 p-6 rounded-lg shadow-lg h-fit">
+    <div className='bg-gray-100 p-6 rounded-lg shadow-lg h-fit'>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-          <div className="grid xl:grid-cols-2 grid-cols-1 gap-4">
-            <InputField label="الاسم الاول" name="firstName" type="text" control={form.control} />
-            <InputField label="الاسم الاخير" name="lastName" type="text" control={form.control} />
+        <form onSubmit={form.handleSubmit(handleSubmit)} className='space-y-4'>
+          <div className='grid xl:grid-cols-2 grid-cols-1 gap-4'>
+            <InputField
+              label={translate("firstName")}
+              name='firstName'
+              type='text'
+              control={form.control}
+            />
+            <InputField
+              label={translate("lastName")}
+              name='lastName'
+              type='text'
+              control={form.control}
+            />
           </div>
-          <InputField label="البريد الالكتروني" name="email" type="email" control={form.control} />
-          <InputField label="الغرض" name="subject" type="text" control={form.control} />
+          <InputField label={translate("email")} name='email' type='email' control={form.control} />
+          <InputField
+            label={translate("subject")}
+            name='subject'
+            type='text'
+            control={form.control}
+          />
           <InputField
             isTextarea
-            label="الرسالة"
-            name="message"
-            type="text"
+            label={translate("message")}
+            name='message'
+            type='text'
             control={form.control}
           />
           <LoadingButton
-            className="w-full"
+            className='w-full'
             loading={mutation.isPending}
-            type="submit"
-            variant="blue"
+            type='submit'
+            variant='blue'
           >
-            ارسال الرسالة
+            {translate("sendMessage")}
           </LoadingButton>
         </form>
       </Form>

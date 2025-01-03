@@ -13,7 +13,8 @@ import { filterFranchises } from "@/actions/franchises"
 import { getCategories } from "@/actions/categories"
 import { getCountries } from "@/actions/countries"
 import { FranchisesStartJourneyBox } from "@/components/app/franchises/start-journey-box"
-import { FranchisesIntro } from "@/components/app/franchises/intro-section"
+import { getLanguage } from "@/actions/app"
+import translate from "@/lib/translate"
 
 export const dynamic = "force-dynamic"
 
@@ -35,6 +36,8 @@ export default async function Franchises({ searchParams }: Props) {
   const category = (await searchParams).category
   const country = (await searchParams).country
 
+  const language = await getLanguage()
+
   const franchisesPromise = filterFranchises(page, category, country)
   const countriesPromise = getCountries()
   const categoriesPromise = getCategories()
@@ -50,7 +53,7 @@ export default async function Franchises({ searchParams }: Props) {
       <div className='p-10 xl:px-24' id='franchises-id'>
         <div className='mt-10'>
           <div className='flex justify-between flex-wrap mb-2'>
-            <h1 className='text-blue-600 my-4'>الامتيازات</h1>
+            <h1 className='text-blue-600 my-4'>{translate("franchises", language)}</h1>
             {categories && countries && (
               <FranchiseFilters categories={categories} countries={countries} />
             )}

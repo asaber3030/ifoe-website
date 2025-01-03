@@ -14,6 +14,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { InputField } from "@/components/common/input-field"
 import { LoadingButton } from "@/components/common/loading-button"
 import { Form } from "@/components/ui/form"
+import translate from "@/lib/translate"
 
 export function PersonalInfoForm() {
   const user = useUser()
@@ -38,22 +39,22 @@ export function PersonalInfoForm() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>البيانات الشخصية</CardTitle>
+        <CardTitle>{translate("personalInfo")}</CardTitle>
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)}>
-          <CardContent className="space-y-4">
-            <InputField label="الاسم" name="name" type="text" control={form.control} />
+          <CardContent className='space-y-4'>
+            <InputField label={translate("name")} name='name' type='text' control={form.control} />
             <InputField
-              label="البريد الالكتروني"
-              name="email"
-              type="email"
+              label={translate("email")}
+              name='email'
+              type='email'
               control={form.control}
             />
           </CardContent>
           <CardFooter>
-            <LoadingButton loading={mutation.isPending} type="submit">
-              تعديل البيانات الشخصيه
+            <LoadingButton loading={mutation.isPending} type='submit'>
+              {translate("save")}
             </LoadingButton>
           </CardFooter>
         </form>

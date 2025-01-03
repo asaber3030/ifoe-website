@@ -1,6 +1,6 @@
 "use client"
 
-import Image from "next/image"
+import moment from "moment"
 import Link from "next/link"
 
 import { Blog } from "@/types"
@@ -8,9 +8,10 @@ import { Blog } from "@/types"
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { routes } from "@/lib/routes"
-import moment from "moment"
+import { useTranslate } from "@/hooks/use-translate"
 
 export function BlogPost({ post }: { post: Blog }) {
+  const translate = useTranslate()
   return (
     <Card>
       <CardHeader className='p-2 space-y-2'>
@@ -32,7 +33,7 @@ export function BlogPost({ post }: { post: Blog }) {
       <CardFooter className='p-2'>
         <Link href={routes.blogs.view(post.id)} className='w-full block'>
           <Button className='w-full' variant='blue'>
-            اقرأ المزيد
+            {translate("readMore")}
           </Button>
         </Link>
       </CardFooter>

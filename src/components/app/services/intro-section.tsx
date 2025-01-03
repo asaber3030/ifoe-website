@@ -1,46 +1,22 @@
 "use client"
 
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Search, FileText, Users, TrendingUp } from "lucide-react"
 import Link from "next/link"
 
-const services = [
-  {
-    title: "استثمر في سوق الفرانشايز",
-    description: "ابحث عن فرصة الامتياز المثالية التي تتناسب مع اهتماماتك وميزانيتك.",
-    icon: Search,
-    action: "ابدأ البحث",
-    link: "/search"
-  },
-  {
-    title: "اطلب استشارة",
-    description: "احصل على مساعدة خبراء في جميع المستندات القانونية والأوراق المطلوبة.",
-    icon: FileText,
-    action: "احصل على المساعدة",
-    link: "/documentation"
-  },
-  {
-    title: "اجعل البراند الخاص بك فرانشايز",
-    description: "تواصل مع أصحاب الامتياز الآخرين لتبادل الخبرات وأفضل الممارسات.",
-    icon: Users,
-    action: "انضم إلى الشبكة",
-    link: "/network"
-  },
-  {
-    title: "طور علامتك التجارية",
-    description: "اطلع على استراتيجيات مصممة خصيصًا لنمو وتوسيع أعمال الامتياز الخاصة بك.",
-    icon: TrendingUp,
-    action: "استكشف الاستراتيجيات",
-    link: "/growth"
-  }
-]
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+
+import { useLanguage, useTranslate } from "@/hooks/use-translate"
+import { arServices, enServices } from "@/lib/lists"
 
 export const ServicesList = () => {
+  const translate = useTranslate()
+  const language = useLanguage()
+  const services = language === "ar" ? arServices : enServices
+
   return (
     <section className='py-8 bg-gray-50 rounded-md shadow-md border'>
       <div className='container mx-auto px-4'>
-        <h2 className='text-3xl font-bold mb-8'>الخدمات الخاصة بنا</h2>
+        <h2 className='text-3xl font-bold mb-8'>{translate("ourServices")}</h2>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
           {services.map((service, index) => (
             <Card
