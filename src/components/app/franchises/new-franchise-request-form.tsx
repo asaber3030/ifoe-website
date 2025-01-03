@@ -65,7 +65,7 @@ export const NewFranchiseRequestForm = ({ countries, types, franchiseId }: Props
         <InputField name='phone' label={translate("phone")} control={form.control} />
         <InputField name='city' label={translate("city")} control={form.control} />
         <InputField name='company_name' label={translate("companyName")} control={form.control} />
-        <InputField name='business_type' label={translate("busniessType")} control={form.control} />
+        <InputField name='business_type' label={translate("businessType")} control={form.control} />
         <div className='grid xl:grid-cols-2 grid-cols-1 gap-4'>
           <SelectField
             valueAsNumber
