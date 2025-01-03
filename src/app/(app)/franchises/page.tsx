@@ -1,4 +1,3 @@
-import LoadingFrancises from "./loading"
 import React from "react"
 
 import { type Metadata } from "next"
