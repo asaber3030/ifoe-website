@@ -38,6 +38,7 @@ export const EnglishTranslations: Record<string, string> = {
   logout: "Logout",
   sendMessage: "Send message",
   whyChooseOurServices: "Why choose our services?",
+  whyChooseUs: "Why choose us?",
   ourProcess: "Our process",
   ourServices: "Our services",
   servicesFooterTitle: "Ready to start your franchising journey?",

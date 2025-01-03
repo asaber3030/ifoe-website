@@ -62,7 +62,7 @@ export const ArabicTranslations: Record<string, string> = {
   franchiseType: "نوع الامتياز",
   send: "إرسال",
   contactUsTitle: "نحن هنا للإجابة على استفساراتك وتقديم الدعم اللازم",
-
+  whyChooseUs: "لماذا تختارنا؟",
   personalInfo: "المعلومات الشخصية",
   changePassword: "تغيير كلمة المرور",
   franchiseRequests: "طلبات الامتياز",
