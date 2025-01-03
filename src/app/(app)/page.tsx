@@ -11,9 +11,8 @@ import { ContactForm } from "@/components/app/contact/form"
 import { HomeSocialDetails } from "@/components/app/home/social-details"
 import { HomeFranchisesList } from "@/components/app/home/franchises"
 import { HomePartnersList } from "@/components/app/home/partners"
-
-import { Suspense } from "react"
-import HomeLoading from "./loading"
+import { getLanguage } from "@/actions/app"
+import translate from "@/lib/translate"
 
 export const metadata: Metadata = {
   title: "الرئيسية",
@@ -25,6 +24,7 @@ export const dynamic = "force-dynamic"
 export default async function Home() {
   const franchisesPromise = getFranchises()
   const partnersPromise = getPartners()
+  const language = await getLanguage()
 
   const [franchises, partners] = await Promise.all([franchisesPromise, partnersPromise])
 
@@ -43,18 +43,19 @@ export default async function Home() {
           />
         </div>
 
-        <div className='max-w-lg md:text-right text-center'>
-          <h1 className='font-bold text-gray-800'>الامتياز التجاري الدولي</h1>
+        <div className='max-w-lg text-center'>
+          <h1 className='font-bold text-gray-800'>
+            {translate("secondSectionhomePageTitle", language)}
+          </h1>
           <p className='mt-4 text-gray-600 text-lg'>
-            Your ultimate destination for fixing things with ease. Discover our range of services
-            tailored just for you.
+            {translate("secondSectionhomePageDescription", language)}
           </p>
           <div className='mt-6 flex gap-2 md:justify-start justify-center space-x-4'>
             <LinkBtn variant='outlineBlue' href='/about'>
-              تعرف علينا أكثر
+              {translate("knowAboutUs", language)}
             </LinkBtn>
             <LinkBtn variant='blue' href='/contact'>
-              تواصل معنا
+              {translate("contactUs", language)}
             </LinkBtn>
           </div>
         </div>

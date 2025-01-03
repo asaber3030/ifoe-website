@@ -20,10 +20,12 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
+import { useTranslate } from "@/hooks/use-translate"
 
 export const HeaderUserItems = ({ className }: { className?: ClassValue }) => {
   const user = useUser()
   const router = useRouter()
+  const translate = useTranslate()
 
   if (!user) return null
 
@@ -45,18 +47,20 @@ export const HeaderUserItems = ({ className }: { className?: ClassValue }) => {
         <Button variant='outline'>{user.name}</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className={cn("min-w-[250px]", className)}>
-        <DropdownMenuLabel className='justify-end text-right'>حسابي الشخصي</DropdownMenuLabel>
+        <DropdownMenuLabel className='justify-end text-right'>
+          {translate("myAccount")}
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => router.push(routes.profile.root)}>
-          الصفحة الشخصية
+          {translate("personalInfo")}
           <User className='size-4' />
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => router.push(routes.profile.changePassword)}>
-          تغيير كلمة المرور
+          {translate("changePassword")}
           <LockIcon className='size-4' />
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => router.push(routes.profile.franchises)}>
-          طلبات الامتيازات
+          {translate("franchiseRequests")}
           <CheckCheck className='size-4' />
         </DropdownMenuItem>
 
@@ -64,7 +68,7 @@ export const HeaderUserItems = ({ className }: { className?: ClassValue }) => {
           <>
             <DropdownMenuSeparator />
             <DropdownMenuItem className='text-blue-500' onClick={() => router.push("/admin")}>
-              صفحة التحكم
+              {translate("dashboard")}
               <LockIcon className='size-4' />
             </DropdownMenuItem>
           </>
@@ -72,7 +76,7 @@ export const HeaderUserItems = ({ className }: { className?: ClassValue }) => {
 
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout} className='text-red-500 hover:text-red-600'>
-          تسجيل الخروج
+          {translate("logout")}
           <LogOut className='size-4' />
         </DropdownMenuItem>
       </DropdownMenuContent>

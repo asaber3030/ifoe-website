@@ -18,6 +18,7 @@ import { Country, FranchiseType } from "@/types"
 import { CheckboxField } from "@/components/common/checkbox-field"
 import { useUser } from "@/hooks/use-user"
 import { NotLoggedInAlert } from "../not-loggedin-alert"
+import { useTranslate } from "@/hooks/use-translate"
 
 type Props = {
   countries: Country[]
@@ -26,6 +27,7 @@ type Props = {
 }
 
 export const NewFranchiseRequestForm = ({ countries, types, franchiseId }: Props) => {
+  const translate = useTranslate()
   const form = useForm({
     resolver: zodResolver(FranchiseRequestSchema.Create),
     defaultValues: {
@@ -59,13 +61,18 @@ export const NewFranchiseRequestForm = ({ countries, types, franchiseId }: Props
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className='space-y-4'>
-        <InputField name='full_name' label='الاسم' control={form.control} />
-        <InputField name='phone' label='رقم الهاتف' control={form.control} />
-        <InputField name='city' label='المدينة' control={form.control} />
-        <InputField name='company_name' label='اسم الشركه' control={form.control} />
-        <InputField name='business_type' label='نوع العمل' control={form.control} />
+        <InputField name='full_name' label={translate("name")} control={form.control} />
+        <InputField name='phone' label={translate("phone")} control={form.control} />
+        <InputField name='city' label={translate("city")} control={form.control} />
+        <InputField name='company_name' label={translate("companyName")} control={form.control} />
+        <InputField name='business_type' label={translate("busniessType")} control={form.control} />
         <div className='grid xl:grid-cols-2 grid-cols-1 gap-4'>
-          <SelectField valueAsNumber name='country_id' control={form.control} label='الدولة'>
+          <SelectField
+            valueAsNumber
+            name='country_id'
+            control={form.control}
+            label={translate("country")}
+          >
             {countries.map((country) => (
               <SelectItem key={`country-${country.id}`} value={country.id.toString()}>
                 {country.name}
@@ -77,7 +84,7 @@ export const NewFranchiseRequestForm = ({ countries, types, franchiseId }: Props
             valueAsNumber
             name='franchise_type_id'
             control={form.control}
-            label='نوع الامتياز'
+            label={translate("franchiseType")}
           >
             {types.map((type) => (
               <SelectItem key={`type-${type.id}`} value={type.id.toString()}>
@@ -87,11 +94,15 @@ export const NewFranchiseRequestForm = ({ countries, types, franchiseId }: Props
           </SelectField>
         </div>
 
-        <CheckboxField name='have_experience' control={form.control} label='هل لديك خبرة؟' />
+        <CheckboxField
+          name='have_experience'
+          control={form.control}
+          label={translate("haveExperience")}
+        />
 
         {user ? (
           <LoadingButton loading={createMutation.isPending} variant='blue' className='w-full'>
-            ارسال الطلب
+            {translate("send")}
           </LoadingButton>
         ) : (
           <NotLoggedInAlert />

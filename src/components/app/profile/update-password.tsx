@@ -1,8 +1,8 @@
 "use client"
 
 import { useMutation } from "@tanstack/react-query"
-import { useUser } from "@/hooks/use-user"
 import { useForm } from "react-hook-form"
+import { useTranslate } from "@/hooks/use-translate"
 
 import { changePasswordAction } from "@/actions/auth"
 import { showResponse } from "@/lib/utils"
@@ -16,6 +16,7 @@ import { InputField } from "@/components/common/input-field"
 import { Form } from "@/components/ui/form"
 
 export function PasswordUpdateForm() {
+  const translate = useTranslate()
   const form = useForm({
     resolver: zodResolver(UserSchema.Password),
     defaultValues: {
@@ -37,33 +38,33 @@ export function PasswordUpdateForm() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>تغيير كلمة المرور</CardTitle>
+        <CardTitle>{translate("changePassword")}</CardTitle>
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)}>
-          <CardContent className="space-y-4">
+          <CardContent className='space-y-4'>
             <InputField
-              label="كلمة المرور الحالية"
-              name="current_password"
-              type="password"
+              label={translate("currentPassword")}
+              name='current_password'
+              type='password'
               control={form.control}
             />
             <InputField
-              label="كلمة المرور الجديدة"
-              name="new_password"
-              type="password"
+              label={translate("newPassword")}
+              name='new_password'
+              type='password'
               control={form.control}
             />
             <InputField
-              label="تأكيد كلمة المرور"
-              name="new_password_confirmation"
-              type="password"
+              label={translate("confirmationPassword")}
+              name='new_password_confirmation'
+              type='password'
               control={form.control}
             />
           </CardContent>
           <CardFooter>
-            <LoadingButton loading={mutation.isPending} type="submit">
-              حفظ كلمة المرور
+            <LoadingButton loading={mutation.isPending} type='submit'>
+              {translate("save")}
             </LoadingButton>
           </CardFooter>
         </form>

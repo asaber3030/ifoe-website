@@ -41,9 +41,7 @@ export async function getUser(): Promise<User | null> {
   }
 }
 
-export async function registerAction(
-  values: z.infer<typeof UserSchema.Create>
-): Promise<TRegisterReturn> {
+export async function registerAction(values: z.infer<typeof UserSchema.Create>): TRegisterReturn {
   try {
     const response = await fetch(`${API_URL}/register`, {
       method: "POST",
@@ -76,7 +74,7 @@ export async function registerAction(
   }
 }
 
-export async function loginAction(values: z.infer<typeof UserSchema.Login>): Promise<TLoginReturn> {
+export async function loginAction(values: z.infer<typeof UserSchema.Login>): TLoginReturn {
   try {
     const response = await fetch(`${API_URL}/login`, {
       method: "POST",

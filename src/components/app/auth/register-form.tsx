@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useMutation } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
+import { useTranslate } from "@/hooks/use-translate"
 
 import { registerAction } from "@/actions/auth"
 import { showResponse } from "@/lib/utils"
@@ -18,6 +19,7 @@ import { InputField } from "@/components/common/input-field"
 import { Form } from "@/components/ui/form"
 
 export const RegisterForm = () => {
+  const translate = useTranslate()
   const router = useRouter()
   const form = useForm({
     resolver: zodResolver(UserSchema.Create),
@@ -48,33 +50,32 @@ export const RegisterForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-        <InputField name="name" placeholder="Username" label="الاسم" control={form.control} />
+      <form onSubmit={form.handleSubmit(handleSubmit)} className='space-y-4'>
         <InputField
-          name="email"
-          placeholder="example@domain.com"
-          label="البريد الالكتروني"
+          name='name'
+          placeholder='Username'
+          label={translate("name")}
           control={form.control}
         />
+        <InputField name='email' label={translate("email")} control={form.control} />
         <InputField
-          name="password"
-          placeholder="Strong Password"
-          label="كلمة السر"
+          name='password'
+          label={translate("password")}
           control={form.control}
-          type="password"
+          type='password'
         />
 
-        <CheckboxField name="remember" label="تذكرني" control={form.control} />
+        <CheckboxField name='remember' label={translate("rememberMe")} control={form.control} />
 
-        <LoadingButton className="w-full" variant="blue" loading={registerMutation.isPending}>
-          تسجيل حساب جديد
+        <LoadingButton className='w-full' variant='blue' loading={registerMutation.isPending}>
+          {translate("createNewAccount")}
         </LoadingButton>
 
         <Link
           href={"/login"}
-          className="text-gray-500 text-center mb-4 block font-light text-sm hover:text-black"
+          className='text-gray-500 text-center mb-4 block font-light text-sm hover:text-black'
         >
-          لديك حساب بالفعل؟
+          {translate("alreadyHaveAccount")}
         </Link>
       </form>
     </Form>

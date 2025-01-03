@@ -1,11 +1,18 @@
 "use server"
 
-import { API_URL, AUTH_COOKIE_NAME } from "@/lib/constants"
+import { API_URL, AUTH_COOKIE_NAME, LANGUAGE_COOKIE_NAME } from "@/lib/constants"
 import { ContactSchema } from "@/lib/schema"
 import { actionResponse, defaultHeaders } from "@/lib/utils"
-import { APIResponse, Role } from "@/types"
+import { APIResponse, Language, Role } from "@/types"
 import { cookies } from "next/headers"
 import { z } from "zod"
+
+export const getLanguage = async (): Promise<Language> => {
+  const cookiesStore = cookies()
+  const value = (await cookiesStore).get(LANGUAGE_COOKIE_NAME)?.value
+  const language = value ? value : "ar"
+  return language as Language
+}
 
 export const getAuthorizationToken = async () => {
   const cookiesStore = cookies()

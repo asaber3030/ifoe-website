@@ -16,10 +16,11 @@ import { CheckboxField } from "@/components/common/checkbox-field"
 import { UserSchema } from "@/lib/schema"
 import { InputField } from "@/components/common/input-field"
 import { Form } from "@/components/ui/form"
+import { useTranslate } from "@/hooks/use-translate"
 
 export const LoginForm = () => {
+  const translate = useTranslate()
   const router = useRouter()
-
   const form = useForm({
     resolver: zodResolver(UserSchema.Login),
     defaultValues: {
@@ -48,30 +49,23 @@ export const LoginForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className='space-y-4'>
+        <InputField name='email' label={translate("email")} control={form.control} />
         <InputField
-          name="email"
-          placeholder="example@domain.com"
-          label="البريد الالكتروني"
+          name='password'
+          label={translate("password")}
           control={form.control}
+          type='password'
         />
-        <InputField
-          name="password"
-          placeholder="Strong Password"
-          label="كلمة السر"
-          control={form.control}
-          type="password"
-        />
-
-        <CheckboxField name="remember" label="تذكرني" control={form.control} />
-        <LoadingButton className="w-full" variant="blue" loading={loginMutation.isPending}>
-          تسجيل الدخول
+        <CheckboxField name='remember' label={translate("remember")} control={form.control} />
+        <LoadingButton className='w-full' variant='blue' loading={loginMutation.isPending}>
+          {translate("login")}
         </LoadingButton>
         <Link
           href={"/login"}
-          className="text-gray-500 text-center mb-4 block font-light text-sm hover:text-black"
+          className='text-gray-500 text-center mb-4 block font-light text-sm hover:text-black'
         >
-          ليس لديك حساب؟ سجل الان
+          {translate("dontHaveAccount")}
         </Link>
       </form>
     </Form>

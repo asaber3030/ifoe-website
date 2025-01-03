@@ -19,11 +19,14 @@ import { AppLogo } from "../logo"
 import { useUser } from "@/hooks/use-user"
 import { HeaderUserItems } from "./user-items"
 import { useState } from "react"
+import { useTranslate } from "@/hooks/use-translate"
+import { LanguageSwitcher } from "../language-switcher"
 
 export const UserSidebar = () => {
   const pathname = usePathname()
   const isActive = (path: string) => pathname === path
   const user = useUser()
+  const translate = useTranslate()
 
   const [open, setOpen] = useState(false)
 
@@ -53,7 +56,7 @@ export const UserSidebar = () => {
                   href='/'
                   className={`block ${isActive("/") ? "text-blue-500" : "hover:text-gray-400"}`}
                 >
-                  الرئيسية
+                  {translate("home")}
                 </Link>
               </li>
               <li onClick={hideSheet}>
@@ -63,7 +66,7 @@ export const UserSidebar = () => {
                     isActive("/blogs") ? "text-blue-500" : "hover:text-gray-400"
                   }`}
                 >
-                  المقالات
+                  {translate("blogs")}
                 </Link>
               </li>
               <li onClick={hideSheet}>
@@ -73,7 +76,7 @@ export const UserSidebar = () => {
                     isActive("/about") ? "text-blue-500" : "hover:text-gray-400"
                   }`}
                 >
-                  من نحن
+                  {translate("aboutUs")}
                 </Link>
               </li>
               <li onClick={hideSheet}>
@@ -83,7 +86,7 @@ export const UserSidebar = () => {
                     isActive("/franchises") ? "text-blue-500" : "hover:text-gray-400"
                   }`}
                 >
-                  الامتيازات
+                  {translate("franchises")}
                 </Link>
               </li>
               <li onClick={hideSheet}>
@@ -93,7 +96,7 @@ export const UserSidebar = () => {
                     isActive("/partners") ? "text-blue-500" : "hover:text-gray-400"
                   }`}
                 >
-                  شركائنا
+                  {translate("partners")}
                 </Link>
               </li>
               <li>
@@ -103,7 +106,7 @@ export const UserSidebar = () => {
                     isActive("/contact") ? "text-blue-500" : "hover:text-gray-400"
                   }`}
                 >
-                  تواصل معنا
+                  {translate("contactUs")}
                 </Link>
               </li>
 
@@ -117,7 +120,7 @@ export const UserSidebar = () => {
                       }`}
                     >
                       <UserPlus size={16} />
-                      تسجيل حساب جديد
+                      {translate("createNewAccount")}
                     </Link>
                   </li>
                   <li onClick={hideSheet}>
@@ -128,13 +131,15 @@ export const UserSidebar = () => {
                       }`}
                     >
                       <LogIn size={16} />
-                      تسجيل الدخول
+                      {translate("login")}
                     </Link>
                   </li>
                 </>
               ) : (
                 <HeaderUserItems />
               )}
+
+              <LanguageSwitcher />
             </ul>
           </nav>
 

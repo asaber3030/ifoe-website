@@ -10,24 +10,26 @@ import {
   TableRow
 } from "@/components/ui/table"
 import { FranchiseRequest } from "@/types"
-import { Eye } from "lucide-react"
 import { EmptyState } from "../empty-state"
+import { useTranslate } from "@/hooks/use-translate"
 
 export function FranchiseRequestsTableProfile({ requests }: { requests: FranchiseRequest[] }) {
+  const translate = useTranslate()
+
   if (requests.length === 0) return <EmptyState />
 
   return (
-    <div className="mt-4">
+    <div className='mt-4'>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>رقم التعريف</TableHead>
-            <TableHead>الاسم</TableHead>
-            <TableHead>لديه خبرة؟</TableHead>
-            <TableHead>الحالة</TableHead>
-            <TableHead>نوع العمل</TableHead>
-            <TableHead>رقم الهاتف</TableHead>
-            <TableHead>حرر</TableHead>
+            <TableHead>{translate("id")}</TableHead>
+            <TableHead>{translate("name")}</TableHead>
+            <TableHead>{translate("haveExperience")}</TableHead>
+            <TableHead>{translate("status")}</TableHead>
+            <TableHead>{translate("businessType")}</TableHead>
+            <TableHead>{translate("phoneNumber")}</TableHead>
+            <TableHead>{translate("do")}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -40,8 +42,8 @@ export function FranchiseRequestsTableProfile({ requests }: { requests: Franchis
               <TableCell>{request.business_type}</TableCell>
               <TableCell>{request.phone}</TableCell>
               <TableCell>
-                <LinkBtn href={`/profile/franchises/${request.id}`} variant="outline">
-                  السجل
+                <LinkBtn href={`/profile/franchises/${request.id}`} variant='outline'>
+                  {translate("requests")}
                 </LinkBtn>
               </TableCell>
             </TableRow>

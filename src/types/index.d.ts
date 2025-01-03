@@ -5,6 +5,8 @@ export type APIResponse<T> = {
   data: T
 }
 
+export type Language = "en" | "ar"
+
 export type Status = "Pending" | "Approved" | "Rejected"
 
 type ErrorResponse = {

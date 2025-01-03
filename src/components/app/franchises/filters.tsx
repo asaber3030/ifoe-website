@@ -14,6 +14,7 @@ import {
 import { useRouter, useSearchParams } from "next/navigation"
 
 import { build } from "search-params"
+import { useTranslate } from "@/hooks/use-translate"
 
 type Props = {
   categories: Category[]
@@ -21,6 +22,7 @@ type Props = {
 }
 
 export const FranchiseFilters = ({ categories, countries }: Props) => {
+  const translate = useTranslate()
   const searchParams = useSearchParams()
   const router = useRouter()
   const categoryId = searchParams.get("category")
@@ -45,11 +47,11 @@ export const FranchiseFilters = ({ categories, countries }: Props) => {
     <div className='grid xl:grid-cols-2 grid-cols-1 gap-2'>
       <Select defaultValue={categoryId ?? ""} onValueChange={handleCategoryChange}>
         <SelectTrigger className='xl:min-w-[250px] w-full'>
-          <SelectValue placeholder='اختار القسم' defaultValue={categoryId || ""} />
+          <SelectValue placeholder={translate("category")} defaultValue={categoryId || ""} />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>اختار القسم</SelectLabel>
+            <SelectLabel>{translate("category")}</SelectLabel>
             {categories.map((category) => (
               <SelectItem key={`select-category-${category.id}`} value={category.id.toString()}>
                 {category.name}
@@ -61,11 +63,11 @@ export const FranchiseFilters = ({ categories, countries }: Props) => {
 
       <Select defaultValue={countryId ?? ""} onValueChange={handleCountryChange}>
         <SelectTrigger className='min-w-[250px]'>
-          <SelectValue placeholder='اختار الدولة' defaultValue={countryId || ""} />
+          <SelectValue placeholder={translate("country")} defaultValue={countryId || ""} />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>اختار الدولة</SelectLabel>
+            <SelectLabel>{translate("country")}</SelectLabel>
             {countries.map((country) => (
               <SelectItem key={`select-country-${country.id}`} value={country.id.toString()}>
                 {country.name}
