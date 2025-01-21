@@ -55,14 +55,17 @@ export default async function Home() {
             <LinkBtn variant='outlineBlue' href='/about'>
               {translate("knowAboutUs", language)}
             </LinkBtn>
+
             <LinkBtn variant='blue' href='/contact'>
               {translate("contactUs", language)}
             </LinkBtn>
+              <span>A7a</span>
+              <></>
           </div>
         </div>
       </div>
 
-      <HomeFranchisesList franchises={franchises?.data!} />
+      <HomeFranchisesList franchises={franchises?.data} />
 
       <HomePartnersList partners={partners} />
 
