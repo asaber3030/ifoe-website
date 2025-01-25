@@ -51,12 +51,7 @@ export const RegisterForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className='space-y-4'>
-        <InputField
-          name='name'
-          placeholder='Username'
-          label={translate("name")}
-          control={form.control}
-        />
+        <InputField name='name' label={translate("name")} control={form.control} />
         <InputField name='email' label={translate("email")} control={form.control} />
         <InputField
           name='password'

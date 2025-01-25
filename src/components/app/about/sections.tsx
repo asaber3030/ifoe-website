@@ -6,6 +6,7 @@ import Link from "next/link"
 import { ArrowLeft, CheckCircle, TrendingUp, Users } from "lucide-react"
 import { Partner } from "@/types"
 import { useTranslate } from "@/hooks/use-translate"
+import { routes } from "@/lib/routes"
 
 export function AboutHeroSection() {
   const translate = useTranslate()
@@ -19,16 +20,20 @@ export function AboutHeroSection() {
         objectFit='cover'
         className='absolute z-0'
       />
-      <div className='relative z-10 text-center text-white'>
-        <h1 className='text-5xl md:text-7xl font-bold mb-4 animate-fade-in-up'>
+      <div className='bg-opacity-70 bg-black w-full h-full absolute left-0 top-0'></div>
+      <div className='relative text-center z-10'>
+        <h1 className='text-5xl md:text-7xl font-bold mb-4 animate-fade-in-up text-white'>
           {translate("aboutFirstTitle")}
         </h1>
-        <p className='text-xl md:text-2xl mb-8 animate-fade-in-up animation-delay-200'>
+        <p className='text-lg max-w-3xl mx-auto md:text-2xl mb-8 animate-fade-in-up animation-delay-200 text-gray-200'>
           {translate("aboutSecondTitle")}
         </p>
-        <button className='bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition duration-300 animate-fade-in-up animation-delay-400'>
+        <Link
+          href={routes.franchises.root}
+          className='bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition duration-300 animate-fade-in-up animation-delay-400'
+        >
           {translate("exploreFranchises")}
-        </button>
+        </Link>
       </div>
     </section>
   )

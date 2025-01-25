@@ -14,7 +14,7 @@ export const ServicesList = () => {
   const services = language === "ar" ? arServices : enServices
 
   return (
-    <section className='py-8 bg-gray-50 rounded-md shadow-md border'>
+    <section className='py-8 rounded-md'>
       <div className='container mx-auto px-4'>
         <h2 className='text-3xl font-bold mb-8'>{translate("ourServices")}</h2>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>

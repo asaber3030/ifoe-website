@@ -14,6 +14,8 @@ import { HomePartnersList } from "@/components/app/home/partners"
 import { getLanguage } from "@/actions/app"
 import translate from "@/lib/translate"
 import { cn } from "@/lib/utils"
+import { ServicesList } from "@/components/app/services/intro-section"
+import PricingSection from "@/components/app/home/first-section"
 
 export const metadata: Metadata = {
   title: "الرئيسية",
@@ -33,7 +35,9 @@ export default async function Home() {
     <main>
       <HomeBanner />
 
-      <div className='container mx-auto px-4 py-16 text-center lg:text-left flex flex-col lg:flex-row items-center space-y-10 lg:space-y-0 lg:space-x-10'>
+      <PricingSection />
+
+      {/* <div className='container mx-auto px-4 py-16 text-center lg:text-left flex flex-col lg:flex-row items-center space-y-10 lg:space-y-0 lg:space-x-10'>
         <div className='w-full lg:w-1/2'>
           <Image
             src='/bg.jpg'
@@ -59,10 +63,13 @@ export default async function Home() {
             <LinkBtn variant='blue' href='/contact'>
               {translate("contactUs", language)}
             </LinkBtn>
-              <span>A7a</span>
-              <></>
+
           </div>
         </div>
+      </div> */}
+
+      <div className="container mx-auto mb-10">
+        <ServicesList />
       </div>
 
       <HomeFranchisesList franchises={franchises?.data} />

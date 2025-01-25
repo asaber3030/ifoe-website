@@ -14,10 +14,12 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { InputField } from "@/components/common/input-field"
 import { LoadingButton } from "@/components/common/loading-button"
 import { Form } from "@/components/ui/form"
-import translate from "@/lib/translate"
+import { useTranslate } from "@/hooks/use-translate"
 
 export function PersonalInfoForm() {
   const user = useUser()
+
+  const translate = useTranslate()
 
   const form = useForm({
     resolver: zodResolver(UserSchema.Update),

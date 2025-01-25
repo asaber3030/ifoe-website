@@ -37,7 +37,7 @@ export const UserSidebar = () => {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button size='icon' variant='blue'>
+        <Button size='icon' variant='blue' className='xl:hidden lg:flex flex'>
           <Menu size={17} />
         </Button>
       </SheetTrigger>

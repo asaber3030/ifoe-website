@@ -2,7 +2,7 @@ export const ArabicTranslations: Record<string, string> = {
   arabic: "العربية",
   english: "الإنجليزية",
 
-  homeTitle: "مرحباً بكم في معرض الامتياز التجاري الدولي",
+  homeTitle: "مرحباً بكم في فرص الامتياز التجاري الدولي",
   homeDescription: "وجهتك المثالية لحل المشكلات بسهولة. اكتشف مجموعة خدماتنا المصممة خصيصًا لك.",
 
   secondSectionhomePageTitle: "الامتياز التجاري الدولي",
@@ -46,7 +46,7 @@ export const ArabicTranslations: Record<string, string> = {
   dontHaveAccount: "لا تمتلك حساباً؟",
   address: "العنوان",
   ourBlogs: "مدوناتنا",
-  category: "الفئة",
+  category: "القطاع",
   readMore: "قراءة المزيد",
   requestFranchise: "طلب امتياز",
   details: "التفاصيل",
@@ -82,7 +82,8 @@ export const ArabicTranslations: Record<string, string> = {
   changedAt: "تغير في",
   notes: "الملاحظات",
   aboutFirstTitle: "تمكين رواد الأعمال",
-  aboutSecondTitle: "نجاحك هو عملنا",
+  aboutSecondTitle:
+    "نجاحك هو عملنا: تمكين رؤيتك، دفع النمو التحويلي، وتقديم حلول مبتكرة لبناء مستقبل مستدام معًا",
   exploreFranchises: "استكشاف الامتيازات",
   aboutOurStory: "قصتنا",
   aboutFooterTitle: "هل أنت مستعد لبدء رحلتك في عالم الامتياز؟",
@@ -99,5 +100,21 @@ export const ArabicTranslations: Record<string, string> = {
   franchiseCost: "تكلفة الامتياز",
   royaltyCost: "تكلفة التمليك",
   marketingCost: "تكلفة التسويق",
-  investmentCost: "تكلفة الاستثمار"
+  investmentCost: "تكلفة الاستثمار",
+
+  quickLinks: "روابط سريعة",
+
+  weHaveHelped: "لقد ساعدنا",
+  innovativeCompanies: "شركات مبتكرة",
+  hundredsOfAllSizes: "مئات من جميع الأحجام والقطاعات",
+  haveMadeBigImprovements: "حققت تحسينات كبيرة معنا",
+  revenueBusiness: "أعمال الإيرادات",
+  inAnnualRevenue: "في الإيرادات السنوية",
+  monthsOfRunway: "أشهر من التشغيل",
+
+  aboutCompany: "عن الشركة",
+  aboutCompanyDescription: "نحن نقدم حلولًا مبتكرة للشركات الناشئة والمؤسسات الكبيرة.",
+
+  youHaveToLogin: "يجب عليك تسجيل الدخول اولا حتى تكمل.",
+  rememberMe: "تذكرني"
 }

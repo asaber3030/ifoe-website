@@ -29,7 +29,7 @@ export default async function BlogsPage({ searchParams }: Props) {
       <h1 className='text-4xl font-bold mb-12'>{translate("ourBlogs", language)}</h1>
 
       {blogs?.data?.length === 0 ? (
-        <EmptyState />
+        <EmptyState parentClassName='mb-44 max-w-full w-full' />
       ) : (
         <div className='grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4'>
           {blogs?.data?.map((post) => (

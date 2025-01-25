@@ -14,10 +14,10 @@ export default async function RegisterPage() {
   const language = await getLanguage()
 
   return (
-    <div className='min-h-screen bg-background text-foreground p-2'>
-      <div className='max-w-3xl mx-auto bg-white rounded-xl border p-2'>
-        <div className='p-8 rounded-2xl bg-blue-600 mb-8'>
-          <h1 className='text-2xl font-bold text-center py-4 text-white'>
+    <div className='min-h-screen bg-background text-foreground p-2  mt-20'>
+      <div className='max-w-3xl mx-auto bg-white rounded-xl border p-4'>
+        <div className='p-8 rounded-2xl bg-gray-100 mb-8'>
+          <h1 className='text-2xl font-bold text-center py-4 text-blue-600'>
             {translate("createNewAccount", language)}
           </h1>
         </div>

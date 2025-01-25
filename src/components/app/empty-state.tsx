@@ -2,13 +2,15 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import { useTranslate } from "@/hooks/use-translate"
+import { cn } from "@/lib/utils"
+import { ClassValue } from "class-variance-authority/types"
 import { PenLine, Sparkles } from "lucide-react"
 
-export function EmptyState() {
+export function EmptyState({ parentClassName }: { parentClassName?: ClassValue }) {
   const translate = useTranslate()
 
   return (
-    <Card className='w-full max-w-md mx-auto'>
+    <Card className={cn('w-full max-w-md mx-auto', parentClassName)}>
       <CardContent className='pt-6 px-8 pb-8'>
         <div className={`transition-opacity duration-1000`}>
           <div className='flex justify-center mb-6'>

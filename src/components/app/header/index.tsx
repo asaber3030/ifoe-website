@@ -23,7 +23,7 @@ export const Header = () => {
       <div className='mx-auto px-10 py-6 flex items-center justify-between'>
         <AppLogo />
 
-        <nav className='hidden md:flex space-x-6'>
+        <nav className='hidden lg:flex space-x-6'>
           <ul className='flex space-x-10 text-gray-600'>
             <li>
               <Link

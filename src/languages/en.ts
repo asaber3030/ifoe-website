@@ -84,7 +84,8 @@ export const EnglishTranslations: Record<string, string> = {
   changedAt: "Changed at",
   notes: "Notes",
   aboutFirstTitle: "Empowering Entrepreneurs",
-  aboutSecondTitle: "Your Success is Our Business",
+  aboutSecondTitle:
+    "Your Success is Our Business: Empowering Your Vision, Driving Transformative Growth, and Delivering Innovative Solutions to Build a Sustainable Future Together",
   exploreFranchises: "Explore Franchises",
   aboutOurStory: "Our Story",
   aboutFooterTitle: "Ready to start your franchising journey?",
@@ -101,5 +102,22 @@ export const EnglishTranslations: Record<string, string> = {
   franchiseCost: "Franchise cost",
   royaltyCost: "Royalty cost",
   marketingCost: "Marketing cost",
-  investmentCost: "Investment cost"
+  investmentCost: "Investment cost",
+
+  weHaveHelped: "We've helped",
+  innovativeCompanies: "innovative companies",
+  hundredsOfAllSizes: "Hundreds of all sizes and across all industries",
+  haveMadeBigImprovements: "have made a big improvements with us.",
+
+  revenueBusiness: "Revenue business",
+  inAnnualRevenue: "In annual revenue",
+  monthsOfRunway: "Months of runway",
+
+  quickLinks: "Quick links",
+
+  aboutCompany: "About the company",
+  aboutCompanyDescription:
+    "We provide innovative solutions and high-quality services to our clients. Our goal is to provide the best possible experience.",
+  youHaveToLogin: "You have to login first to continue.",
+  rememberMe: "Remember me"
 }
