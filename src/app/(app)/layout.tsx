@@ -3,7 +3,7 @@ import { Header } from "@/components/app/header";
 import UnderDevelopment from "@/components/common/under-dev";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  return <UnderDevelopment />;
+  /*  return <UnderDevelopment />; */
   return (
     <>
       <Header />
