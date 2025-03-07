@@ -1,17 +1,19 @@
-"use client"
+"use client";
 
-import Link from "next/link"
+import Link from "next/link";
 
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
-import { useLanguage, useTranslate } from "@/hooks/use-translate"
-import { arServices, enServices } from "@/lib/lists"
+import { useLanguage, useTranslate } from "@/hooks/use-translate";
+import { arServices, enServices } from "@/lib/lists";
 
 export const ServicesList = () => {
-  const translate = useTranslate()
-  const language = useLanguage()
-  const services = language === "ar" ? arServices : enServices
+  const translate = useTranslate();
+  const language = useLanguage();
+  const services = language === "ar" ? arServices : enServices;
+
+  return null;
 
   return (
     <section className='py-8 rounded-md'>
@@ -40,5 +42,5 @@ export const ServicesList = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
